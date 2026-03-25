@@ -1,0 +1,15 @@
+@import "tailwindcss";
+@import './font-faces.css';
+
+@theme static {
+    --font-roboto: 'Roboto', sans-serif;
+    --font-sans: 'Public Sans', sans-serif;
+
+    /*Colors*/
+    --color-terrakotta: #C4956A;
+    --color-sand: #E8D5B7;
+    --color-salvie: #7A9E7E;
+    --color-dark-bark: #4A3728;
+    --color-creme: #F5EEE3;
+    --color-rust: #D4664A;
+}
