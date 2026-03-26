@@ -8,8 +8,37 @@
     /*Colors*/
     --color-terrakotta: #C4956A;
     --color-sand: #E8D5B7;
-    --color-salvie: #7A9E7E;
-    --color-dark-bark: #4A3728;
+    --color-salvie-900: #7A9E7E;
+    --color-salvie-500: #B3D6B6;
+    --color-salvie-300: #D6E5D8;
+    --color-bark-900: #2C1F14;
+    --color-bark-500: #4A3728;
+    --color-bark-300: #D9CDC3;
     --color-creme: #F5EEE3;
-    --color-rust: #D4664A;
+    --color-male: #4a66d4;
+    --color-rust-900: #D4664A;
+    --color-rust-500: #DFADAD;
+    --color-rust-300: #E4D6D2;
 }
+
+@layer base {
+  .petmatch-container {
+    @apply container mx-auto px-3 lg:px-5;
+  }
+  body {
+    @apply bg-sand;
+  }
+}
+@layer components {
+  .pet-card {
+    @apply md:col-span-6 lg:col-span-4 xl:col-span-3;
+  }
+  .pet-card .card-info {
+    @apply p-4 bg-white rounded-b-lg shadow-md;
+  }
+  .pet-card .card-info>div {
+    @apply space-x-2 mb-2;
+  }
+}
+@layer utility {}
+

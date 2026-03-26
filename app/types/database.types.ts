@@ -24,11 +24,13 @@ export type Database = {
           gender: string | null
           good_with_animals: boolean | null
           good_with_children: boolean | null
+          grooming_level: number | null
           handling_tolerance: number | null
           id: string
           image_url: string | null
           independence_level: number | null
           is_hypoallergenic: boolean | null
+          is_neutered: boolean | null
           name: string
           needs_outdoor: boolean | null
           personality: string | null
@@ -47,11 +49,13 @@ export type Database = {
           gender?: string | null
           good_with_animals?: boolean | null
           good_with_children?: boolean | null
+          grooming_level?: number | null
           handling_tolerance?: number | null
           id?: string
           image_url?: string | null
           independence_level?: number | null
           is_hypoallergenic?: boolean | null
+          is_neutered?: boolean | null
           name: string
           needs_outdoor?: boolean | null
           personality?: string | null
@@ -70,11 +74,13 @@ export type Database = {
           gender?: string | null
           good_with_animals?: boolean | null
           good_with_children?: boolean | null
+          grooming_level?: number | null
           handling_tolerance?: number | null
           id?: string
           image_url?: string | null
           independence_level?: number | null
           is_hypoallergenic?: boolean | null
+          is_neutered?: boolean | null
           name?: string
           needs_outdoor?: boolean | null
           personality?: string | null

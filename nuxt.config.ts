@@ -1,5 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from '@tailwindcss/vite'
+import svgLoader from 'vite-svg-loader'
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
@@ -10,6 +12,13 @@ export default defineNuxtConfig({
     '@nuxt/icon',
     '@nuxt/eslint',
   ],
+  image: {
+    format: ['webp'],
+    domains: ['rlqzvlavdwokmnrsdygx.supabase.co'],
+    alias: {
+      unsplash: 'http://localhost:3000/'
+    }
+  },
   supabase: {
     redirect: false,
     url: process.env.SUPABASE_URL,
@@ -18,6 +27,9 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/css/main.css'],
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [
+      tailwindcss(),
+      svgLoader()
+    ],
   },
 })
