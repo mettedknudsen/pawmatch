@@ -1,6 +1,15 @@
 import { Temporal } from 'temporal-polyfill'
 export function useFormat() {
-  function age(months: number){
+  function age(months: number, registeredAt: string){
+    // læg tiden der er gået siden de blev oprettet med - i måneder
+    const start = Temporal.PlainDate.from(registeredAt)
+    const now = Temporal.Now.plainDateISO()
+
+    const diff = start.until(now, {smallestUnit: 'months'})
+
+    if (diff.years > 0) months = months + (diff.years * 12)
+    if (diff.months > 0)  months = months + diff.months
+
     // først få antal år (afrundet)
     const years = Math.floor(months / 12)
     //  og så de resterende måneder

@@ -31,7 +31,7 @@
 }
 @layer components {
   .pet-card {
-    @apply md:col-span-6 lg:col-span-4 xl:col-span-3;
+    @apply md:col-span-6 xl:col-span-4 xl:col-span-3;
   }
   .pet-card .card-info {
     @apply p-4 bg-white rounded-b-lg shadow-md;

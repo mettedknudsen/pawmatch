@@ -34,7 +34,7 @@
             </span>
           </p>
           <span class="text-neutral-300 text-2xl">-</span>
-          <p v-if="pet.age_months">{{age(pet.age_months)}}</p>
+          <p v-if="pet.age_months">{{age(pet.age_months, pet.created_at)}}</p>
         </div>
       </article>
     </nuxt-link>
