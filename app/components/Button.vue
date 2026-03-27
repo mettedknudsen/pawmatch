@@ -1,7 +1,7 @@
 <template>
   <button :type="type ?? 'button'"
           :disabled="disabled || loading"
-          :class="classes"
+          :class="[classes,variantClasses]"
           @click="emit('click', $event)"
   >
     <!-- loading -->
@@ -47,36 +47,28 @@ const variantClasses = computed(() => {
       plain: 'text-salvie-900',
     },
     alert: {
-      full: '',
-      bordered: '',
-      plain: '',
+      full: 'bg-rust-900 text-white',
+      bordered: 'bg-rust-300 border border-rust-900 text-rust-900',
+      plain: 'text-rust-900',
     },
     dark: {
-      full: '',
-      bordered: '',
-      plain: '',
+      full: 'bg-bark-500 text-white',
+      bordered: 'border border-bark-900 text-bark-900 hover:text-white hover:bg-bark-500',
+      plain: 'text-bark-900',
     },
     white: {
-      full: '',
-      bordered: '',
-      plain: '',
+      full: 'bg-white text-black',
+      bordered: 'border border-white text-white',
+      plain: 'text-white',
     },
     black: {
-      full: '',
-      bordered: '',
-      plain: '',
+      full: 'bg-black text-white',
+      bordered: 'border border-black text-black',
+      plain: 'text-black',
     },
   }
   return map[c][v]
 })
-
-const variants = {
-  success: props.variant === 'full' ? 'bg-salvie-900 text-white' : props.variant === 'bordered' ? '' : '',
-  alert: props.variant === 'full' ? 'bg-rust-900 text-white' : props.variant === 'bordered' ? 'bg-rust-300 border border-rust-900 text-rust-900' : 'text-rust-900',
-  dark: props.variant === 'full' ? 'bg-bark-500 text-white' : props.variant === 'bordered' ? 'border border-bark-900 text-bark-900' : 'text-bark-900',
-  white: props.variant === 'full' ? 'bg-white text-black' : props.variant === 'bordered' ? 'border border-white text-white' : 'text-white',
-  black: props.variant === 'full' ? 'bg-black text-white' : props.variant === 'bordered' ? 'border border-black text-black' : 'text-black',
-}
 
 
 const sizes = {
@@ -86,9 +78,8 @@ const sizes = {
 }
 
 const classes = computed(() => [
-  'inline-flex items-center justify-center rounded-xl border font-medium transition-colors hover:opacity-50',
+  'inline-flex items-center justify-center rounded-xl font-medium transition-colors',
   'disabled:opacity-50 disabled:cursor-not-allowed',
-  variants[props.color ?? 'primary'],
   sizes[props.size ?? 'md'],
 ])
 </script>

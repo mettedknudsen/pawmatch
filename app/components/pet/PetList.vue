@@ -8,8 +8,8 @@
     <p class="">{{ amountShown }}</p>
   </div>
   <div class="bg-black/50 inset-0 fixed" :class="isOpen ? 'block' : 'hidden'"  @click="isOpen = !isOpen"></div>
-  <div v-if="filters" :class="isOpen ? 'translate-x-0' : '-translate-x-full'" class="filter-drawer">
-    <Button :icon="CloseIcon" variant="plain" color="white" @click="isOpen = !isOpen"/>
+  <div v-if="filters" :class="isOpen ? 'translate-x-0' : '-translate-x-full'" class="filter-drawer pt-15">
+    <Button :icon="CloseIcon" variant="full" color="white" @click="isOpen = !isOpen" class="!rounded-full !p-2 [&_svg]:size-5 absolute left-2 top-2"/>
     <!-- type-->
     <div class="">
       <button
