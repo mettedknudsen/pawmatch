@@ -1,0 +1,86 @@
+<template>
+  <nuxt-link :to="`/dyr/${pet.id}`" class="pet-card block h-full">
+    <NuxtImg
+      v-if="pet.image_url"
+      :src="getImageUrl(pet.image_url)"
+      :alt="pet.name"
+      width="400"
+      height="300"
+      fit="cover"
+      loading="lazy"
+      class="w-full object-cover"
+    />
+    <div v-else class="w-full object-cover aspect-[1.33] flex items-center justify-center border border-b-neutral-400"
+         :class="pet.species === 'dog' ? 'bg-rust-300 text-bark-500' : (pet.species === 'cat' ? 'bg-rust-500 text-rust-900 ' : 'bg-salvie-300 text-salvie-900')">
+      <PetIcon v-if="pet.species" :species="pet.species" class="w-16 h-16"/>
+    </div>
+    <article class="card-info">
+      <div>
+        <h3 class="font-roboto font-bold text-bark-900">{{ pet.name }}</h3>
+        <p v-if="pet.created_at" class="text-neutral-500 text-sm">{{ timeInShelter(pet.created_at) }}</p>
+      </div>
+      <div class="flex items-center text-sm">
+        <p v-if="pet.gender" class="items-center space-x.pz flex">
+          <PetGender :gender="pet.gender" class="size-6"/>
+          <span>
+            {{ pet.gender === 'male' ? 'Han' : 'Hun' }}
+            </span>
+        </p>
+        <span class="text-neutral-300 text-2xl">-</span>
+        <p v-if="pet.age_months">{{ age(pet.age_months, pet.created_at) }}</p>
+      </div>
+      <div class="tags-container">
+        <!--  status  -->
+        <span v-if="pet.status" :class="status[pet.status].class" class="tag">
+            {{status[pet.status].label}}
+          </span>
+        <!--  personality  -->
+        <span v-if="pet.personality" class="tag">
+            {{personality[pet.personality]}}
+          </span>
+        <!--  hypoallergenic  -->
+        <span v-if="pet.is_hypoallergenic" class="tag">
+              allergivenlig
+          </span>
+        <span v-if="pet.good_with_children" class="tag">
+              børnevenlig
+          </span>
+        <!--  good_with_animals  -->
+        <span v-if="pet.good_with_animals" class="tag">
+              god med dyr
+          </span>
+        <!--  neutered  -->
+        <span v-if="pet.is_neutered" class="tag">
+              {{ pet.gender === 'male' ? 'kastreret' : 'steriliseret' }}
+          </span>
+      </div>
+
+    </article>
+  </nuxt-link>
+</template>
+<script setup lang="ts">
+import {useStorage} from "../../composables/useStorage";
+import {useFormat} from "../../composables/useFormat"
+import PetGender from "./PetGender.vue";
+
+import type {Animal} from '~/types'
+
+defineProps<{pet: Animal}>()
+
+const {getImageUrl} = useStorage()
+const {age, timeInShelter} = useFormat()
+
+const status = {
+  available: {label: 'ledig', class: 'bg-salvie-300 text-salvie-900'},
+  reserved: {label: 'reserveret', class: 'bg-sand text-bark-500'},
+  adopted: {label: 'adopteret', class: 'bg-rust-300 text-rust-900'},
+}
+
+const personality = {
+  playful: 'legesyg',
+  calm: 'rolig',
+  affectionate: 'kærlig'
+}
+
+
+</script>

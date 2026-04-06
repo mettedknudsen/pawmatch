@@ -31,7 +31,7 @@
           <input
             type="radio"
             :value="option.value"
-            v-model="filter.model.value"
+            v-model="filter.model"
             class="peer hidden"
           />
           <span class="px-2 sm:px-4 py-2 rounded-lg peer-checked:border border-rust-900 transition-all">
@@ -44,7 +44,7 @@
         v-for="(filter, index) in checkboxFilters"
         :key="index"
         class="flex items-center gap-2 text-sm cursor-pointer border rounded-lg p-2 border-rust-900 mb-2">
-        <input v-model="filter.model.value" type="checkbox" class="size-6 accent-rust-900"/>
+        <input v-model="filter.model" type="checkbox" class="size-6 accent-rust-900"/>
         {{ filter.label }}
       </label>
     </div>
@@ -53,7 +53,7 @@
     <div class="bottom-0 pb-3 absolute inset-x-0 mx-5 border-t border-rust-900 bg-light">
       <Button v-if="hasActiveFilters"
               variant="bordered" color="alert" class="hover:bg-rust-900 hover:text-white mt-3"
-              @click="resetFilters"
+              @click="emit('reset')"
       >
         Nulstil filtre
       </Button>
@@ -61,45 +61,33 @@
 
   </div>
 
-  <PetGrid :pets="pets" :loading="pending"/>
-  <Pagination
-    v-if="pages > 1 && paginate"
-    v-model="currentPage"
-    :pages="pages"
-  />
-
 </template>
-
 <script setup lang="ts">
-import type {Animal} from '~/types'
 import FiltersIcon from '~/assets/images/icons/filters.svg?component'
 import CloseIcon from '~/assets/images/icons/close.svg?component'
 
 const props = defineProps<{
-  paginate?: number | null,
-  limit?: number | null,
-  species?: string | null,
-  filters: boolean,
-  status?: string | null
+  modelValue: {
+    selectedSpecies: Ref<string | null>
+    selectedSize: Ref<string | null>
+    selectedGender: Ref<string | null>
+    goodWithChildren: Ref<boolean>
+    goodWithAnimals: Ref<boolean>
+  }
+  total: number
+  currentPage: number
+  pageSize: number
 }>()
 
+const emit = defineEmits<{
+  reset: []
+}>()
 
-// FILTER REFS
-const selectedSpecies = ref(props.species ?? null)
-const selectedSize = ref<string | null>(null)
-const selectedGender = ref<string | null>(null)
-const goodWithChildren = ref(false)
-const goodWithAnimals = ref(false)
-const currentPage = ref(1)
-
-const pageSize = props.paginate ?? 12
-
-const supabase = useSupabaseClient()
 
 const filterGroups = [
   {
     label: null,
-    model: selectedSpecies,
+    model: toRef(props.modelValue, 'selectedSpecies'),
     options: [
       { value: null, label: 'Alle' },
       { value: 'dog', label: 'Hunde' },
@@ -109,7 +97,7 @@ const filterGroups = [
   },
   {
     label: 'Størrelse',
-    model: selectedSize,
+    model: toRef(props.modelValue, 'selectedSize'),
     options: [
       { value: null, label: 'Alle' },
       { value: 'small', label: 'Lille' },
@@ -119,7 +107,7 @@ const filterGroups = [
   },
   {
     label: 'Køn',
-    model: selectedGender,
+    model: toRef(props.modelValue, 'selectedGender'),
     options: [
       { value: null, label: 'Alle' },
       { value: 'male', label: 'Han' },
@@ -131,82 +119,28 @@ const filterGroups = [
 const checkboxFilters= [
   {
     label: 'God med børn',
-    model: goodWithChildren,
+    model: toRef(props.modelValue, 'goodWithChildren'),
   },
   {
     label: 'God med dyr',
-    model: goodWithAnimals,
+    model: toRef(props.modelValue, 'goodWithAnimals'),
   }
 ]
 
 
-// watch for value changes - set currentpage to 1
-watch([selectedSpecies, selectedSize, selectedGender, goodWithChildren, goodWithAnimals], () => {
-  currentPage.value = 1
-})
-
-const {data, error, refresh, pending} = await useAsyncData('pets', async () => {
-    let query = supabase
-      .from('animals')
-      .select('*', {count: 'exact'})
-      .order('created_at', {ascending: false})
-
-    if (props.status === 'available') {
-      query = query.eq('status', 'available')
-    } else if (props.status === 'adopted') {
-      query = query.in('status', ['reserved', 'adopted'])
-    }
-
-    if (props.limit) {
-      query = query.limit(props.limit)
-    } else {
-      query = query.range(
-        (currentPage.value - 1) * pageSize,
-        currentPage.value * pageSize - 1
-      )
-    }
-
-    // add filters
-    if (selectedSpecies.value) query = query.eq('species', selectedSpecies.value)
-    if (selectedSize.value) query = query.eq('size', selectedSize.value)
-    if (selectedGender.value) query = query.eq('gender', selectedGender.value)
-    if (goodWithAnimals.value) query = query.eq('good_with_animals', true)
-    if (goodWithChildren.value) query = query.eq('good_with_children', true)
-
-    const {data, error, count} = await query
-    if (error) throw error
-    return {animals: data as Animal[], total: count ?? 0}
-  },
-  // watch - get data if values changes
-  {watch: [currentPage, selectedSpecies, selectedSize, selectedGender, goodWithChildren, goodWithAnimals]}
-)
-
 const isOpen = useFilterDrawer()
 
 const amountShown = computed(() => {
-  const from = (currentPage.value - 1) * pageSize + 1
-  const to = Math.min(currentPage.value * pageSize, total.value)
-  return `${from}–${to} af ${total.value} dyr`
+  const from = (props.currentPage - 1) * props.pageSize + 1
+  const to = Math.min(props.currentPage * props.pageSize, props.total)
+  return `${from}–${to} af ${props.total} dyr`
 })
 
-
-const pets = computed(() => data.value?.animals ?? [])
-const total = computed(() => data.value?.total ?? 0)
-const pages = computed(() => Math.ceil(total.value / pageSize))
-
 const hasActiveFilters = computed(() =>
-  selectedSpecies.value ||
-  selectedSize.value ||
-  selectedGender.value ||
-  goodWithChildren.value ||
-  goodWithAnimals.value
+  props.modelValue.selectedSpecies.value ||
+  props.modelValue.selectedSize.value ||
+  props.modelValue.selectedGender.value ||
+  props.modelValue.goodWithChildren.value ||
+  props.modelValue.goodWithAnimals.value
 )
-
-function resetFilters() {
-  selectedSpecies.value = null
-  selectedSize.value = null
-  selectedGender.value = null
-  goodWithChildren.value = false
-  goodWithAnimals.value = false
-}
 </script>

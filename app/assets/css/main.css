@@ -16,6 +16,7 @@
     --color-bark-500: #4A3728;
     --color-bark-300: #D9CDC3;
     --color-creme: #F5EEE3;
+    --color-light: #faf4f2;
     --color-male: #4a66d4;
     --color-rust-900: #D4664A;
     --color-rust-500: #e4b1b1;
@@ -31,8 +32,11 @@
   }
 }
 @layer components {
+  .loading-animate {
+    @apply bg-gradient-to-tr from-bark-500/30 to-bark-500/60 animate-pulse;
+  }
   .filter-drawer{
-    @apply bg-rust-900 text-white fixed top-0 left-0 max-sm:right-10 h-screen z-50 transition-transform duration-300 lg:translate-x-0
+    @apply bg-light text-rust-900 fixed top-0 left-0 max-sm:right-10 h-screen z-50 transition-transform duration-300 lg:translate-x-0
   }
   .tags-container {
     @apply flex items-start flex-wrap mb-4 space-x-2 gap-y-2 md:min-h-[68px] max-md:w-3/4
@@ -50,5 +54,18 @@
     @apply space-x-2 mb-2;
   }
 }
-@layer utility {}
+@layer utilities {
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 1.5s infinite linear;
+  }
+}
 
