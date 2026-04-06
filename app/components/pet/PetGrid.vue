@@ -15,9 +15,9 @@
 <!--   empty  -->
   <div v-if="pets.length === 0 && !loading" class="text-center py-16 text-bark-900">
     <p class="text-lg">Ingen dyr matcher dine filtre</p>
-    <Button v-if="selectedSpecies || selectedSize || selectedGender || goodWithChildren || goodWithAnimals"
+    <Button
             variant="bordered" color="dark" class="mt-3"
-            @click="selectedSpecies = null; selectedSize = null; selectedGender = null; goodWithChildren = false; goodWithAnimals = false"
+            @click="$emit('reset')"
     >
       Nulstil filtre
     </Button>

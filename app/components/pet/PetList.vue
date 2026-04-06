@@ -1,9 +1,18 @@
 <template>
   <!--    FILTERS -->
   <div class="petmatch-container px-0 my-5 flex items-center justify-between text-bark-900">
-    <Button :icon="FiltersIcon" variant="bordered" color="dark"  @click="isOpen = !isOpen">
-      Filtrer
-    </Button>
+    <div class="flex items-center space-x-2">
+      <Button :icon="FiltersIcon" variant="bordered" color="dark"  @click="isOpen = !isOpen">
+        Filtrer
+      </Button>
+      <Button v-if="hasActiveFilters"
+              variant="plain" color="dark" class="hover:text-bark-500 hover:opacity-75"
+              @click="resetFilters"
+      >
+        Nulstil filtre
+      </Button>
+    </div>
+
     <p class="">{{ amountShown }}</p>
   </div>
 
@@ -61,7 +70,7 @@
 
   </div>
 
-  <PetGrid :pets="pets" :loading="pending"/>
+  <PetGrid :pets="pets" :loading="pending" @reset="resetFilters"/>
   <Pagination
     v-if="pages > 1 && paginate"
     v-model="currentPage"

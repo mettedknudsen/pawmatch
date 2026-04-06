@@ -33,7 +33,7 @@
 }
 @layer components {
   .loading-animate {
-    @apply bg-gradient-to-tr from-bark-500/30 to-bark-500/60 animate-pulse;
+    @apply bg-gradient-to-tr from-bark-500/10 to-bark-500/40 animate-pulse;
   }
   .filter-drawer{
     @apply bg-light text-rust-900 fixed top-0 left-0 max-sm:right-10 h-screen z-50 transition-transform duration-300 lg:translate-x-0
