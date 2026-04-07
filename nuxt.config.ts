@@ -15,9 +15,6 @@ export default defineNuxtConfig({
   image: {
     format: ['webp'],
     domains: ['rlqzvlavdwokmnrsdygx.supabase.co'],
-    alias: {
-      unsplash: 'http://localhost:3000/'
-    }
   },
   supabase: {
     redirect: false,

@@ -1,6 +1,7 @@
 <template>
   <!--    FILTERS -->
-  <div class="petmatch-container px-0 my-5 flex items-center justify-between text-bark-900">
+  <template v-if="filters">
+  <div class="pawmatch-container px-0 my-5 flex items-center justify-between text-bark-900">
     <div class="flex items-center space-x-2">
       <Button :icon="FiltersIcon" variant="bordered" color="dark"  @click="isOpen = !isOpen">
         Filtrer
@@ -69,7 +70,7 @@
     </div>
 
   </div>
-
+  </template>
   <PetGrid :pets="pets" :loading="pending" @reset="resetFilters"/>
   <Pagination
     v-if="pages > 1 && paginate"

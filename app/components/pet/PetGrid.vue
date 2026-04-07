@@ -1,7 +1,7 @@
 <template>
   <section class="md:grid grid-cols-12 place-items-stretch md:gap-4 space-y-4">
 <!--    loading -->
-    <div v-if="loading" v-for="n in 6" class="col-span-4 h-130 rounded-xl loading-animate"></div>
+    <div v-if="loading" v-for="n in 6" class="md:col-span-6 xl:col-span-4 2xl:col-span-3 h-130 rounded-xl loading-animate"></div>
 <!--    output -->
     <template v-else>
       <PetCard

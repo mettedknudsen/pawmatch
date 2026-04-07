@@ -24,7 +24,7 @@
 }
 
 @layer base {
-  .petmatch-container {
+  .pawmatch-container {
     @apply container mx-auto px-3 lg:px-5;
   }
   body {
@@ -45,7 +45,7 @@
     @apply rounded-2xl p-1 px-3 border text-sm bg-gray-200 text-gray-500
   }
   .pet-card {
-    @apply md:col-span-6 xl:col-span-4 xl:col-span-3;
+    @apply md:col-span-6 xl:col-span-4 2xl:col-span-3;
   }
   .pet-card .card-info {
     @apply p-4 bg-white rounded-b-[10px] shadow-md;

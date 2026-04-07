@@ -1,6 +1,6 @@
 <template>
   <!--    FILTERS -->
-  <div class="petmatch-container px-0 my-5 flex items-center justify-between text-bark-900">
+  <div class="pawmatch-container px-0 my-5 flex items-center justify-between text-bark-900">
     <Button :icon="FiltersIcon" variant="bordered" color="dark"  @click="isOpen = !isOpen">
       Filtrer
     </Button>
