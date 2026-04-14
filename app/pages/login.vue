@@ -1,14 +1,13 @@
 <template>
-  <main class="min-h-screen max-w-[400px] mx-auto px-3 lg:px-5 py-10">
-    <h1 class="text-center my-10">PetMatch | Login</h1>
-      <form class="space-y-4 px-10 bg-white px-3 lg:px-5 py-10" @submit.prevent="handleLogin">
+      <form class="space-y-4 px-10 bg-white px-3 lg:px-5 py-10 max-w-[400px] mx-auto" @submit.prevent="handleLogin">
+        <h1 class="text-center font-bold text-bark-500 text-lg">Login</h1>
         <div>
           <label class="block text-sm text-bark-700 mb-1">Email</label>
           <input
             v-model="email"
             type="email"
             required
-            class="rounded-lg border px-4 py-2.5focus:outline-none focus:border-terrakotta w-full min-h-8"
+            class="rounded-lg border border-bark-300 px-4 py-1.5 focus:outline-terrakotta w-full min-h-8"
           />
         </div>
         <div>
@@ -17,35 +16,34 @@
             v-model="password"
             type="password"
             required
-            class="rounded-lg border px-4 py-2.5focus:outline-none focus:border-terrakotta w-full min-h-8"
+            class="rounded-lg border border-bark-300 px-4 py-1.5 focus:outline-terrakotta  w-full min-h-8"
           />
         </div>
 
         <p v-if="error" class="text-sm text-rust-900">{{ error }}</p>
-
+        <div class="flex items-center space-x-1">
         <Button type="submit" :loading="loading" color="primary" variant="full" :icon="UserSvg" >
           Log ind
         </Button>
+        <Button type="button" @click="navigateTo('/register')" color="primary" variant="bordered" class="ml-3">
+          Opret bruger
+        </Button>
+        </div>
+        <NuxtLink to="/forgot-password" class="text-xs block text-terrakotta hover:text-terrakotta-hover">Glemt dit kodeord? Tryk her</NuxtLink>
       </form>
-    <div class="flex justify-center">
-      <Button type="button" @click="navigateTo('/')" color="dark" variant="plain" :icon="BackSvg" class="mt-5" >
-        Gå tilbage til forsiden
-      </Button>
-    </div>
-
-  </main>
 </template>
 <script setup lang="ts">
 import UserSvg from '~/assets/images/icons/user.svg?component'
-import BackSvg from '~/assets/images/icons/back.svg?component'
-import {navigateTo} from "../../.nuxt/imports";
 
-definePageMeta({ layout: false }) // no shared layout and no footer/navbar
+definePageMeta({ layout: 'account' })
 
 const supabase = useSupabaseClient()
 const user = useSupabaseUser()
 
-if (user.value) navigateTo('/')
+if (user.value && user.value.user_metadata.role) {
+  if (user.value.user_metadata.role === 'admin') navigateTo('/admin')
+  else navigateTo('/')
+}
 
 const email = ref('')
 const password = ref('')
@@ -55,6 +53,7 @@ const loading = ref(false)
 
 async function handleLogin() {
   loading.value = true
+  error.value = ''
 
   try {
     const {error: err} = await supabase.auth.signInWithPassword({

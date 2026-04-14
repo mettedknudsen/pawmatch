@@ -11,7 +11,11 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/icon',
     '@nuxt/eslint',
+    '@nuxt/ui',
   ],
+  ui: {
+    colorMode: false
+  },
   image: {
     format: ['webp'],
     domains: ['rlqzvlavdwokmnrsdygx.supabase.co'],
@@ -24,6 +28,11 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/css/main.css'],
   vite: {
+    optimizeDeps: {
+      include: [
+        'temporal-polyfill',
+      ]
+    },
     plugins: [
       tailwindcss(),
       svgLoader()

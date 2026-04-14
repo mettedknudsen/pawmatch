@@ -1,11 +1,13 @@
 @import "tailwindcss";
 @import './font-faces.css';
+@import "@nuxt/ui";
 
 @theme static {
     --font-roboto: 'Roboto', sans-serif;
     --font-sans: 'Public Sans', sans-serif;
 
     /*Colors*/
+    --color-terrakotta-hover: #a57e5a;
     --color-terrakotta: #C4956A;
     --color-sand: #E8D5B7;
     --color-salvie-900: #5e7a62;
@@ -21,6 +23,14 @@
     --color-rust-900: #D4664A;
     --color-rust-500: #e4b1b1;
     --color-rust-300: #edd5ce;
+
+
+  /* Replace nuxt ui colors */
+  --color-primary: #dfa325;
+  --color-ui-bg: #C4956A;
+  --color-ui-text: #DFE7E9;
+  --color-ui-text-muted: #c2c9ca;
+
 }
 
 @layer base {
@@ -35,13 +45,16 @@
   .loading-animate {
     @apply bg-gradient-to-tr from-bark-500/10 to-bark-500/40 animate-pulse;
   }
+  .admin-menu-drawer{
+    @apply bg-bark-900 text-white flex flex-col p-5 col-span-2 max-lg:fixed max-lg:top-0 max-lg:left-0 max-sm:right-10 max-lg:max-w-[500px] max-lg:w-full max-lg:h-screen max-lg:z-50 transition-transform duration-300
+  }
   .filter-drawer{
     @apply bg-light text-rust-900 fixed top-0 left-0 max-sm:right-10 h-screen z-50 transition-transform duration-300 lg:translate-x-0
   }
   .tags-container {
     @apply flex items-start flex-wrap mb-4 space-x-2 gap-y-2 md:min-h-[68px] max-md:w-3/4
   }
-  .tags-container .tag {
+  .tag {
     @apply rounded-2xl p-1 px-3 border text-sm bg-gray-200 text-gray-500
   }
   .pet-card {
@@ -52,6 +65,24 @@
   }
   .pet-card .card-info>div {
     @apply space-x-2 mb-2;
+  }
+
+/*  Backend */
+
+  .input select {
+    @apply appearance-none block w-full px-2 py-2.5;
+  }
+  .input select option{
+    @apply p-1 checked:bg-terrakotta/50;
+  }
+  .input input, .input select, .input textarea {
+    @apply w-full border border-neutral-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-terrakotta accent-terrakotta;
+  }
+  .input .label {
+    @apply block text-sm font-medium text-bark-500 mb-1;
+  }
+  .input .error-message {
+    @apply text-sm font-medium text-rust-900 mb-1;
   }
 }
 @layer utilities {

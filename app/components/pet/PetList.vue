@@ -93,6 +93,10 @@ const props = defineProps<{
   status?: string | null
 }>()
 
+// the async needs a different key for each time the component is used / the different configuration - for caching
+const cacheKey = computed(() =>
+  `pets-${props.limit ?? 'all'}-${props.status ?? 'any'}-${props.species ?? 'any'}`
+)
 
 // FILTER REFS
 const selectedSpecies = ref(props.species ?? null)
@@ -155,7 +159,7 @@ watch([selectedSpecies, selectedSize, selectedGender, goodWithChildren, goodWith
   currentPage.value = 1
 })
 
-const {data, error, refresh, pending} = await useAsyncData('pets', async () => {
+const {data, error, refresh, pending} = await useAsyncData(cacheKey.value, async () => {
     let query = supabase
       .from('animals')
       .select('*', {count: 'exact'})
@@ -219,4 +223,5 @@ function resetFilters() {
   goodWithChildren.value = false
   goodWithAnimals.value = false
 }
+
 </script>

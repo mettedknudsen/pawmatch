@@ -19,6 +19,7 @@ export type Database = {
           activity_level: number | null
           age_months: number | null
           breed: string | null
+          cage: string | null
           created_at: string | null
           description: string | null
           gender: string | null
@@ -27,7 +28,7 @@ export type Database = {
           grooming_level: number | null
           handling_tolerance: number | null
           id: string
-          image_url: string | null
+          images: string[] | null
           independence_level: number | null
           is_hypoallergenic: boolean | null
           is_neutered: boolean | null
@@ -44,6 +45,7 @@ export type Database = {
           activity_level?: number | null
           age_months?: number | null
           breed?: string | null
+          cage?: string | null
           created_at?: string | null
           description?: string | null
           gender?: string | null
@@ -52,7 +54,7 @@ export type Database = {
           grooming_level?: number | null
           handling_tolerance?: number | null
           id?: string
-          image_url?: string | null
+          images?: string[] | null
           independence_level?: number | null
           is_hypoallergenic?: boolean | null
           is_neutered?: boolean | null
@@ -69,6 +71,7 @@ export type Database = {
           activity_level?: number | null
           age_months?: number | null
           breed?: string | null
+          cage?: string | null
           created_at?: string | null
           description?: string | null
           gender?: string | null
@@ -77,7 +80,7 @@ export type Database = {
           grooming_level?: number | null
           handling_tolerance?: number | null
           id?: string
-          image_url?: string | null
+          images?: string[] | null
           independence_level?: number | null
           is_hypoallergenic?: boolean | null
           is_neutered?: boolean | null
@@ -96,29 +99,35 @@ export type Database = {
         Row: {
           animal_id: string | null
           created_at: string | null
+          created_by: string | null
+          guest_id: string
           id: string
+          meeting_type: string | null
           notes: string | null
           status: string | null
-          timeslot_id: string | null
-          user_id: string | null
+          timeslot_id: string
         }
         Insert: {
           animal_id?: string | null
           created_at?: string | null
+          created_by?: string | null
+          guest_id: string
           id?: string
+          meeting_type?: string | null
           notes?: string | null
           status?: string | null
-          timeslot_id?: string | null
-          user_id?: string | null
+          timeslot_id: string
         }
         Update: {
           animal_id?: string | null
           created_at?: string | null
+          created_by?: string | null
+          guest_id?: string
           id?: string
+          meeting_type?: string | null
           notes?: string | null
           status?: string | null
-          timeslot_id?: string | null
-          user_id?: string | null
+          timeslot_id?: string
         }
         Relationships: [
           {
@@ -129,15 +138,57 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "bookings_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_guest_id_fkey"
+            columns: ["guest_id"]
+            isOneToOne: false
+            referencedRelation: "guests"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "bookings_timeslot_id_fkey"
             columns: ["timeslot_id"]
             isOneToOne: false
             referencedRelation: "timeslots"
             referencedColumns: ["id"]
           },
+        ]
+      }
+      guests: {
+        Row: {
+          created_at: string | null
+          email: string | null
+          full_name: string
+          id: string
+          phone: string | null
+          profile_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email?: string | null
+          full_name: string
+          id?: string
+          phone?: string | null
+          profile_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string | null
+          full_name?: string
+          id?: string
+          phone?: string | null
+          profile_id?: string | null
+        }
+        Relationships: [
           {
-            foreignKeyName: "bookings_user_id_fkey"
-            columns: ["user_id"]
+            foreignKeyName: "guests_profile_id_fkey"
+            columns: ["profile_id"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
@@ -170,32 +221,96 @@ export type Database = {
       }
       timeslots: {
         Row: {
-          animal_id: string | null
+          capacity: number | null
+          created_at: string | null
           duration_minutes: number | null
           id: string
-          is_available: boolean | null
-          meeting_type: string | null
           starts_at: string
         }
         Insert: {
-          animal_id?: string | null
+          capacity?: number | null
+          created_at?: string | null
           duration_minutes?: number | null
           id?: string
-          is_available?: boolean | null
-          meeting_type?: string | null
           starts_at: string
         }
         Update: {
-          animal_id?: string | null
+          capacity?: number | null
+          created_at?: string | null
           duration_minutes?: number | null
           id?: string
-          is_available?: boolean | null
-          meeting_type?: string | null
           starts_at?: string
+        }
+        Relationships: []
+      }
+    }
+    Views: {
+      bookings_with_details: {
+        Row: {
+          animal_cage: string | null
+          animal_id: string | null
+          animal_name: string | null
+          animal_species: string | null
+          capacity: number | null
+          created_at: string | null
+          duration_minutes: number | null
+          guest_id: string | null
+          id: string | null
+          meeting_type: string | null
+          notes: string | null
+          slot_bookings: number | null
+          starts_at: string | null
+          status: string | null
+          timeslot_id: string | null
+          user_email: string | null
+          user_name: string | null
+          user_phone: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "timeslots_animal_id_fkey"
+            foreignKeyName: "bookings_animal_id_fkey"
+            columns: ["animal_id"]
+            isOneToOne: false
+            referencedRelation: "animals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_guest_id_fkey"
+            columns: ["guest_id"]
+            isOneToOne: false
+            referencedRelation: "guests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_timeslot_id_fkey"
+            columns: ["timeslot_id"]
+            isOneToOne: false
+            referencedRelation: "timeslots"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      todays_bookings: {
+        Row: {
+          animal_id: string | null
+          animal_name: string | null
+          animal_species: string | null
+          capacity: number | null
+          created_at: string | null
+          duration_minutes: number | null
+          id: string | null
+          meeting_type: string | null
+          notes: string | null
+          slot_bookings: number | null
+          starts_at: string | null
+          status: string | null
+          user_email: string | null
+          user_name: string | null
+          user_phone: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_animal_id_fkey"
             columns: ["animal_id"]
             isOneToOne: false
             referencedRelation: "animals"
@@ -203,9 +318,6 @@ export type Database = {
           },
         ]
       }
-    }
-    Views: {
-      [_ in never]: never
     }
     Functions: {
       [_ in never]: never

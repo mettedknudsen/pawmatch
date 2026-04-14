@@ -32,9 +32,9 @@ const variantClasses = computed(() => {
 
   const map = {
     primary: {
-      full: 'bg-terrakotta text-white',
-      bordered: 'bg-creme border border-terrakotta text-black',
-      plain: 'text-terrakotta',
+      full: 'bg-terrakotta text-white hover:bg-terrakotta-hover',
+      bordered: 'bg-creme border border-terrakotta text-black hover:text-terrakotta-hover',
+      plain: 'text-terrakotta hover:text-terrakotta-hover',
     },
     secondary: {
       full: 'bg-bark-300 text-black',
@@ -78,7 +78,7 @@ const sizes = {
 }
 
 const classes = computed(() => [
-  'inline-flex items-center justify-center rounded-xl font-medium transition-colors',
+  'inline-flex items-center justify-center rounded-lg font-medium transition-colors',
   'disabled:opacity-50 disabled:cursor-not-allowed',
   sizes[props.size ?? 'md'],
 ])

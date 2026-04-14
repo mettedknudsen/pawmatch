@@ -1,3 +1,5 @@
+import * as path from "node:path";
+
 export function useStorage() {
   const supabase = useSupabaseClient()
   function getImageUrl(path: string) {
@@ -11,11 +13,23 @@ export function useStorage() {
       .from('animals')
       .upload(filename, file, {
         cacheControl: '3600',
-        upsert: true
+        upsert: false
       })
     if (error) throw error
     return getImageUrl(data.path)
   }
+  // for multiple files
+  async function uploadImages(files: File[]) {
+    const uploads = files.map(file =>
+      uploadImage(file, `${Date.now()}-${file.name}`)
+    )
+    return Promise.all(uploads)
+  }
 
-  return { getImageUrl, uploadImage }
+  async function deleteImage(url: string){
+    if(!url) return
+    await supabase.storage.from('images').remove([url])
+  }
+
+  return { getImageUrl, uploadImage, uploadImages, deleteImage }
 }

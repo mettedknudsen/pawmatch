@@ -34,5 +34,35 @@ export function useFormat() {
 
     return `Har ventet ${diff.days} dage på et nyt hjem`
   }
-  return {age, timeInShelter}
+
+  function bookingDateTime(startsAt: string, duration: number) {
+    // getting start and end time for booking based on our arguments (danish time)
+    const start = Temporal.Instant.from(startsAt)
+      .toZonedDateTimeISO('Europe/Copenhagen')
+    const end = start.add({minutes: duration})
+
+    // three formats - date (full format) - time (the time to-from) - dayShort (smaller format for bookinglist)
+    return {
+      date: start.toLocaleString('da-DK', {
+        weekday: 'long',
+        day: 'numeric',
+        month:  'long',
+        year:'numeric',
+      }),
+      time: `${start.toLocaleString('da-DK', {
+        hour:'2-digit',
+        minute: '2-digit',
+      })}–${end.toLocaleString('da-DK', {
+        hour:'2-digit',
+        minute: '2-digit',
+      })}`,
+      dateShort: start.toLocaleString('da-DK', {
+        weekday: 'short',
+        day: 'numeric',
+        month: 'short',
+      }),
+    }
+  }
+  return {age, timeInShelter, bookingDateTime}
 }
+
