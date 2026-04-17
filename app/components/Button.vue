@@ -1,8 +1,10 @@
 <template>
-  <button :type="type ?? 'button'"
-          :disabled="disabled || loading"
-          :class="[classes,variantClasses]"
-          @click="emit('click', $event)"
+  <component :is="isLink ? NuxtLink : 'button'"
+  :to="to || undefined"
+  :disabled="!to ? (disabled || loading) : undefined"
+  :type="!to ? (type ?? 'button') : undefined"
+  :class="[classes,variantClasses]"
+  @click="emit('click', $event)"
   >
     <!-- loading -->
     <span v-if="loading" class="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
@@ -10,9 +12,11 @@
     <component :is="icon" v-else-if="icon" class="w-4 h-4" />
     <!-- content -->
     <slot />
-  </button>
+  </component>
 </template>
 <script setup lang="ts">
+import { NuxtLink } from '#components'
+
 const props = defineProps<{
   icon?: Component | string
   color?: 'primary' | 'secondary' |'success' | 'alert' | 'dark' | 'white'|'black'
@@ -20,9 +24,10 @@ const props = defineProps<{
   loading?: boolean
   disabled?: boolean
   variant?: 'full' | 'bordered' | 'plain',
-  type?: 'button' | 'submit' | 'reset'
+  type?: 'button' | 'submit' | 'reset',
+  to?: string | RouteLocationRaw | null
 }>()
-
+const isLink = computed(() => !!props.to)
 const emit = defineEmits<{
   click: [e: MouseEvent]
 }>()

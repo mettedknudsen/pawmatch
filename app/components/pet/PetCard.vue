@@ -8,7 +8,7 @@
       height="300"
       fit="cover"
       loading="lazy"
-      class="w-full object-cover"
+      class="w-full object-cover bg-neutral-200"
     />
     <div v-else class="w-full object-cover aspect-[1.33] flex items-center justify-center border border-b-neutral-400"
          :class="pet.species === 'dog' ? 'bg-bark-300 text-bark-500' : (pet.species === 'cat' ? 'bg-rust-500 text-rust-900 ' : 'bg-salvie-300 text-salvie-900')">

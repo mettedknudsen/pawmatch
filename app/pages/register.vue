@@ -45,7 +45,7 @@
       <Button type="submit" :loading="loading" color="primary" variant="full" :icon="UserSvg">
         Opret bruger
       </Button>
-      <Button type="button" @click="navigateTo('/login')" color="primary" variant="plain" >
+      <Button to="/login" color="primary" variant="plain" >
         Jeg har en bruger
       </Button>
       </div>

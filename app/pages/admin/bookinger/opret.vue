@@ -71,9 +71,8 @@
               @click="form.timeslot_id = slot.id"
             >
               {{ Temporal.Instant.from(slot.starts_at)
-              .toZonedDateTimeISO('Europe/Copenhagen')
-              .toLocaleString('da-DK', { hour: '2-digit', minute: '2-digit' }) }}
-
+              .toZonedDateTimeISO('Europe/Copenhagen' )
+              .toLocaleString('da-DK', {hour: '2-digit', minute: '2-digit'})}}
             </button>
           </div>
         </div>
@@ -90,7 +89,7 @@
         <Button type="submit" :loading="loading">
           Opret booking
         </Button>
-        <Button type="button" variant="bordered" color="dark" @click="navigateTo('/admin/bookinger')">
+        <Button variant="bordered" color="dark" to="/admin/bookinger">
           Annuller
         </Button>
       </div>
@@ -123,11 +122,6 @@ const form = reactive({
 
 const selectedDate = ref('')
 
-// Reset timeslot if selectedDate is changed
-watch([selectedDate], () => {
-  form.timeslot_id = ''
-} )
-
 // Animals (for the select)
 const { data: animals } = await useAsyncData('admin-animals-select', async () => {
   const { data } = await supabase
@@ -138,6 +132,10 @@ const { data: animals } = await useAsyncData('admin-animals-select', async () =>
   return data
 })
 
+// Reset timeslot if selectedDate is changed
+watch([selectedDate], () => {
+  form.timeslot_id = ''
+} )
 const {data: timeslots} = await useAsyncData('admin-timeslots', async () =>{
   if(!selectedDate.value) return []
 
@@ -159,7 +157,7 @@ const {data: timeslots} = await useAsyncData('admin-timeslots', async () =>{
 const availableTimeslots = computed(() =>
   timeslots.value?.filter(t => {
     const booked = t.bookings?.[0]?.count ?? 0
-    return booked < t.capacity
+    return booked < t.capacity  // our bookings(count) less that the timeslot capacity ?
   }) ?? []
 )
 
@@ -224,7 +222,7 @@ async function save(){
 
 const appointmentTypeBySpecies: Record<string, string[]> = {
   dog:['walk', 'visit', 'petting'],
-  cat:['visit', 'petting'],
+  cat:['visit','petting'],
   rabbit:['visit', 'petting']
 }
 

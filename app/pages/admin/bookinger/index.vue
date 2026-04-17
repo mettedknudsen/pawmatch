@@ -1,7 +1,7 @@
 <template>
     <div class="flex items-center justify-between mb-6">
       <h1 class="text-2xl font-bold text-bark-900">Bookinger</h1>
-        <Button @click="navigateTo('/admin/bookinger/opret')" :icon="PlusSvg">Tilføj booking</Button>
+        <Button to="/admin/bookinger/opret" :icon="PlusSvg">Tilføj booking</Button>
     </div>
       <BookingTable :bookings="bookings" :default-rows="12" :refresh="refresh"/>
 </template>

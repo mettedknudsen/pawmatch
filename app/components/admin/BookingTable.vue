@@ -20,10 +20,11 @@
           <td class="px-4 py-3 px-4 py-3 animate-pulse bg-neutral-300 max-lg:hidden border-3 border-light"></td>
           <td class="px-4 py-3 px-4 py-3 animate-pulse bg-neutral-300 border-3 border-light"></td>
       </tr>
-      <tr v-else v-for="booking in bookings" :key="booking.id">
-        <td class="px-4 py-3 font-medium text-bark-900 sm:inline-flex items-start space-x-3 align-top">
+      <tr v-else v-for="booking in bookings" :key="booking.id" class="align-top" :class="booking.status === 'cancelled' ? 'bg-rust-900/10' : booking.status === 'completed' ? 'bg-neutral-500/15' : '' ">
+        <td class="px-4 py-3 font-medium text-bark-900 space-x-3">
           <ConfirmedSvg class="text-salvie-700" v-if="booking.status === 'confirmed'"/>
           <CancelledSvg v-else-if="booking.status === 'cancelled'" class="text-rust-900" />
+          <ConfirmedSvg class="text-salvie-700" v-else/>
           <div>
             <NuxtLink :to="`/admin/dyr/${booking.animal_id}`" class="font-bold text-bark-500 max-md:inline hover:text-terrakotta">{{booking.animal_name}}</NuxtLink>
             <span class="mx-1 md:hidden" v-if="booking.animal_id">-</span>
@@ -54,11 +55,11 @@
             <p class="font-bold text-bark-500">{{ bookingDateTime(booking.starts_at, booking.duration_minutes).time }}</p>
           </div>
           <div class="flex gap-2 justify-end">
-            <Button variant="bordered" @click="navigateTo(`/admin/bookinger/${booking.id}`)" color="dark" size="sm" :icon="EditSvg" class="h-8"></Button>
-            <Button variant="bordered" @click="cancelBooking(booking.id)" color="alert" size="sm" class="bg-white hover:bg-rust-900 hover:text-white h-8"  v-if="booking.status === 'confirmed'">
+            <Button variant="bordered" :to="`/admin/bookinger/${booking.id}`" color="dark" size="sm" :icon="EditSvg" class="h-8"></Button>
+            <Button variant="bordered" @click="cancelBooking(booking.id)" color="alert" size="sm" class="bg-transparent hover:bg-rust-900 hover:text-white h-8"  v-if="booking.status === 'confirmed'">
               Aflys
             </Button>
-            <Button variant="bordered" @click="deleteBooking(booking.id)" color="alert" class="bg-white hover:bg-rust-900 hover:text-white [&_svg]:size-5 h-8" :icon="DeleteSvg"  v-else-if="booking.status === 'cancelled'">
+            <Button variant="bordered" @click="deleteBooking(booking.id)" color="alert" class="bg-transparent hover:bg-rust-900 hover:text-white [&_svg]:size-5 h-8" :icon="DeleteSvg"  v-else-if="booking.status === 'cancelled'">
             </Button>
           </div>
         </td>
@@ -73,7 +74,7 @@
       <Button
         :icon="PlusSvg"
         class="mt-3"
-        @click="navigateTo('admin/bookinger/opret')"
+        to="/admin/bookinger/opret"
       >
         Tilføj booking
       </Button>

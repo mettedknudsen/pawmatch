@@ -24,7 +24,6 @@
     --color-rust-500: #e4b1b1;
     --color-rust-300: #edd5ce;
 
-
   /* Replace nuxt ui colors */
   --color-primary: #dfa325;
   --color-ui-bg: #C4956A;
@@ -38,8 +37,26 @@
     @apply container mx-auto px-3 lg:px-5;
   }
   body {
-    @apply bg-creme;
+    @apply bg-creme antialiased;
   }
+  .formatting p,.formatting ul, .formatting ol, .formatting h1, .formatting h2 {
+    @apply !mt-0 !mb-2
+  }
+  .formatting h1, .formatting h2 {
+    @apply font-roboto;
+  }
+
+  .vc-weeks {
+    @apply !pt-10 lg:!pt-7;
+  }
+  .vc-highlights .vc-green {
+    @apply !hidden;
+  }
+  .vc-header .vc-weekdays {
+    @apply !text-bark-500;
+  }
+
+
 }
 @layer components {
   .loading-animate {

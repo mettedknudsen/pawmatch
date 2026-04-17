@@ -35,6 +35,21 @@ export function useFormat() {
     return `Har ventet ${diff.days} dage på et nyt hjem`
   }
 
+  function timeInShelterSimple(registeredAt: string) {
+    const start = Temporal.PlainDate.from(registeredAt)
+    const now = Temporal.Now.plainDateISO()
+
+    const diff = start.until(now, {largestUnit: 'years'})
+
+    if (diff.years > 0) return `${diff.years} år`
+    if (diff.months === 1) return `${diff.months} måned`
+    if (diff.months > 0) return `${diff.months} måneder`
+    if (diff.days === 1) return `${diff.days} dag`
+    if (diff.days === 0) return 'Første dag på internatet'
+
+    return `${diff.days} dage`
+  }
+
   function bookingDateTime(startsAt: string, duration: number) {
     // getting start and end time for booking based on our arguments (danish time)
     const start = Temporal.Instant.from(startsAt)
@@ -63,6 +78,6 @@ export function useFormat() {
       }),
     }
   }
-  return {age, timeInShelter, bookingDateTime}
+  return {age, timeInShelter, bookingDateTime, timeInShelterSimple}
 }
 

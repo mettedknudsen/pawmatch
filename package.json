@@ -18,18 +18,19 @@
     "@nuxt/ui": "^4.6.1",
     "@nuxtjs/supabase": "2.0.4",
     "@pinia/nuxt": "0.11.3",
-    "@popperjs/core": "^2.11.8",
     "@tailwindcss/vite": "^4.2.2",
     "@vee-validate/zod": "^4.15.1",
     "nuxt": "^4.4.2",
     "resend": "^6.9.4",
     "tailwindcss": "^4.2.2",
     "temporal-polyfill": "^0.3.2",
-    "v-calendar": "^2.4.2",
     "vee-validate": "^4.15.1",
     "vite-svg-loader": "^5.1.1",
     "vue": "^3.5.30",
     "vue-router": "^5.0.4",
     "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@yuta-inoue-ph/nuxt-vcalendar": "^1.1.4"
   }
 }

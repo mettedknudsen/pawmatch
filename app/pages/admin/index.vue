@@ -23,7 +23,7 @@
     <section class="my-10">
       <div class="flex items-center justify-between mb-6">
       <h3 class="text-xl text-bark-500">Bookinger i dag</h3>
-        <Button variant="bordered" class="text-terrakotta hover:bg-terrakotta hover:text-white" size="sm" @click="navigateTo('/admin/bookinger/')">Se alle bookinger</Button>
+        <Button variant="bordered" class="text-terrakotta hover:bg-terrakotta hover:text-white" size="sm" to="/admin/bookinger">Se alle bookinger</Button>
       </div>
 
       <BookingTable :loading="loading" :bookings="todaysBookings" :default-rows="3"  :refresh="refresh"/>

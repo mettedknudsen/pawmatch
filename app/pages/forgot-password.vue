@@ -17,7 +17,7 @@
         <Button type="submit" :loading="loading" color="primary" variant="full" >
           Nulstil kodeord
         </Button>
-        <Button type="button" @click="navigateTo('/login')" color="primary" variant="plain" >
+        <Button type="button" to="/login" color="primary" variant="plain" >
           Tilbage til login
         </Button>
       </div>

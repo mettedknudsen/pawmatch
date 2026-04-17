@@ -71,7 +71,7 @@
 
   </div>
   </template>
-  <PetGrid :pets="pets" :loading="pending" @reset="resetFilters"/>
+  <PetGrid :pets="pets" :loading="pending" @reset="resetFilters" :extra-class="!filters ? 'xl:max-2xl:[&>*:last-child]:hidden' : '' "/>
   <Pagination
     v-if="pages > 1 && paginate"
     v-model="currentPage"

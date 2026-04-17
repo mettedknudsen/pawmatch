@@ -15,7 +15,7 @@
           <WarningSvg />
           <span>Booking er aflyst</span>
         </div>
-        <Button variant="bordered" color="dark" @click="navigateTo('/admin/bookinger')">
+        <Button variant="bordered" color="dark" to="/admin/bookinger">
           Tilbage
         </Button>
       </div>
@@ -75,7 +75,7 @@
 </template>
   <div v-else class="h-80 flex flex-col items-center justify-center space-y-4">
   <p>Ingen booking fundet.</p>
-    <Button @click="navigateTo('/admin/bookinger')">Gå tilbage</Button>
+    <Button to="/admin/bookinger">Gå tilbage</Button>
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
     <div class="flex items-center justify-between mb-6">
       <h1 class="text-2xl font-bold text-bark-900">Dyr</h1>
-        <Button :icon="PlusSvg" @click="navigateTo('/admin/dyr/opret')">Tilføj dyr</Button>
+        <Button :icon="PlusSvg" to="/admin/dyr/opret">Tilføj dyr</Button>
     </div>
 
     <div class="bg-white rounded-2xl border border-neutral-200 overflow-hidden">
@@ -48,7 +48,7 @@
             <p v-if="animal.next_booking_at" class="text-xs">Næste booking: <br> {{bookingDateTime(animal.next_booking_at, 30).dateShort}} <br> {{bookingDateTime(animal.next_booking_at, 30).time}} </p>
           </td>
           <td class="px-4 py-3 flex gap-2 justify-end">
-            <Button variant="bordered" color="dark" @click="navigateTo(`/admin/dyr/${animal.id}`)" size="sm" :icon="EditSvg">Rediger</Button>
+            <Button variant="bordered" color="dark" :to="`/admin/dyr/${animal.id}`" size="sm" :icon="EditSvg">Rediger</Button>
 
             <Button variant="bordered" color="alert" size="sm" @click="deleteAnimal(animal.id)" class="bg-white hover:bg-rust-900 hover:text-white">
               Slet

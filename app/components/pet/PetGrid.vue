@@ -1,5 +1,5 @@
 <template>
-  <section class="md:grid grid-cols-12 place-items-stretch md:gap-4 space-y-4">
+  <section class="pet-grid md:grid grid-cols-12 place-items-stretch md:gap-4 space-y-4" :class="extraClass">
 <!--    loading -->
     <div v-if="loading" v-for="n in 6" class="md:col-span-6 xl:col-span-4 2xl:col-span-3 h-130 rounded-xl loading-animate"></div>
 <!--    output -->
@@ -31,6 +31,7 @@ import type {Animal} from '~/types'
 defineProps<{
   pets: Animal[]
   loading?: boolean
+  extraClass?: string
 }>()
 
 </script>

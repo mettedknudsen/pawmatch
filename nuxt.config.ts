@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     '@nuxt/icon',
     '@nuxt/eslint',
     '@nuxt/ui',
+    '@yuta-inoue-ph/nuxt-vcalendar'
   ],
   ui: {
     colorMode: false
@@ -31,6 +32,11 @@ export default defineNuxtConfig({
     optimizeDeps: {
       include: [
         'temporal-polyfill',
+        '@nuxt/ui > prosemirror-state',
+        '@nuxt/ui > prosemirror-transform',
+        '@nuxt/ui > prosemirror-model',
+        '@nuxt/ui > prosemirror-view',
+        '@nuxt/ui > prosemirror-gapcursor',
       ]
     },
     plugins: [

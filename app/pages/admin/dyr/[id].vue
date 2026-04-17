@@ -113,7 +113,10 @@
       <!-- Description -->
       <div class="input">
         <label class="label mb-1">Beskrivelse</label>
-        <UTextarea v-model="form.description" rows="4" class="w-full" placeholder="Skriv en beskrivelse her"/>
+
+        <UEditor v-slot="{ editor }" v-model="form.description" content-type="json" class="w-full py-2 border border-neutral-300 rounded-xl min-h-[150px]" :placeholder="{ placeholder: 'Skriv en beskrivelse her...', mode: 'firstLine' }">
+          <UEditorToolbar class="border-b border-neutral-300 mb-3 pb-1 px-4" :editor="editor" :items="toolbarItems"/>
+        </UEditor>
       </div>
 
       <!-- Checkboxes -->
@@ -138,6 +141,8 @@
 </template>
 
 <script setup lang="ts">
+import type { EditorToolbarItem } from '@nuxt/ui'
+
 definePageMeta({ layout: 'admin' })
 const route  = useRoute()
 const supabase = useSupabaseClient()
@@ -166,14 +171,25 @@ const form = reactive({
   is_neutered:false
 })
 
-// Getting the animal by id | if not in edit page
+const toolbarItems: EditorToolbarItem[] = [
+  { kind: 'mark', mark: 'bold', icon: 'i-lucide-bold' },
+  { kind: 'mark', mark: 'italic', icon: 'i-lucide-italic' },
+  { kind: 'heading', level: 1, icon: 'i-lucide-heading-1' },
+  { kind: 'heading', level: 2, icon: 'i-lucide-heading-2' },
+  { kind: 'bulletList', icon: 'i-lucide-list' },
+  { kind: 'orderedList', icon: 'i-lucide-list-ordered' },
+  { kind: 'blockquote', icon: 'i-lucide-quote' },
+  { kind: 'link', icon: 'i-lucide-link' }
+]
+
+// Getting the animal by id | if not on add page
 if (!isNew) {
   const { data } = await supabase
     .from('animals')
     .select('*')
     .eq('id', route.params.id)
     .single()
-  console.log(data)
+  // console.log(data)
   if (data) Object.assign(form, data)
 }
 

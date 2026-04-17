@@ -25,7 +25,7 @@
         <Button type="submit" :loading="loading" color="primary" variant="full" :icon="UserSvg" >
           Log ind
         </Button>
-        <Button type="button" @click="navigateTo('/register')" color="primary" variant="bordered" class="ml-3">
+        <Button to="/register" color="primary" variant="bordered" class="ml-3">
           Opret bruger
         </Button>
         </div>

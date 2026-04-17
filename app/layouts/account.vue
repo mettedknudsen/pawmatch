@@ -5,7 +5,7 @@
     </NuxtLink>
     <slot/>
     <div class="flex justify-center">
-      <Button type="button" @click="navigateTo('/')" color="dark" variant="plain" :icon="BackSvg" class="mt-5 hover:text-terrakotta-hover" >
+      <Button to="/" color="dark" variant="plain" :icon="BackSvg" class="mt-5 hover:text-terrakotta-hover" >
         Gå tilbage til forsiden
       </Button>
     </div>
