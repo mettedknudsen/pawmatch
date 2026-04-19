@@ -52,8 +52,7 @@ export function useFormat() {
 
   function bookingDateTime(startsAt: string, duration: number) {
     // getting start and end time for booking based on our arguments (danish time)
-    const start = Temporal.Instant.from(startsAt)
-      .toZonedDateTimeISO('Europe/Copenhagen')
+    const start = Temporal.Instant.from(startsAt).toZonedDateTimeISO('Europe/Copenhagen')
     const end = start.add({minutes: duration})
 
     // three formats - date (full format) - time (the time to-from) - dayShort (smaller format for bookinglist)
@@ -61,7 +60,7 @@ export function useFormat() {
       date: start.toLocaleString('da-DK', {
         weekday: 'long',
         day: 'numeric',
-        month:  'long',
+        month:'long',
         year:'numeric',
       }),
       time: `${start.toLocaleString('da-DK', {

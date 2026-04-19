@@ -94,7 +94,7 @@ const items = ref<DropdownMenuItem[]>([
       icon: 'i-lucide-heart',
       onSelect(e: Event){
         e.preventDefault()
-        navigateTo('/favoritter')
+        navigateTo('/bruger/favoritter')
       }
     },
     {
@@ -102,7 +102,7 @@ const items = ref<DropdownMenuItem[]>([
       icon: 'i-lucide-calendar',
       onSelect(e: Event){
         e.preventDefault()
-        navigateTo('/bookinger')
+        navigateTo('/bruger/bookinger')
       },
     },
   ] : []),

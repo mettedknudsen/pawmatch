@@ -1,10 +1,10 @@
 <template>
   <component :is="isLink ? NuxtLink : 'button'"
   :to="to || undefined"
-  :disabled="!to ? (disabled || loading) : undefined"
-  :type="!to ? (type ?? 'button') : undefined"
+  :disabled="!isLink ? isDisabled : undefined"
+  :type="!isLink ? (type ?? 'button') : undefined"
   :class="[classes,variantClasses]"
-  @click="emit('click', $event)"
+  @click="!isLink && !isDisabled ? emit('click', $event) : undefined"
   >
     <!-- loading -->
     <span v-if="loading" class="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
@@ -28,6 +28,7 @@ const props = defineProps<{
   to?: string | RouteLocationRaw | null
 }>()
 const isLink = computed(() => !!props.to)
+const isDisabled = computed(() => props.disabled || props.loading)
 const emit = defineEmits<{
   click: [e: MouseEvent]
 }>()
@@ -83,7 +84,7 @@ const sizes = {
 }
 
 const classes = computed(() => [
-  'inline-flex items-center justify-center rounded-lg font-medium transition-colors',
+  'inline-flex items-center justify-center rounded-lg font-medium transition',
   'disabled:opacity-50 disabled:cursor-not-allowed',
   sizes[props.size ?? 'md'],
 ])
