@@ -30,9 +30,6 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/css/main.css'],
   vite: {
-    ssr: {
-      noExternal: ['vue']
-    },
     optimizeDeps: {
       include: [
         'temporal-polyfill',

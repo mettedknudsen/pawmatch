@@ -4,7 +4,7 @@
       <!--  Content  -->
       <section class="col-span-5">
         <div class="hidden md:flex md:space-x-7 items-center max-md:justify-between mb-10 max-lg:mt-10">
-          <h1 class="text-2xl font-bold font-roboto" v-if="pet.name">{{ pet.name }}</h1>
+          <h1 class="text-2xl font-bold font-inter" v-if="pet.name">{{ pet.name }}</h1>
 
           <div class="h-10 relative flex items-center justify-center p-1" v-if="pet.status === 'available'">
             <div class="bg-rust-500/80 rounded-xl animate-pulse absolute inset-0">
@@ -27,7 +27,7 @@
       <!--  Image  -->
       <div class="col-span-6 col-start-7 max-lg:order-first">
         <div class="flex md:space-x-7 items-center max-md:justify-between mb-10 md:hidden">
-          <h1 class="text-2xl font-bold font-roboto" v-if="pet.name">{{ pet.name }}</h1>
+          <h1 class="text-2xl font-bold font-inter" v-if="pet.name">{{ pet.name }}</h1>
           <div class="h-10 relative flex items-center justify-center p-1">
             <div class="bg-rust-500/80 rounded-xl animate-pulse absolute inset-0" v-if="pet.status === 'available'">
             </div>
@@ -107,7 +107,7 @@
     <div class="bg-white pb-10">
       <section class="pawmatch-container max-md:py-5 py-10 lg:grid grid-cols-2 gap-4">
         <div class="flex items-center justify-between mb-5 col-span-2">
-          <h2 class="text-lg font-bold font-roboto">Flere informationer<span v-if="pet.name" class="hidden lg:inline"> om {{ pet.name }}</span>
+          <h2 class="text-lg font-bold font-inter">Flere informationer<span v-if="pet.name" class="hidden lg:inline"> om {{ pet.name }}</span>
           </h2>
           <div class="h-10 relative flex items-center justify-center p-1" v-if="pet.status === 'available'">
             <div class="bg-rust-500/80 rounded-xl animate-pulse absolute inset-0">

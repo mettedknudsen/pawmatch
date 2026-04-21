@@ -6,7 +6,7 @@
         <p class="text-sm leading-[2] pr-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
       </section>
       <nav class="col-span-1 lg:col-span-2 px-3 max-lg:order-4 max-lg:w-1/2" v-if="footerContent[0]">
-        <h3 class="text-white/80 font-bold uppercase font-roboto">{{footerContent[0].heading}}</h3>
+        <h3 class="text-white/80 font-bold uppercase font-inter">{{footerContent[0].heading}}</h3>
         <ul>
           <li v-for="item in footerContent[0].links" :key="item.to" class="py-2">
             <NuxtLink
@@ -20,8 +20,8 @@
           </li>
         </ul>
       </nav>
-      <nav class="col-span-1 lg:col-span-2 px-3 max-lg:order-5 max-lg:w-1/2" v-if="footerContent[1]">
-        <h3 class="text-white/80 font-bold uppercase font-roboto">{{footerContent[1].heading}}</h3>
+      <nav class="col-span-1 lg:col-span-2 px-3 max-lg:order-5 max-lg:w-1/2 max-md:text-right" v-if="footerContent[1]">
+        <h3 class="text-white/80 font-bold uppercase font-inter">{{footerContent[1].heading}}</h3>
         <ul>
           <li v-for="item in footerContent[1].links" :key="item.to" class="py-2">
             <NuxtLink
@@ -34,18 +34,17 @@
         </ul>
       </nav>
       <article class="col-span-1 lg:col-span-4 xl:col-span-3 px-3 max-lg:order-3 max-lg:w-full" v-if="footerContent[2]">
-        <div class="font-roboto flex items-center lg:space-x-5 max-lg:justify-between">
+        <div class="font-inter flex items-center lg:space-x-5 max-lg:justify-between">
           <h3 class="text-white/80 font-bold uppercase">{{footerContent[2].heading}}</h3>
           <span class="px-3 py-1 rounded-xl border text-xs" :class="openNow ? 'bg-salvie-700/20 text-salvie-500' : 'bg-rust-900/20 text-rust-500'">{{ openNow ? 'Åbent nu' : 'Lukket' }}</span>
         </div>
-        <ul class="mt-3">
+        <ul class="mt-3 max-w-[]">
           <li v-for="(item, index) in footerContent[2].openingHours" :key="index" class="py-2 flex justify-between">
             <span>{{ item.label }}</span>
             <span class="text-white/80 font-bold">{{ item.hours }}</span>
           </li>
         </ul>
         </article>
-    <!--   new row   -->
       <article class="col-span-1 lg:col-span-4 xl:col-span-3 xl:col-start-2 px-3 max-lg:w-full max-lg:order-2">
         <p class="text-sm leading-[2] max-lg:-order-1">
           Grenaa Dyreinternat<br>

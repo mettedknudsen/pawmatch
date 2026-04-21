@@ -116,9 +116,11 @@ const cacheKey = computed(() =>
 const selectedSpecies = ref((route.query.species || props.species) ?? null)
 const selectedSize = ref<string | null>(null)
 const selectedGender = ref<string | null>(null)
+const selectedStatus = ref<string | null>(route.query.status ?? null)
 const goodWithChildren = ref(false)
 const goodWithAnimals = ref(false)
 const isNeutered = ref(false)
+const isHypoallergenic = ref(false)
 const currentPage = ref(1)
 
 const pageSize = props.paginate ?? 12
@@ -154,6 +156,15 @@ const filterGroups = [
       { value: 'male', label: 'Han' },
       { value: 'female', label: 'Hun' },
     ]
+  },
+  {
+    label: 'Adoptionsstatus',
+    model: selectedStatus,
+    options: [
+      { value: null, label: 'Alle' },
+      { value: 'available', label: 'Ledige' },
+      { value: 'adopted', label: 'Adopteret' },
+    ]
   }
 ]
 
@@ -169,12 +180,16 @@ const checkboxFilters= [
   {
     label: 'Kastreret / steriliseret',
     model: isNeutered
+  },
+  {
+    label: 'Allergivenlig',
+    model: isHypoallergenic
   }
 ]
 
 
 // watch for value changes - set currentpage to 1
-watch([selectedSpecies, selectedSize, selectedGender, goodWithChildren, goodWithAnimals, isNeutered], () => {
+watch([selectedSpecies, selectedSize, selectedGender,selectedStatus, goodWithChildren, goodWithAnimals, isNeutered,isHypoallergenic], () => {
   currentPage.value = 1
 })
 
@@ -201,9 +216,11 @@ const {data, error, refresh, pending} = await useAsyncData(cacheKey.value, async
 
     // add filters
     if (selectedSpecies.value) query = query.eq('species', selectedSpecies.value)
+    if (selectedStatus.value) query = query.eq('status', selectedStatus.value)
     if (selectedSize.value) query = query.eq('size', selectedSize.value)
     if (selectedGender.value) query = query.eq('gender', selectedGender.value)
     if (isNeutered.value) query = query.eq('is_neutered', true)
+    if (isHypoallergenic.value) query = query.eq('is_hypoallergenic', true)
     if (goodWithAnimals.value) query = query.eq('good_with_animals', true)
     if (goodWithChildren.value) query = query.eq('good_with_children', true)
 
@@ -212,7 +229,7 @@ const {data, error, refresh, pending} = await useAsyncData(cacheKey.value, async
     return {animals: data as Animal[], total: count ?? 0}
   },
   // watch - get data if values changes
-  {watch: [currentPage, selectedSpecies, selectedSize, selectedGender, goodWithChildren, goodWithAnimals, isNeutered]}
+  {watch: [currentPage, selectedSpecies, selectedSize, selectedGender,selectedStatus, goodWithChildren, goodWithAnimals, isNeutered,isHypoallergenic]}
 )
 
 
@@ -231,18 +248,22 @@ const hasActiveFilters = computed(() =>
   selectedSpecies.value ||
   selectedSize.value ||
   selectedGender.value ||
+  selectedStatus.value ||
   goodWithChildren.value ||
   goodWithAnimals.value ||
-  isNeutered.value
+  isNeutered.value ||
+  isHypoallergenic.value
 )
 
 function resetFilters() {
   selectedSpecies.value = null
   selectedSize.value = null
   selectedGender.value = null
+  selectedStatus.value = null
   goodWithChildren.value = false
   goodWithAnimals.value = false
   isNeutered.value = false
+  isHypoallergenic.value = false
   isOpen.value = false
 }
 

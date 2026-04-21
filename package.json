@@ -9,7 +9,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "typecheck": "nuxt typecheck",
-    "db:types": "supabase gen types typescript --project-id rlqzvlavdwokmnrsdygx --schema public > app/types/database.types.ts"
+    "db:types": "supabase gen types typescript --project-id rlqzvlavdwokmnrsdygx --schema public > app/types/database.types.ts",
+    "clearcache": "rm -rf .nuxt .output .cache node_modules/.cache"
   },
   "dependencies": {
     "@nuxt/eslint": "1.15.2",

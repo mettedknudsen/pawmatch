@@ -5,6 +5,7 @@
 @theme static {
     --font-roboto: 'Roboto', sans-serif;
     --font-sans: 'Public Sans', sans-serif;
+    --font-inter: 'Inter', sans-serif;
 
     /*Colors*/
     --color-terrakotta-hover: #a57e5a;
@@ -36,7 +37,7 @@
 
 @layer base {
   .pawmatch-container {
-    @apply container mx-auto px-3 lg:px-5;
+    @apply container sm:mx-auto px-3 lg:px-5;
   }
   body {
     @apply bg-creme !antialiased;
@@ -45,7 +46,7 @@
     @apply !mt-0 !mb-2 leading-[1.4]
   }
   .formatting h3, .formatting h2 {
-    @apply font-roboto font-bold;
+    @apply font-inter font-bold;
   }
 
   .vc-pane-layout .vc-pane{@apply !max-w-[700px] !w-full !mx-auto;}
@@ -75,7 +76,7 @@
     @apply bg-salvie-700 text-white fixed top-0 left-0 max-sm:right-10 h-screen z-30 transition-transform duration-300 lg:translate-x-0
   }
   .tags-container {
-    @apply flex items-start flex-wrap mb-4 space-x-2 gap-y-2 md:min-h-[68px] max-md:w-3/4
+    @apply flex items-start flex-wrap mb-4 space-x-2 gap-y-2 md:min-h-[68px] max-md:w-3/4 lowercase
   }
   .tag {
     @apply rounded-2xl p-1 px-3 border text-xs bg-gray-200 text-gray-500

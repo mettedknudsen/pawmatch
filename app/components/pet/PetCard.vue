@@ -16,22 +16,22 @@
     </div>
     <article class="card-info">
       <div>
-        <h3 class="font-roboto font-bold text-bark-900">{{ pet.name }}
+        <h3 class="font-inter font-bold text-bark-900">{{ pet.name }}
           <template v-if="pet.breed">
             <span class="px-2 text-rust-900">|</span>
             <span class="font-normal text-sm">{{pet.breed}}</span>
           </template>
         </h3>
-        <p v-if="pet.created_at" class="text-neutral-500 text-sm">{{ timeInShelter(pet.created_at) }}</p>
+        <p v-if="pet.created_at" class="text-neutral-500 text-xs">{{ timeInShelter(pet.created_at) }}</p>
       </div>
-      <div class="flex items-center text-sm">
-        <p v-if="pet.gender" class="items-center space-x.pz flex">
+      <div class="flex items-center text-sm py-2">
+        <p v-if="pet.gender" class="items-center flex">
           <PetGender :gender="pet.gender" class="size-6"/>
           <span>
             {{ gender[pet.gender] }}
             </span>
         </p>
-        <span class="text-neutral-300 text-2xl">-</span>
+        <span class="text-neutral-300">-</span>
         <p v-if="pet.age_months">{{ age(pet.age_months, pet.created_at) }}</p>
       </div>
       <div class="tags-container">

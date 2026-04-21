@@ -1,16 +1,17 @@
 <template>
   <main class="mb-10 lg:mb-20">
     <Hero />
-    <div class="pawmatch-container">
-      <div class="flex items-center justify-between my-3">
-      <h2 class="font-medium font-roboto text-bark-500 lg:text-lg">Find dit nye kæledyr</h2>
-      <Button to="/dyr" :icon="RightSvg" variant="plain" color="dark" icon-position="right" class="hover:text-terrakotta-hover lg:text-base font-roboto">Se alle</Button>
-      </div>
-      <PetList :limit="4" :filters="false" status="available" />
-    </div>
+    <AnimalGrid/>
+    <CtaBanner />
+    <TextImage/>
+    <SpeciesSelect/>
   </main>
 </template>
 <script setup lang="ts">
-import RightSvg from '~/assets/images/icons/arrow-right.svg?component'
+
 import Hero from "../components/blocks/Hero.vue";
+import AnimalGrid from "../components/blocks/AnimalGrid.vue";
+import CtaBanner from "../components/blocks/CtaBanner.vue";
+import TextImage from "../components/blocks/TextImage.vue";
+import SpeciesSelect from "../components/blocks/SpeciesSelect.vue";
 </script>

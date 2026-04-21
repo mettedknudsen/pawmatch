@@ -8,7 +8,7 @@
             <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <h1 class="text-2xl font-roboto font-bold text-bark-900 mb-2">Booking bekræftet!</h1>
+        <h1 class="text-2xl font-inter font-bold text-bark-900 mb-2">Booking bekræftet!</h1>
         <p class="mb-8  text-neutral-500">Vi glæder os til at se dig.</p>
 
         <div class="bg-creme/75 rounded-2xl p-3 md:p-5 text-left space-y-3 text-sm mb-8">
@@ -54,7 +54,7 @@
     <!--  booking flow  -->
     <template v-else>
       <div class="col-span-12">
-        <div class="font-roboto md:text-xl flex items-center justify-center pt-5" v-if="petId && pet">
+        <div class="font-inter md:text-xl flex items-center justify-center pt-5" v-if="petId && pet">
           <div class="flex items-center px-2 lg:px-5">
             <span :class="currentStep === 1 ? 'bg-terrakotta text-white' : 'bg-salvie-700/80 text-white'" class="size-5 md:size-8 flex items-center justify-center rounded-full font-bold">1</span>
             <span :class="currentStep === 1 ? 'text-bark-500/80 font-bold' : 'text-bark-500/50'" class="ml-2">Vælg dyr</span>
@@ -72,12 +72,12 @@
     <aside class="col-span-4 xl:col-span-3 self-start">
       <div class="bg-white shadow-lg rounded-lg p-5 lg:py-10">
           <template v-if="petId && pet">
-            <h2 class="text-2xl text-bark-500 font-bold font-roboto mb-3">Dit valgte dyr</h2>
+            <h2 class="text-2xl text-bark-500 font-bold font-inter mb-3">Dit valgte dyr</h2>
             <p class="text-bark-500/90 mb-2 font-bold">{{pet.name}}</p>
             <p class="text-bark-500/90 mb-10 capitalize">{{species[pet.species]}} <span class="px-1">-</span> {{gender[pet.gender]}}</p>
           </template>
           <div class="formatting text-bark-500/90">
-            <h2 class="text-2xl text-bark-500 font-bold font-roboto mb-3">Vælg besøgstype</h2>
+            <h2 class="text-2xl text-bark-500 font-bold font-inter mb-3">Vælg besøgstype</h2>
             <p class="text-sm">
               Vi tilbyder 3 typer besøg
             </p>
@@ -112,7 +112,7 @@
        </div>
     </aside>
     <main class="col-span-8 xl:col-span-9 bg-white shadow-lg rounded-lg py-10 lg:px-15 mb-10" v-if="currentStep > 1">
-      <h1 class="text-2xl text-bark-500 font-bold font-roboto mb-8 max-lg:px-5">Vælg dato og tid</h1>
+      <h1 class="text-2xl text-bark-500 font-bold font-inter mb-8 max-lg:px-5">Vælg dato og tid</h1>
       <!-- Calendar  -->
       <client-only>
         <!-- calender -->

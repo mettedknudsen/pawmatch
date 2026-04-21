@@ -5,7 +5,7 @@
         <h1 class="text-2xl mb-2 text-bark-900 font-bold">
           Booking
         </h1>
-        <p class="text-neutral-400 mb-8 text-sm font-roboto">{{ booking.id }}</p>
+        <p class="text-neutral-400 mb-8 text-sm font-inter">{{ booking.id }}</p>
       </section>
       <div class="flex items-center gap-2 max-md:mb-5">
         <Button v-if="booking.status === 'confirmed'" variant="full" color="alert" :loading="loading" @click="cancelBooking">
@@ -23,7 +23,7 @@
 
     <div class="grid grid-cols-2 gap-4">
       <article class="col-span-2 md:col-span-1 bg-white rounded-lg border border-neutral-200 p-6">
-        <h3 class="uppercase text-neutral-400 text-sm font-roboto mb-1">tidspunkt</h3>
+        <h3 class="uppercase text-neutral-400 text-sm font-inter mb-1">tidspunkt</h3>
         <p class="text-lg text-bark-900 font-medium">{{ date }}</p>
         <p class="text-neutral-500 mt-1">{{ time }}</p>
         <div class="mt-3 flex items-center pt-3 gap-2">
@@ -33,14 +33,14 @@
       </article>
 
       <article class="col-span-2 md:col-span-1 bg-white rounded-lg border border-neutral-200 p-6">
-        <h3 class="uppercase text-neutral-400 text-sm font-roboto mb-1">gæst</h3>
+        <h3 class="uppercase text-neutral-400 text-sm font-inter mb-1">gæst</h3>
         <p class="text-lg font-medium text-bark-900">{{ booking.user_name }}</p>
         <p class="text-sm text-neutral-500 mt-1" v-if="booking.user_email">Email: <a class="hover:text-terrakotta" :href="`mailto:${booking.user_email}`">{{ booking.user_email }}</a></p>
         <p class="text-sm text-neutral-500 mt-1" v-if="booking.user_phone">Telefon: <a class="hover:text-terrakotta" :href="`tel:${booking.user_phone}`">{{ booking.user_phone }}</a></p>
       </article>
 
       <article class="col-span-2 md:col-span-1 bg-white rounded-lg border border-neutral-200 p-6" v-if="booking.animal_id">
-        <h3 class="uppercase text-neutral-400 text-sm font-roboto mb-1">dyr</h3>
+        <h3 class="uppercase text-neutral-400 text-sm font-inter mb-1">dyr</h3>
         <NuxtLink :to="`/admin/dyr/${booking.animal_id}`" class="text-lg font-medium text-bark-900 hover:text-terrakotta">{{ booking.animal_name }}</NuxtLink>
         <p class="text-sm text-neutral-500 mt-1">{{species[booking.animal_species]}}</p>
 
@@ -49,7 +49,7 @@
         </div>
       </article>
       <article class="col-span-2 md:col-span-1 bg-white rounded-lg border border-neutral-200 p-6">
-        <h3 class="uppercase text-neutral-400 text-sm font-roboto mb-1">noter</h3>
+        <h3 class="uppercase text-neutral-400 text-sm font-inter mb-1">noter</h3>
         <div class="input">
           <textarea v-model="notes" rows="4" placeholder="Fx særlige ønsker eller bemærkninger" :disabled="booking.status === 'cancelled'" />
         </div>
