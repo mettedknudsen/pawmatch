@@ -40,37 +40,37 @@ const variantClasses = computed(() => {
 
   const map = {
     primary: {
-      full: 'bg-terrakotta text-white hover:bg-terrakotta-hover',
+      full: 'bg-terrakotta text-white hover:bg-terrakotta-hover border border-terrakotta',
       bordered: 'bg-creme border border-terrakotta text-black hover:text-terrakotta-hover',
       plain: 'text-terrakotta hover:text-terrakotta-hover',
     },
     secondary: {
-      full: 'bg-bark-300 text-black',
+      full: 'bg-bark-300 text-black border border-bark-300',
       bordered: 'border border-bark-300 text-black',
       plain: 'text-black',
     },
     success: {
-      full: 'bg-salvie-900 text-white',
+      full: 'bg-salvie-900 text-white border border-salvie-900',
       bordered: 'bg-salvie-500 border border-salvie-900 text-salvie-900',
       plain: 'text-salvie-900',
     },
     alert: {
-      full: 'bg-rust-900 text-white',
+      full: 'bg-rust-900 text-white border border-rust-900',
       bordered: 'bg-rust-300 border border-rust-900 text-rust-900',
       plain: 'text-rust-900',
     },
     dark: {
-      full: 'bg-bark-500 text-white',
+      full: 'bg-bark-500 text-white border border-bark',
       bordered: 'border border-bark-900 text-bark-900 hover:text-white hover:bg-bark-500',
       plain: 'text-bark-900',
     },
     white: {
-      full: 'bg-white text-black',
+      full: 'bg-white text-black border border-white',
       bordered: 'border border-white text-white',
       plain: 'text-white',
     },
     black: {
-      full: 'bg-black text-white',
+      full: 'bg-black text-white border border-black',
       bordered: 'border border-black text-black',
       plain: 'text-black',
     },

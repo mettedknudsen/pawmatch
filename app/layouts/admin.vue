@@ -13,7 +13,7 @@
       </div>
 
       <!--   menu   -->
-      <nav class="space-y-2 flex-1">
+      <nav class="space-y-2 flex-1 mb-10">
         <NuxtLink v-for="item in
          [
             {to: '/admin', text: 'Overblik'},
@@ -47,7 +47,7 @@
 <script setup lang="ts">
 import LogoutSvg from '~/assets/images/icons/logout.svg?component'
 import CloseIcon from '~/assets/images/icons/close.svg?component'
-import MenuIcon from '~/assets/images/icons/Menu.svg?component'
+import MenuIcon from '~/assets/images/icons/menu.svg?component'
 import {useAdminMenu} from "../composables/useAdminMenu";
 
 const isOpen = useAdminMenu()

@@ -1,11 +1,11 @@
 <template>
-  <footer class="bg-bark-900 pt-5 lg:pt-15 text-creme/80 mt-20">
-    <div class="pawmatch-container flex flex-col gap-y-10 md:grid col-span-2 lg:grid-cols-12 md:gap-x-4 max-md:py-5">
-      <section class="col-span-2 lg:col-span-4 xl:col-span-3 xl:col-start-2 px-3 max-lg:order-first">
+  <footer class="bg-bark-900 pt-5 md:pt-15 text-creme/80">
+    <div class="pawmatch-container flex flex-wrap gap-y-7 md:grid col-span-2 lg:grid-cols-12 md:gap-x-4 max-md:py-5">
+      <section class="col-span-2 max-lg:w-full lg:col-span-4 xl:col-span-3 xl:col-start-2 px-3 max-lg:order-first">
         <h3 class="font-bold mb-2 text-white/80">PawMatch</h3>
         <p class="text-sm leading-[2] pr-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
       </section>
-      <nav class="col-span-1 lg:col-span-2 px-3 max-lg:order-4" v-if="footerContent[0]">
+      <nav class="col-span-1 lg:col-span-2 px-3 max-lg:order-4 max-lg:w-1/2" v-if="footerContent[0]">
         <h3 class="text-white/80 font-bold uppercase font-roboto">{{footerContent[0].heading}}</h3>
         <ul>
           <li v-for="item in footerContent[0].links" :key="item.to" class="py-2">
@@ -20,7 +20,7 @@
           </li>
         </ul>
       </nav>
-      <nav class="col-span-1 lg:col-span-2 px-3 max-lg:order-5" v-if="footerContent[1]">
+      <nav class="col-span-1 lg:col-span-2 px-3 max-lg:order-5 max-lg:w-1/2" v-if="footerContent[1]">
         <h3 class="text-white/80 font-bold uppercase font-roboto">{{footerContent[1].heading}}</h3>
         <ul>
           <li v-for="item in footerContent[1].links" :key="item.to" class="py-2">
@@ -33,7 +33,7 @@
           </li>
         </ul>
       </nav>
-      <article class="col-span-1 lg:col-span-4 xl:col-span-3 px-3 max-lg:order-3" v-if="footerContent[2]">
+      <article class="col-span-1 lg:col-span-4 xl:col-span-3 px-3 max-lg:order-3 max-lg:w-full" v-if="footerContent[2]">
         <div class="font-roboto flex items-center lg:space-x-5 max-lg:justify-between">
           <h3 class="text-white/80 font-bold uppercase">{{footerContent[2].heading}}</h3>
           <span class="px-3 py-1 rounded-xl border text-xs" :class="openNow ? 'bg-salvie-700/20 text-salvie-500' : 'bg-rust-900/20 text-rust-500'">{{ openNow ? 'Åbent nu' : 'Lukket' }}</span>
@@ -46,7 +46,7 @@
         </ul>
         </article>
     <!--   new row   -->
-      <article class="col-span-1 lg:col-span-4 xl:col-span-3 xl:col-start-2 px-3  max-lg:order-2">
+      <article class="col-span-1 lg:col-span-4 xl:col-span-3 xl:col-start-2 px-3 max-lg:w-full max-lg:order-2">
         <p class="text-sm leading-[2] max-lg:-order-1">
           Grenaa Dyreinternat<br>
           Eksempelvej 12, 8500 Grenaa<br>
@@ -55,13 +55,16 @@
       </article>
     </div>
     <div class="pawmatch-container py-4 mt-5 lg:mt-10 lg:py-6 border-t border-creme/30 xl:grid grid-cols-12 gap-4">
-      <span class="text-xs text-creme/80 col-span-10 col-start-2">© 2026 PawMatch · Alle rettigheder forbeholdes</span>
+      <span class="text-xs text-creme/80 col-span-10 col-start-2 px-3">© {{ year }} PawMatch · Alle rettigheder forbeholdes</span>
     </div>
   </footer>
 </template>
 <script setup lang="ts">
 import {useFormat} from "../composables/useFormat";
 const {openNow} = useFormat()
+
+const d = new Date();
+let year = d.getFullYear();
 
 const footerContent = [
   { heading: 'Navigation', links: [

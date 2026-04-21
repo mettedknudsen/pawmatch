@@ -1,5 +1,5 @@
 <template>
-  <aside class="z-40 fixed inset-0 bg-bark-500 size-full transition-transform duration-300 md:hidden" :class="isOpen ? 'translate-x-0' : 'translate-x-full'">
+  <aside class="z-40 fixed inset-0 bg-bark-500 size-full overflow-y-scroll transition-transform duration-300 md:hidden" :class="isOpen ? 'translate-x-0' : 'translate-x-full'">
     <div class="top-3 absolute inset-x-0 mx-5 flex justify-end">
       <Button :icon="CloseIcon" variant="bordered" color="white" @click="isOpen = !isOpen" class="!rounded-full !p-1 [&_svg]:size-4 mb-3"/>
     </div>
@@ -77,7 +77,7 @@
 </template>
 <script setup lang="ts">
 import CloseIcon from '~/assets/images/icons/close.svg?component'
-import MenuIcon from '~/assets/images/icons/Menu.svg?component'
+import MenuIcon from '~/assets/images/icons/menu.svg?component'
 import {useNavMenu} from "../composables/useNavMenu";
 const isOpen = useNavMenu()
 

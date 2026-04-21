@@ -3,18 +3,18 @@
   <template v-if="filters">
   <div class="pawmatch-container px-0 my-5 flex items-center justify-between text-bark-900">
     <div class="flex items-center space-x-2">
-      <Button :icon="FiltersIcon" variant="bordered" color="dark"  @click="isOpen = !isOpen">
+      <Button :icon="FiltersIcon" variant="bordered" color="dark"  @click="isOpen = !isOpen" size="sm">
         Filtrer
       </Button>
       <Button v-if="hasActiveFilters"
-              variant="plain" color="dark" class="hover:text-bark-500 hover:opacity-75"
+              variant="plain" color="dark" class="hover:text-bark-500 hover:opacity-75 text-xs"
               @click="resetFilters"
       >
         Nulstil filtre
       </Button>
     </div>
 
-    <p class="">{{ amountShown }}</p>
+    <p class="text-sm">{{ amountShown }}</p>
   </div>
 
   <div class="bg-black/50 inset-0 fixed z-20" :class="isOpen ? 'block' : 'hidden'"  @click="isOpen = !isOpen"></div>
@@ -93,7 +93,11 @@ import type {Animal} from '~/types'
 import FiltersIcon from '~/assets/images/icons/filters.svg?component'
 import CloseIcon from '~/assets/images/icons/close.svg?component'
 import {useFilterDrawer} from "../../composables/useFilterDrawer";
+import {useRoute} from "vue-router";
+
+const route = useRoute()
 const isOpen = useFilterDrawer()
+
 
 const props = defineProps<{
   paginate?: number | null,
@@ -109,7 +113,7 @@ const cacheKey = computed(() =>
 )
 
 // FILTER REFS
-const selectedSpecies = ref(props.species ?? null)
+const selectedSpecies = ref((route.query.species || props.species) ?? null)
 const selectedSize = ref<string | null>(null)
 const selectedGender = ref<string | null>(null)
 const goodWithChildren = ref(false)

@@ -1,5 +1,5 @@
 <template>
-  <div class="pawmatch-container lg:grid grid-cols-12 gap-4 max-lg:space-y-4">
+  <div class="pawmatch-container lg:grid grid-cols-12 gap-4 max-lg:space-y-4 mb-10 lg:mb-20 min-h-[90vh] content-start">
           <!--  Reciept for booking  -->
     <main v-if="success" class="col-span-12 text-center py-5 lg:py-10">
       <section class="max-w-lg mx-auto py-5 lg:py-20 bg-white px-3 md:px-5">
@@ -69,7 +69,7 @@
           </div>
         </div>
       </div>
-    <aside class="col-span-4 xl:col-span-3">
+    <aside class="col-span-4 xl:col-span-3 self-start">
       <div class="bg-white shadow-lg rounded-lg p-5 lg:py-10">
           <template v-if="petId && pet">
             <h2 class="text-2xl text-bark-500 font-bold font-roboto mb-3">Dit valgte dyr</h2>

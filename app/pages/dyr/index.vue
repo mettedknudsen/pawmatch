@@ -1,5 +1,5 @@
 <template>
-  <main class="pawmatch-container">
+  <main class="pawmatch-container mb-10">
     <PetList :paginate="12" :filters="true" status="available" />
   </main>
 </template>
