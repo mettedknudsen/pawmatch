@@ -3,8 +3,9 @@ import tailwindcss from '@tailwindcss/vite'
 import svgLoader from 'vite-svg-loader'
 
 export default defineNuxtConfig({
+  target: process.env.TARGET || 'static',
   compatibilityDate: '2025-07-15',
-  devtools: { enabled: true },
+  devtools: { enabled: !process.env.PRODUCTION },
   modules: [
     '@nuxtjs/supabase',
     '@pinia/nuxt',
@@ -29,6 +30,9 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/css/main.css'],
   vite: {
+    ssr: {
+      noExternal: ['vue']
+    },
     optimizeDeps: {
       include: [
         'temporal-polyfill',

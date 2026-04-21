@@ -19,7 +19,7 @@ export const useAuth = () => {
   const isLoggedIn = computed(() => !!user.value)
   async function signOut() {
     await supabase.auth.signOut()
-    console.log(route.path.includes('/admin'))
+    // console.log(route.path.includes('/admin'))
     if (route.path.includes('/admin')) navigateTo('/')
     clearNuxtData('profile')
     toast.add({

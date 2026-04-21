@@ -152,7 +152,7 @@ const {data: pet, error} = await supabase
   .select('*')
   .eq('id', id)
   .single()
-console.log(pet)
+// console.log(pet)
 if (error) console.log('Fejl:', error)
 
 const currentIndex = ref(0)
