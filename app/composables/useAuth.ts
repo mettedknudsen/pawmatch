@@ -1,5 +1,4 @@
 import {useRoute} from "vue-router";
-import {navigateTo} from "../../.nuxt/imports";
 
 export const useAuth = () => {
   const supabase = useSupabaseClient()
