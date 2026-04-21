@@ -5,14 +5,21 @@
       <section class="col-span-5">
         <div class="hidden md:flex md:space-x-7 items-center max-md:justify-between mb-10 max-lg:mt-10">
           <h1 class="text-2xl font-bold font-roboto" v-if="pet.name">{{ pet.name }}</h1>
-          <div class="h-10 relative flex items-center justify-center p-1">
+
+          <div class="h-10 relative flex items-center justify-center p-1" v-if="pet.status === 'available'">
             <div class="bg-rust-500/80 rounded-xl animate-pulse absolute inset-0">
             </div>
             <Button color="alert" variant="full" class="hover:opacity-70 relative"
-                    :to="{path:'/booking', query:{dyr: pet.id}}">Mød mig
+                    :to="{path:'/booking', query:{dyr: pet.id}}">
+              Mød mig
             </Button>
           </div>
-
+          <div v-else-if="pet.status === 'reserved'" class="bg-bark-300 border text-bark-500/80 px-2 py-0.5 text-sm rounded-full">
+            <span>Reserveret</span>
+          </div>
+          <div v-else class="bg-rust-300 border text-rust-900 border-rust-500 px-2 py-0.5 text-sm rounded-full">
+            <span>Adopteret</span>
+          </div>
         </div>
         <UEditor v-if="pet.description" content-type="json" v-model="pet.description" :editable="false" class="formatting [&_div]:!p-0 py-10 lg:pt-0"/>
         <p class="py-10 lg:pt-0" v-else>Beskrivelse på vej</p>
@@ -22,11 +29,17 @@
         <div class="flex md:space-x-7 items-center max-md:justify-between mb-10 md:hidden">
           <h1 class="text-2xl font-bold font-roboto" v-if="pet.name">{{ pet.name }}</h1>
           <div class="h-10 relative flex items-center justify-center p-1">
-            <div class="bg-rust-500/80 rounded-xl animate-pulse absolute inset-0">
+            <div class="bg-rust-500/80 rounded-xl animate-pulse absolute inset-0" v-if="pet.status === 'available'">
             </div>
-            <Button type="button" color="alert" variant="full" class="hover:opacity-70 relative"
+            <Button type="button" color="alert" variant="full" class="hover:opacity-70 relative" v-if="pet.status === 'available'"
                     :to="{path:'/booking', query:{dyr: pet.id}}">Mød mig
             </Button>
+            <div v-else-if="pet.status === 'reserved'" class="bg-bark-300 border text-bark-500/80 px-2 py-0.5 text-sm rounded-full">
+              <span>Reserveret</span>
+            </div>
+            <div v-else class="bg-rust-300 border text-rust-900 border-rust-500 px-2 py-0.5 text-sm rounded-full">
+              <span>Adopteret</span>
+            </div>
           </div>
 
         </div>
@@ -96,7 +109,7 @@
         <div class="flex items-center justify-between mb-5 col-span-2">
           <h2 class="text-lg font-bold font-roboto">Flere informationer<span v-if="pet.name" class="hidden lg:inline"> om {{ pet.name }}</span>
           </h2>
-          <div class="h-10 relative flex items-center justify-center p-1">
+          <div class="h-10 relative flex items-center justify-center p-1" v-if="pet.status === 'available'">
             <div class="bg-rust-500/80 rounded-xl animate-pulse absolute inset-0">
             </div>
           <Button color="alert" variant="full" class="hover:opacity-70 relative"
@@ -128,7 +141,7 @@ import {useFormat} from "../../composables/useFormat";
 import {useAnimalMetaData} from "../../composables/useAnimalMetaData";
 
 const {gender, personality} = useAnimalMetaData()
-const {getImageUrl} = useStorage()
+const {getImageUrl, getFileType} = useStorage()
 const {age, timeInShelterSimple} = useFormat()
 const supabase = useSupabaseClient()
 const route = useRoute()
@@ -148,15 +161,6 @@ const images = computed(() =>{
   return pet?.images ?? []
 })
 
-const getFileType = (fileName) => {
-  if(!fileName) return null
-
-  const ext = fileName.split('.').pop().toLowerCase()
-  if (['jpg', 'jpeg', 'gif','png'].includes(ext)) return 'image'
-  if (['mp4', 'mov', 'avi'].includes(ext)) return 'video'
-
-  return null
-}
 const attributes = computed(() => {
   if (!pet) return
 
@@ -194,7 +198,7 @@ const attributes = computed(() => {
   {
     key: 'shedding_level',
     label: 'Pels fælder',
-    value: pet.shedding_level === 3 ? 'Meget' : pet.shedding_level === 2 ? 'Mellem' : 'Lidt',
+    value: pet.shedding_level === 3 ? 'Meget' : pet.shedding_level === 2 ? 'Moderat' : 'Minimalt',
   },
   {
     key: 'good_with_children',
@@ -219,8 +223,8 @@ const attributes = computed(() => {
 
   {
     key: 'independence_level',
-    label: 'Uafhængighedsgrad',
-    value: pet.independence_level === 3 ? 'Høj' : pet.independence_level === 2 ? 'Mellem' : 'Lav'
+    label: 'Selvstændighed',
+    value: pet.independence_level === 3 ? 'Meget selvstænding' : pet.independence_level === 2 ? 'Moderat selvstændig' : 'Kræver meget opmærksomhed'
   },
 
   {

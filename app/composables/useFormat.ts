@@ -77,6 +77,15 @@ export function useFormat() {
       }),
     }
   }
-  return {age, timeInShelter, bookingDateTime, timeInShelterSimple}
+
+  const openNow = computed(() => {
+    const now = Temporal.Now.plainDateTimeISO('Europe/Copenhagen')
+    // console.log(now.dayOfWeek, now.hour)
+    if(now.dayOfWeek < 6 && now.hour > 9 && now.hour < 17) return true
+    else if(now.dayOfWeek === 6 && now.hour > 9 && now.hour < 15) return true
+    return false
+  })
+
+  return {age, timeInShelter, bookingDateTime, timeInShelterSimple, openNow}
 }
 

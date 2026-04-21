@@ -16,7 +16,7 @@ export function useStorage() {
         upsert: false
       })
     if (error) throw error
-    return getImageUrl(data.path)
+    return data.path
   }
   // for multiple files
   async function uploadImages(files: File[]) {
@@ -26,10 +26,21 @@ export function useStorage() {
     return Promise.all(uploads)
   }
 
+  function getFileType(fileName: string){
+    if(!fileName) return null
+
+    const type = fileName.split('.').pop().toLowerCase()
+    if (['jpg', 'jpeg', 'gif','png', 'webp', 'avif'].includes(type)) return 'image'
+    if (['mp4', 'mov', 'avi'].includes(type)) return 'video'
+
+    return null
+  }
+
   async function deleteImage(url: string){
     if(!url) return
     await supabase.storage.from('images').remove([url])
   }
 
-  return { getImageUrl, uploadImage, uploadImages, deleteImage }
+
+  return { getImageUrl, uploadImage, uploadImages, deleteImage, getFileType }
 }

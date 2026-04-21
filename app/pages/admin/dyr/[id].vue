@@ -1,8 +1,11 @@
 <template>
   <section class="max-w-2xl">
-    <h1 class="text-bark-900 mb-8 text-2xl font-bold ">
-      {{ isNew ? 'Tilføj dyr' : 'Rediger dyr'}}
-    </h1>
+    <div class="flex items-center mb-8 max-md:justify-between">
+      <h1 class="text-bark-900 text-2xl font-bold ">
+        {{ isNew ? 'Tilføj dyr' : 'Rediger dyr'}}
+      </h1>
+      <Button v-if="!isNew" color="dark" :to="`/dyr/${route.params.id}`" variant="plain" :icon="EyeSvg" class="!text-neutral-500 hover:!text-neutral-500/70 transition max-md:[&_svg]:size-8"><span class="max-md:hidden">Se profilen</span></Button>
+    </div>
 
     <form class="p-6 bg-white rounded-2xl border border-neutral-200 space-y-6" @submit.prevent="save">
 
@@ -11,10 +14,10 @@
         <p class="label">Billeder</p>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-5 gap-3">
           <!--  currentImages  -->
-          <figure v-for="(url, i) in images" :key="url" class="relative max-w-93">
+          <figure v-for="(url, i) in images" :key="i" class="relative max-w-93">
             <NuxtImg
               :src="getImageUrl(url)"
-              :alt="`${form.name}-image-${i}`"
+              :alt="`${form.name}-image`"
               width="400"
               height="300"
               fit="contain"
@@ -45,7 +48,7 @@
             </div>
           </figure>
         </div>
-          <UFileUpload @change="onFilesChange"
+          <UFileUpload v-model="pendingFiles"
                        accept="image/*, video/*"
                        position="outside" layout="list"
                        multiple label="Upload filer her"
@@ -141,6 +144,7 @@
 </template>
 
 <script setup lang="ts">
+import EyeSvg from '~/assets/images/icons/eye.svg?component'
 import type { EditorToolbarItem } from '@nuxt/ui'
 
 definePageMeta({ layout: 'admin' })
@@ -197,12 +201,6 @@ const images = ref<string[]>(form.images ?? [])
 const loading = ref(false)
 const pendingFiles = ref<File[]>([])
 
-function onFilesChange(e: Event) {
-  const input = e.target as HTMLInputElement
-  const files = Array.from(input.files ?? [])
-  pendingFiles.value.push(...files)
-}
-
 async function removeExisting(url: string) {
   if (!confirm('Fjern dette billede?')) return
   images.value = images.value.filter(i => i !== url)
@@ -213,8 +211,7 @@ async function save() {
 
   try {
 
-    const newUrls = pendingFiles.value.length > 0
-      ? await uploadImages(pendingFiles.value) : []
+    const newUrls = pendingFiles.value.length > 0 ? await uploadImages(pendingFiles.value) : []
 
     const allImages = [...images.value, ...newUrls]
 

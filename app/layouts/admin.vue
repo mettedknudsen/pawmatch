@@ -2,11 +2,11 @@
   <div class="h-screen lg:grid grid-cols-12">
     <div class="bg-black/50 inset-0 fixed lg:hidden" :class="isOpen ? 'block' : 'hidden'"  @click="isOpen = !isOpen"></div>
     <aside class="admin-menu-drawer" :class="isOpen ? 'max-lg:translate-x-0' : 'max-lg:-translate-x-full'">
-      <div class="top-3 absolute inset-x-0 mx-5 flex justify-end lg:hidden">
-        <Button :icon="CloseIcon" variant="bordered" color="white" @click="isOpen = !isOpen" class="!rounded-full !p-2 [&_svg]:size-4 mb-3 hover:bg-white hover:text-bark-900"/>
+      <div class="top-3 absolute right-0 mx-5 flex justify-end lg:hidden pointer-event-none">
+        <Button :icon="CloseIcon" variant="bordered" color="white" @click="isOpen = !isOpen" class="!rounded-full !p-2 [&_svg]:size-4 mb-3 hover:bg-white hover:text-bark-900 pointer-events-auto"/>
       </div>
       <div class="mb-7 pb-2 border-b border-white/10 space-y-2">
-        <NuxtLink to="/" class="block">
+        <NuxtLink to="/" class="block py-2">
           <NuxtImg src="/pawmatch-logo-simple.png" width="100" alt="PawMatch Logo"/>
         </NuxtLink>
         <span class="text-bark-300 text-sm opacity-90">Admin</span>
@@ -14,7 +14,8 @@
 
       <!--   menu   -->
       <nav class="space-y-2 flex-1">
-        <NuxtLink v-for="item in [
+        <NuxtLink v-for="item in
+         [
             {to: '/admin', text: 'Overblik'},
             {to: '/admin/bookinger', text: 'Bookinger'},
             {to: '/admin/dyr', text: 'Dyr'},
@@ -25,7 +26,8 @@
         :key="item.to"
         :to="item.to"
         class="block px-4 py-2 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors"
-        :class="isActive(item) ? 'bg-white/30 hover:bg-white/30 text-white' : ''">
+        :class="isActive(item) ? 'bg-white/30 hover:bg-white/30 text-white' : ''"
+        @click="isOpen = false">
             {{item.text}}
         </NuxtLink>
       </nav>
@@ -36,7 +38,7 @@
     </aside>
 
     <!-- content-->
-    <main class="col-span-10 max-h-screen overflow-y-scroll p-4 lg:p-8">
+    <main class="col-span-10 max-h-screen overflow-y-scroll p-4 max-lg:pb-10 lg:p-8">
       <Button class="mb-7 lg:hidden" variant="bordered" color="dark"  @click="isOpen = !isOpen" :icon="MenuIcon"></Button>
       <slot />
     </main>

@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link :to="`/dyr/${pet.id}`" class="pet-card block h-full">
+  <nuxt-link :to="`/dyr/${pet.id}`" class="pet-card block h-full hover:opacity-70 transition-opacity duration-300 ease-in">
     <NuxtImg
       v-if="pet.images.length > 0"
       :src="getImageUrl(pet.images[0])"
@@ -16,7 +16,12 @@
     </div>
     <article class="card-info">
       <div>
-        <h3 class="font-roboto font-bold text-bark-900">{{ pet.name }}<span class="px-2 text-rust-900">|</span><span class="font-normal text-sm">{{pet.breed}}</span></h3>
+        <h3 class="font-roboto font-bold text-bark-900">{{ pet.name }}
+          <template v-if="pet.breed">
+            <span class="px-2 text-rust-900">|</span>
+            <span class="font-normal text-sm">{{pet.breed}}</span>
+          </template>
+        </h3>
         <p v-if="pet.created_at" class="text-neutral-500 text-sm">{{ timeInShelter(pet.created_at) }}</p>
       </div>
       <div class="flex items-center text-sm">

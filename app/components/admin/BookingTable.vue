@@ -20,7 +20,7 @@
           <td class="px-4 py-3 px-4 py-3 animate-pulse bg-neutral-300 max-lg:hidden border-3 border-light"></td>
           <td class="px-4 py-3 px-4 py-3 animate-pulse bg-neutral-300 border-3 border-light"></td>
       </tr>
-      <tr v-else v-for="booking in bookings" :key="booking.id" class="align-top" :class="booking.status === 'cancelled' ? 'bg-rust-900/10' : booking.status === 'completed' ? 'bg-neutral-500/15' : '' ">
+      <tr v-else v-for="booking in bookings" :key="booking.id" class="align-top" :class="booking.status === 'cancelled' ? 'bg-rust-900/10' : booking.status === 'completed' ? 'bg-neutral-500/10' : '' ">
         <td class="px-4 py-3 font-medium text-bark-900 space-x-3">
           <ConfirmedSvg class="text-salvie-700" v-if="booking.status === 'confirmed'"/>
           <CancelledSvg v-else-if="booking.status === 'cancelled'" class="text-rust-900" />

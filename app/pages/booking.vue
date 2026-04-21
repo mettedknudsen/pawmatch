@@ -1,8 +1,8 @@
 <template>
   <div class="pawmatch-container lg:grid grid-cols-12 gap-4 max-lg:space-y-4">
           <!--  Reciept for booking  -->
-    <main v-if="success" class="col-span-12 text-center py-10">
-      <section class="max-w-lg mx-auto py-20 bg-white px-3 md:px-5">
+    <main v-if="success" class="col-span-12 text-center py-5 lg:py-10">
+      <section class="max-w-lg mx-auto py-5 lg:py-20 bg-white px-3 md:px-5">
         <div class="w-16 h-16 bg-salvie-300 rounded-full flex items-center justify-center mx-auto mb-6">
           <svg class="w-8 h-8 text-salvie-900" viewBox="0 0 24 24" fill="none">
             <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -54,7 +54,7 @@
     <!--  booking flow  -->
     <template v-else>
       <div class="col-span-12">
-        <div class="font-roboto md:text-xl flex items-center justify-center pt-5" v-if="pet">
+        <div class="font-roboto md:text-xl flex items-center justify-center pt-5" v-if="petId && pet">
           <div class="flex items-center px-2 lg:px-5">
             <span :class="currentStep === 1 ? 'bg-terrakotta text-white' : 'bg-salvie-700/80 text-white'" class="size-5 md:size-8 flex items-center justify-center rounded-full font-bold">1</span>
             <span :class="currentStep === 1 ? 'text-bark-500/80 font-bold' : 'text-bark-500/50'" class="ml-2">Vælg dyr</span>
@@ -290,7 +290,7 @@ const currentStep = computed(() => {
   if (!selectedDate.value || !form.timeslot_id) return 2
   return 3
 })
-const selectedDate = ref(<Date | null> null)
+const selectedDate = ref(<string | null> null)
 const selectedTimeslot = computed(() =>
   timeslots.value?.find(t => t.id === form.timeslot_id)
 )
@@ -335,9 +335,21 @@ const {data:animalBookedSlots, refresh: animalTimeslotRefresh} = await useAsyncD
 //---- get the timeslots for date ----//
 const {data: timeslots, refresh: timeslotRefresh} = await useAsyncData('booking-timeslots', async () =>{
     if(!selectedDate.value) return []
+    const dateZoned = Temporal.PlainDate.from(selectedDate.value).toZonedDateTime('Europe/Copenhagen')
 
-    // start of selected date
-    const start = Temporal.PlainDate.from(selectedDate.value).toZonedDateTime('Europe/Copenhagen').startOfDay().toInstant().toString()
+    // We need to check if the timeslots have already passed
+    const now = Temporal.Now.instant()
+
+    let startOfSelectedDay = dateZoned.startOfDay().toInstant()
+
+    // then the time of the day
+    if(Temporal.Instant.compare(now, startOfSelectedDay) > 0){
+      startOfSelectedDay = now
+    }
+
+    // start of selected day or the current time, if that is after
+    const start = startOfSelectedDay.toString()
+
     // start of the day after selected date
     const end = Temporal.PlainDate.from(selectedDate.value).toZonedDateTime('Europe/Copenhagen').add({days: 1}).startOfDay().toInstant().toString()
 

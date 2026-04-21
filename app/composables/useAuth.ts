@@ -1,5 +1,6 @@
 export const useAuth = () => {
   const supabase = useSupabaseClient()
+
   const user = useSupabaseUser()
 
   const {data: profile } = useAsyncData('profile', async () => {
@@ -11,13 +12,12 @@ export const useAuth = () => {
       .single()
     return data
   })
-
   const isAdmin = computed(() => profile.value?.role === 'admin')
   const isLoggedIn = computed(() => !!user.value)
-
   async function signOut() {
     await supabase.auth.signOut()
-    navigateTo('/')
+
+    window.location.href = '/'
   }
 
   return { user, profile, isAdmin, isLoggedIn, signOut }

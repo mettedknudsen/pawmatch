@@ -138,11 +138,22 @@ watch([selectedDate], () => {
 } )
 const {data: timeslots} = await useAsyncData('admin-timeslots', async () =>{
   if(!selectedDate.value) return []
+  const dateZoned = Temporal.PlainDate.from(selectedDate.value).toZonedDateTime('Europe/Copenhagen')
 
-  // start of selected date
-  const start = Temporal.PlainDate.from(selectedDate.value).toZonedDateTime('Europe/Copenhagen').startOfDay().toInstant().toString()
+  // We need to check if the timeslots have already passed
+  const now = Temporal.Now.instant()
+
+  let startOfSelectedDay = dateZoned.startOfDay().toInstant()
+
+  // then the time of the day
+    if(Temporal.Instant.compare(now, startOfSelectedDay) > 0){
+      startOfSelectedDay = now
+    }
+
+    // start of selected day or the current time, if that is after
+  const start = startOfSelectedDay.toString()
   // start of the day after selected date
-  const end = Temporal.PlainDate.from(selectedDate.value).toZonedDateTime('Europe/Copenhagen').add({days: 1}).startOfDay().toInstant().toString()
+  const end = dateZoned.add({days: 1}).startOfDay().toInstant().toString()
 
   const { data} = await supabase
     .from('timeslots')

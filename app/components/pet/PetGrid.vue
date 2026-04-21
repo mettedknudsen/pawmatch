@@ -16,8 +16,8 @@
   <div v-if="pets.length === 0 && !loading" class="text-center py-16 text-bark-900">
     <p class="text-lg">Ingen dyr matcher dine filtre</p>
     <Button
-            variant="bordered" color="dark" class="mt-3"
-            @click="$emit('reset')"
+        variant="bordered" color="dark" class="mt-3"
+        @click="$emit('reset')"
     >
       Nulstil filtre
     </Button>
@@ -34,4 +34,7 @@ defineProps<{
   extraClass?: string
 }>()
 
+defineEmits<{
+  reset: []
+}>()
 </script>

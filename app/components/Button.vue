@@ -9,9 +9,10 @@
     <!-- loading -->
     <span v-if="loading" class="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
     <!--  ikon  -->
-    <component :is="icon" v-else-if="icon" class="w-4 h-4" />
+    <component :is="icon" v-else-if="icon && iconPosition !== 'right'" class="w-4 h-4" />
     <!-- content -->
     <slot />
+    <component :is="icon" v-if="icon && iconPosition === 'right'" class="w-4 h-4" />
   </component>
 </template>
 <script setup lang="ts">
@@ -26,6 +27,7 @@ const props = defineProps<{
   variant?: 'full' | 'bordered' | 'plain',
   type?: 'button' | 'submit' | 'reset',
   to?: string | RouteLocationRaw | null
+  iconPosition?: 'left' | 'right'
 }>()
 const isLink = computed(() => !!props.to)
 const isDisabled = computed(() => props.disabled || props.loading)
