@@ -32,45 +32,44 @@ export const useQuiz = () => {
           const question = questions.find(q => q.field === field)
           if(!question) continue
 
-          // if animals requirement/needs is not met - give hard penalty score
-          if (question?.mode === 'requirement') {
-            if (
-              (animalValue === true && answerValue === false)
-              || (userValue >= animalValue)
-              || (userValue === 'small' && animalValue === 'large') ) {
-              score -= 10
-            }
-            continue
-          }
-
           // bool
           if(typeof answerValue === 'boolean') {
-            // users needs - if false they dont have a specific need
-            // child / allergy / other animals
-            if(answerValue === false) continue
-            total++
+            // if animals requirement/needs is not met - give penalty score
+            if (question?.mode === 'requirement' && animalValue === true && answerValue === false) score -= 1
 
-            //  gain one if it does match
-            if(answerValue === animalValue) score ++
-            // retract point if not matching
-            else score--
+              // users needs - if false they dont have a specific need
+              // child / allergy / other animals
+              if (answerValue === false) continue
+              total++
+
+              //  gain one if it does match
+              if (answerValue === animalValue) score++
+              // retract point if not matching
+              else score--
+
           }
           // range can give 1 / 0.5 / 0 points - depending on the difference
           else if (typeof answerValue === 'number'){
-            total++
+            // if animals requirement/needs is not met - give hard penalty score
+            if (question?.mode === 'requirement' && answerValue === 1 && animalValue === 3) score -= 1
+              total++
 
-            const diff = Math.abs((animalValue as number) - answerValue)
-            score += diff === 0 ? 1 : diff== 1 ? 0.5 : 0
+              const diff = Math.abs((animalValue as number) - answerValue)
+              score += diff === 0 ? 1 : diff== 1 ? 0.5 : 0
           }
           // our enum values gives 1 point if they match
-          else if(answerValue === animalValue){
-            total++
-            score++
+          else {
+            // if animals requirement/needs is not met - give hard penalty score
+            if (question?.mode === 'requirement' && answerValue === 'small' && animalValue === 'large') score -= 1
+            if(answerValue === animalValue){
+              total++
+              score++
+            }
           }
         }
 
 
-        console.log('score;', total > 0 ? score / total : 0)
+        // console.log('score;', total > 0 ? score / total : 0)
         // returning new mapped object, now animal + score
         return {
           animal,
