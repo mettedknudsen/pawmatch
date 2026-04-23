@@ -46,7 +46,7 @@ export const useQuizStore = defineStore('quiz',  () => {
     // set species value to get the relevant questions
     if (q.type === 'species') species.value = value
     // inc the step
-    if(currentStep.value < totalSteps.value - 1) currentStep.value++
+    if(currentStep.value < totalSteps.value) currentStep.value++
 
     // console.log(currentStep.value, species.value, q)
   }

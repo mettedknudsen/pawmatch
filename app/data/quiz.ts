@@ -8,7 +8,7 @@ export const quizData = {
         {label: 'Kat', value:'cat', icon:'cat', classes:'bg-rust-500 hover:bg-rust-500/70 text-rust-900'},
         {label: 'Hund', value:'dog', icon:'dog', classes:'bg-bark-300 hover:bg-bark-300/70 text-bark-500'},
         {label: 'Kanin', value:'rabbit', icon:'rabbit', classes:'bg-salvie-300 hover:bg-salvie-300/70 text-salvie-700'},
-        // {label: 'Det er ligegyldigt', value:null, icon:'i-lucide-x', classes: 'bg-neutral-200 hover:bg-neutral-200/70 text-neutral-500'}
+        {label: 'Det er ligegyldigt', value:'all', icon:'i-lucide-x', classes: 'bg-neutral-200 hover:bg-neutral-200/70 text-neutral-500'}
       ]},
   ],
   shared: [
@@ -57,6 +57,7 @@ export const quizData = {
       id:'handling',
       question: 'Hvordan er du med fysisk kontakt med kæledyr?',
       field:'handling_tolerance',
+      mode: 'requirement',
       type: 'scale',
       options: [
         {label: 'Kæler der, hvor det selv ligger', value: 1 },
@@ -81,6 +82,7 @@ export const quizData = {
         id: 'activity',
         question: 'Hvor aktiv er din hverdag?',
         field:'activity_level',
+        mode: 'requirement',
         type: 'scale',
         options: [
           {label:'Rolig', value: 1,description: 'Mest sofahygge'},
@@ -92,6 +94,7 @@ export const quizData = {
           id: 'space',
           question: 'Hvor meget plads har du?',
           field: 'space_needed',
+          mode: 'requirement',
           type: 'enum',
           options: [
             {label: 'Lille lejlighed', value: 'small' },
@@ -105,6 +108,7 @@ export const quizData = {
       question: 'Har katten adgang til at være udendørs?',
       field: 'needs_outdoor',
       type: 'boolean',
+      mode: 'requirement',
       options: [
         {label: 'Ja, have/altan', value: true },
         {label: 'Nej, indekat',value: false},
@@ -128,6 +132,7 @@ export const quizData = {
       question: 'Hvor meget plads har du?',
       field: 'space_needed',
       type: 'enum',
+      mode: 'requirement',
       options: [
         {label: 'Lille lejlighed', value: 'small' },
         {label: 'Mellemstor bolig',value: 'medium' },

@@ -16,9 +16,9 @@ async function handleAnswer(value: any) {
 
   console.log(quiz.currentStep, quiz.totalSteps, quiz.currentStep >= quiz.totalSteps)
   // last question - time to find the results
-  if (quiz.currentStep >= quiz.totalSteps - 1) {
+  if (quiz.currentStep >= quiz.totalSteps) {
     quiz.loading = true
-    quiz.results = await findMatches(quiz.answers)
+    quiz.results = await findMatches(quiz.answers, quiz.questions)
     quiz.loading = false
   }
 
@@ -33,7 +33,9 @@ async function handleAnswer(value: any) {
   <main class="pawmatch-container py-10 max-w-2xl mx-auto">
     <div v-if="quiz.results.length">
       <p>SUCCES</p>
-      {{quiz.results[0]}}
+      <pre>
+      {{quiz.results}}
+      </pre>
     </div>
     <div v-else>
       <div v-if="quiz.questions[quiz.currentStep]">
