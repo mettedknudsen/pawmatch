@@ -8,7 +8,7 @@
   >
     <component :is="s.icon" v-if="s.icon" class="size-15" />
     <span class="font-inter font-medium text-bark-900">{{s.label}}</span>
-    <div class="bg-neutral-200 text-neutral-600 space-x-1.5 border-neutral-400 text-xs lg:text-sm px-2 py-1 border rounded-full"><span v-if="s.amount > 0">{{s.amount}}</span><span>{{s.amount > 1 ? 'ledige' : s.amount === 1 ? 'ledig' : 'Ingen ledige'}}</span></div>
+    <div class="bg-neutral-200/80 text-neutral-600 space-x-1.5 border-neutral-300 text-xs lg:text-sm px-2 py-1 border rounded-full"><span v-if="s.amount > 0">{{s.amount}}</span><span>{{s.amount > 1 ? 'ledige' : s.amount === 1 ? 'ledig' : 'Ingen ledige'}}</span></div>
   </NuxtLink>
 </section>
 </template>

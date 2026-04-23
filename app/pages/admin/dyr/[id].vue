@@ -6,7 +6,6 @@
       </h1>
       <Button v-if="!isNew" color="dark" :to="`/dyr/${route.params.id}`" variant="plain" :icon="EyeSvg" class="!text-neutral-500 hover:!text-neutral-500/70 transition max-md:[&_svg]:size-8"><span class="max-md:hidden">Se profilen</span></Button>
     </div>
-
     <form class="p-6 bg-white rounded-2xl border border-neutral-200 space-y-6" @submit.prevent="save">
 
       <!-- Image | Upload -->
@@ -94,11 +93,31 @@
         </div>
       </div>
 
-      <!-- Age | status -->
+      <!-- Age | Size -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div class="input">
-          <label class="label mb-1">Alder (måneder)</label>
-          <UInput v-model="form.age_months" type="text" class="w-full" /> <!-- TODO: change to two fields calc the months -->
+          <label class="label mb-1">Alder (år - måneder)</label>
+          <div class="flex items-center gap-1">
+            <UInput v-model="ageYears" type="number" class="flex-1" />
+            <UInput v-model="ageMonths" type="number" class="flex-1" />
+          </div>
+        </div>
+
+        <div class="input">
+          <label class="label mb-1">Størrelse</label>
+          <USelect class="w-full"  v-model="form.size" :items="[
+            {label: 'Lille', value: 'small' },
+            {label: 'Mellem', value: 'medium' },
+            {label: 'Stor', value: 'large'}
+            ]"
+          />
+        </div>
+      </div>
+      <!-- Cage | status -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="input">
+          <label class="label mb-1">Bur / lokation</label>
+          <UInput v-model="form.cage" type="text" class="w-full" />
         </div>
 
         <div class="input">
@@ -123,7 +142,7 @@
       </div>
 
       <!-- Checkboxes -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-10">
         <label v-for="box in [
           {key: 'good_with_children', label: 'God med børn' },
           {key: 'good_with_animals', label: 'God med dyr'},
@@ -135,6 +154,24 @@
           {{ box.label }}
         </label>
       </div>
+
+      <!-- Ranges -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-10">
+        <label v-for="range in [
+          {key: 'independence_level', label: 'Selvstændighed', '1': 'Krævende', '2': 'Moderat', '3':'Meget'},
+          {key: 'shedding_level', label: 'Pels fælder', '1': 'Minimalt', '2': 'Moderat', '3':'Meget'},
+          {key: 'grooming_level',label: 'Pelspleje' , '1': 'Minimalt', '2': 'Mellem', '3':'Krævende'},
+          {key: 'activity_level',  label: 'Aktivitetsniveau', '1': 'Lavt', '2': 'Mellem', '3':'Højt' },
+          {key: 'handling_tolerance', label: 'Tolerance for at blive holdt', '1': 'Lav', '2': 'Mellem', '3':'Høj'},
+        ]" :key="range.key" class="">
+          <span class=" mb-2">
+            {{ range.label }}
+          </span>
+          <span class="float-right mb-2">
+          {{ range[form[range.key]] }}
+          </span>
+          <USlider v-model="form[range.key]" :step="1" :min="1" :max="3" size="xl" class="[&_span]:data-[slot=thumb]:size-3" />
+        </label></div>
 
       <Button type="submit" :loading="loading" class="hover:bg-terrakotta-hover">
         {{ isNew ? 'Opret dyr' : 'Gem ændringer' }}
@@ -158,16 +195,19 @@ const form = reactive({
   name: '',
   species: 'dog',
   status: 'available',
+  cage: '',
   description: '',
   breed: '',
-  age_months: 0,
   gender: 'male',
   shedding_level: 1,
   grooming_level: 1,
   activity_level: 2,
+  independence_level: 2,
+  handling_tolerance: 2,
+  space_needed: 'medium',
   size: 'medium',
   personality: 'calm',
-  images:'',
+  images: [],
   good_with_children: true,
   good_with_animals: true,
   is_hypoallergenic: false,
@@ -186,6 +226,9 @@ const toolbarItems: EditorToolbarItem[] = [
   { kind: 'link', icon: 'i-lucide-link' }
 ]
 
+const ageYears = ref(0)
+const ageMonths = ref(0)
+
 // Getting the animal by id | if not on add page
 if (!isNew) {
   const { data } = await supabase
@@ -194,9 +237,12 @@ if (!isNew) {
     .eq('id', route.params.id)
     .single()
   // console.log(data)
-  if (data) Object.assign(form, data)
+  if (data){
+    Object.assign(form, data)
+    ageYears.value = Math.floor((data.age_months ?? 0)/12)
+    ageMonths.value = (data.age_months ?? 0) % 12
+  }
 }
-
 const images = ref<string[]>(form.images ?? [])
 const loading = ref(false)
 const pendingFiles = ref<File[]>([])
@@ -210,17 +256,24 @@ async function save() {
   loading.value = true
 
   try {
-
+    // Upload files first
     const newUrls = pendingFiles.value.length > 0 ? await uploadImages(pendingFiles.value) : []
 
     const allImages = [...images.value, ...newUrls]
+    const totalMonths = (ageYears.value * 12) + ageMonths.value
+
+    const payload = {
+      ...form,
+      age_months: totalMonths,
+      images: allImages
+    }
 
     if (isNew) {
       // add new animal
-      await supabase.from('animals').insert(form)
+      await supabase.from('animals').insert(payload)
     } else {
       // edit animal - append the pending files to the images field
-      await supabase.from('animals').update({...form, images: allImages}).eq('id', route.params.id)
+      await supabase.from('animals').update(payload).eq('id', route.params.id)
     }
 
     navigateTo('/admin/dyr')

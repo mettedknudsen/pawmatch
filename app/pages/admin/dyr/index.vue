@@ -26,7 +26,7 @@
             <div class="md:hidden text-neutral-500 text-xs" v-if="animal.species">
               {{ species[animal.species]}}
             </div>
-             <span v-if="animal.status" :class="status[animal.status].class" class="tag block sm:hidden text-center">
+             <span v-if="animal.status" :class="status[animal.status].class" class="tag block sm:hidden text-center !max-w-32">
                {{status[animal.status].label}}
              </span>
 
@@ -38,7 +38,7 @@
           </td>
           <td class="px-4 py-3 text-neutral-600 max-md:hidden" v-if="animal.species"> {{ species[animal.species]}}</td>
           <td class="px-4 py-3 max-sm:hidden">
-            <span v-if="animal.status" :class="status[animal.status].class" class="tag">
+            <span v-if="animal.status" :class="status[animal.status].class" class="tag max-w-26 flex justify-center">
               {{status[animal.status].label}}
             </span>
           </td>

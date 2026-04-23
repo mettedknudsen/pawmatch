@@ -2,7 +2,7 @@
   <section class="min-h-screen px-4 flex items-center justify-center">
     <div class="lg:min-h-[500px] pawmatch-container w-full bg-white text-center flex flex-col justify-center items-center gap-5 lg:gap-10 py-20">
     <h1 class="text-4xl lg:text-7xl text-bark-500 font-inter">{{props.error.status}}</h1>
-    <p class="text-lg lg:text-xl text-neutral-500 font-inter">{{props.error.statusText}}</p>
+    <p class="text-lg lg:text-xl text-neutral-500 font-inter">{{props.error.statusText || 'Noget gik galt'}}</p>
     <Button @click="handleError">
       Gå tilbage
     </Button>

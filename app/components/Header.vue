@@ -69,7 +69,7 @@
       <UButton icon="i-lucide-circle-user-round" color="neutral" variant="ghost" class="[&_span]:size-6 hover:text-salvie-700 hover:bg-transparent" />
     </UDropdownMenu>
     </ClientOnly>
-    <Button to="/booking" color="alert" size="sm" class="hover:bg-rust-900-hover">Book en tid</Button>
+    <Button :to="route.matched[0].path ==='/dyr/:id()' ? {path: '/booking', query: {dyr: route.params.id} }: '/booking'" color="alert" size="sm" class="hover:bg-rust-900-hover">Book en tid</Button>
   </div>
   <Button class="md:hidden" variant="bordered" color="dark"  @click="isOpen = !isOpen" :icon="MenuIcon"></Button>
 </div>
@@ -80,6 +80,7 @@ import CloseIcon from '~/assets/images/icons/close.svg?component'
 import MenuIcon from '~/assets/images/icons/menu.svg?component'
 import {useNavMenu} from "../composables/useNavMenu";
 const isOpen = useNavMenu()
+const route = useRoute()
 
 const { isAdmin, isLoggedIn, signOut } = useAuth()
 
@@ -143,7 +144,7 @@ const userMenuItems = computed<MenuItem[]>(() => [
 ])
 
 const navItems = [
-  { to: '/match-quiz', label: 'Find dit match', disabled: true },
+  { to: '/match-quiz', label: 'Find dit match'},
   { to: '/dyr', label: 'Dyrene', disabled: false },
   { to: '/om-os', label: 'Om os', disabled: true },
   { to: '/kontakt', label: 'Kontakt', disabled: true },

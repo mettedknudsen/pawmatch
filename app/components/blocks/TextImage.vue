@@ -2,7 +2,7 @@
   <section class="pawmatch-container md:grid grid-cols-12 gap-4 items-end max-md:px-0 flex flex-col mb-5 lg:mb-10">
     <div class="col-start-1 col-span-6 lg:col-span-5 lg:col-start-2 bg-salvie-700 row-start-1 relative mb-3 text-light  p-5 xl:pt-10 xl:pb-20 xl:px-7 max-md:order-last max-md:-mt-20 max-md:mx-3">
       <div class="grid grid-cols-5 gap-x-4 mb-4">
-        <h3 class="col-span-4 lg:col-span-3 text-2xl xl:text-4xl font-inter font-bold mb-3 lg:mb-6">Basse har ventet 3 år på et nyt hjem</h3>
+        <h3 class="col-span-4 lg:col-span-3 text-2xl xl:text-4xl font-inter font-bold mb-3 lg:mb-6">Basse har ventet 1 år på et nyt hjem</h3>
         <p class="col-span-4 md:col-span-5 lg:col-span-4">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquid cum debitis deserunt dolore doloremque eaque eius error laudantium mollitia nihil?
         </p>

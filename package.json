@@ -13,6 +13,7 @@
     "clearcache": "rm -rf .nuxt .output .cache node_modules/.cache"
   },
   "dependencies": {
+    "@internationalized/date": "^3.12.1",
     "@nuxt/eslint": "1.15.2",
     "@nuxt/icon": "2.2.1",
     "@nuxt/image": "2.0.0",

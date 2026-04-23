@@ -10,9 +10,7 @@
             <div class="bg-rust-500/80 rounded-xl animate-pulse absolute inset-0">
             </div>
             <Button color="alert" variant="full" class="hover:opacity-70 relative"
-                    :to="{path:'/booking', query:{dyr: pet.id}}">
-              Mød mig
-            </Button>
+                    :to="{path:'/booking', query:{dyr: pet.id}}">Mød mig</Button>
           </div>
           <div v-else-if="pet.status === 'reserved'" class="bg-bark-300 border text-bark-500/80 px-2 py-0.5 text-sm rounded-full">
             <span>Reserveret</span>
@@ -93,7 +91,7 @@
           width="800"
           fit="cover"
           loading="lazy"
-          class="w-full object-cover rounded-lg"
+          class="w-full object-cover rounded-lg aspect-[4/3] rounded-2xl"
         />
         <div v-else class="w-full object-cover aspect-[1.33] flex flex-col items-center justify-center rounded-lg bg-gray-300">
           <imgSvg class="w-16 h-16 mb-3"/>
@@ -154,6 +152,13 @@ const {data: pet, error} = await supabase
   .single()
 // console.log(pet)
 if (error) console.log('Fejl:', error)
+if(error || !pet) {
+  throw createError({
+    status: 404,
+    statusText: 'Dyr ikke fundet',
+    fatal: true
+  })
+}
 
 const currentIndex = ref(0)
 

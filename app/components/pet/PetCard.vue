@@ -22,7 +22,7 @@
             <span class="font-normal text-sm">{{pet.breed}}</span>
           </template>
         </h3>
-        <p v-if="pet.created_at" class="text-neutral-500 text-xs">{{ timeInShelter(pet.created_at) }}</p>
+        <p v-if="pet.created_at" class="text-neutral-500 text-xs mt-1">{{ timeInShelter(pet.created_at) }}</p>
       </div>
       <div class="flex items-center text-sm py-2">
         <p v-if="pet.gender" class="items-center flex">

@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
     process.env.SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY
   )
-  console.log(!!config.supabaseServiceRoleKey)
+
   let guest_id: string
 
   // First i make the guest for the booking

@@ -435,7 +435,7 @@ const attrs = computed(() => [
       start: new Date(2025, 10, 7),
       repeat: {
         every: [1, 'weeks'],
-        weekdays: [1,7],
+        weekdays: [1],
       },
     }
   },

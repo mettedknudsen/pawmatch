@@ -1,5 +1,5 @@
 <template>
-  <main class="pawmatch-container mb-10">
+  <main class="pawmatch-container mb-10 min-h-[100vh]">
     <PetList :paginate="12" :filters="true" />
   </main>
 </template>

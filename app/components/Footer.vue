@@ -68,7 +68,7 @@ let year = d.getFullYear();
 const footerContent = [
   { heading: 'Navigation', links: [
       { to: '/dyr', label: 'Dyrene' },
-      { to: '/match-quiz',label: 'Find dit match', disabled: true },
+      { to: '/match-quiz',label: 'Find dit match'},
       { to: '/om-os', label: 'Om os', disabled: true },
       { to: '/kontakt', label: 'Kontakt', disabled: true },
     ]
@@ -83,7 +83,7 @@ const footerContent = [
   { heading: 'Åbningstider',
     openingHours: [
       {hours: '10-17', label: 'Mandag - fredag'},
-      {hours: '10-15', label: 'Lørdag (Ingen bookinger)'},
+      {hours: '10-15', label: 'Lørdag'},
       {hours: 'Lukket', label: 'Søndag'}
     ]
   }

@@ -38,7 +38,7 @@
     </aside>
 
     <!-- content-->
-    <main class="col-span-10 max-h-screen overflow-y-scroll p-4 max-lg:pb-10 lg:p-8">
+    <main class="col-span-10 lg:max-h-screen lg:overflow-y-scroll p-4 max-lg:pb-10 lg:p-8">
       <Button class="mb-7 lg:hidden" variant="bordered" color="dark"  @click="isOpen = !isOpen" :icon="MenuIcon"></Button>
       <slot />
     </main>

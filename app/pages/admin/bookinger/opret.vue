@@ -20,17 +20,18 @@
 
         <!-- SELECT ANIMAL -->
         <div class="input col-span-2 md:col-span-1">
-          <label>Dyr</label>
+          <label class="label mb-2">Dyr</label>
           <select v-model="form.animal_id" required :size="animals.length + 1" class="max-h-[300px]">
             <option :value="null">Generelt besøg - intet dyr</option>
             <option v-for="a in animals" :key="a.id" :value="a.id">
               {{ a.name }} ({{species[a.species] }})
             </option>
           </select>
+<!--          <USelectMenu v-model="form.animal_id" :items="animalOptions"  class="max-h-[300px] w-full" placeholder="Vælg dyr..." />-->
         </div>
 
         <div class="input col-span-2 md:col-span-1">
-          <label class="block text-sm font-medium text-bark-700 mb-2">Mødetype<span class="text-rust-900 ml-1">*</span></label>
+          <label class="label mb-2">Mødetype<span class="text-rust-900 ml-1">*</span></label>
           <div class="flex md:flex-col gap-2">
             <button
               v-for="(label, key) in availableAppointmentTypes"
@@ -132,10 +133,32 @@ const { data: animals } = await useAsyncData('admin-animals-select', async () =>
   return data
 })
 
+// const animalOptions = computed(() => [
+//   {label: 'Generelt besøg — intet dyr', value: null},
+//   ...(animals.value?.map(a => ({
+//     label:`${a.name} (${species[a.species]})`,
+//     value: a.id,
+//   }))
+//     ?? [])
+// ])
+
 // Reset timeslot if selectedDate is changed
 watch([selectedDate], () => {
   form.timeslot_id = ''
 } )
+
+//---- get the timeslots where the chosen animal is booked ----//
+const {data:animalBookedSlots} = await useAsyncData(`animal-booked-${form.animal_id}`, async() => {
+    if(!form.animal_id) return []
+    const {data} = await supabase.from('bookings')
+      .select('timeslot_id')
+      .eq('animal_id', form.animal_id)
+      .neq('status', 'cancelled')
+    return data?.map(b =>b.timeslot_id) ?? []
+
+  },{watch: [() => form.animal_id]}
+)
+
 const {data: timeslots} = await useAsyncData('admin-timeslots', async () =>{
   if(!selectedDate.value) return []
   const dateZoned = Temporal.PlainDate.from(selectedDate.value).toZonedDateTime('Europe/Copenhagen')
@@ -168,7 +191,12 @@ const {data: timeslots} = await useAsyncData('admin-timeslots', async () =>{
 const availableTimeslots = computed(() =>
   timeslots.value?.filter(t => {
     const booked = t.bookings?.[0]?.count ?? 0
-    return booked < t.capacity  // our bookings(count) less that the timeslot capacity ?
+    if(booked >= t.capacity) return false
+
+    // then check if the animal is booked at this timeslot
+    if(form.animal_id && animalBookedSlots.value?.includes(t.id)) return false
+
+    return true
   }) ?? []
 )
 
