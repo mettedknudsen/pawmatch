@@ -75,9 +75,9 @@ const footerContent = [
   },
   { heading: 'Dyr',
     links: [
-      { to: {path:'/dyr', query:{species: 'dog'} }, label: 'Hunde' },
-      { to: {path:'/dyr', query:{species: 'cat'} }, label: 'Katte'},
-      { to: {path:'/dyr', query:{species: 'rabbit'}}, label: 'Kaniner'},
+      { to: {path:'/dyr', query:{s: 'dog'} }, label: 'Hunde' },
+      { to: {path:'/dyr', query:{s: 'cat'} }, label: 'Katte'},
+      { to: {path:'/dyr', query:{s: 'rabbit'}}, label: 'Kaniner'},
     ]
   },
   { heading: 'Åbningstider',

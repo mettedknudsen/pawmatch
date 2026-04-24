@@ -4,7 +4,7 @@
     <button
       :disabled="modelValue === 1"
       class="px-4 py-2 rounded-full bg-bark-300 text-black text-sm disabled:opacity-50"
-      @click="emit('update:modelValue', modelValue - 1)"
+      @click="emit('update:modelValue', modelValue - 1); scrollTop();"
     >
       <
     </button>
@@ -16,7 +16,7 @@
       :class="p === modelValue
           ? 'bg-terrakotta text-white'
           : 'bg-white text-black'"
-      @click="emit('update:modelValue', p)"
+      @click="emit('update:modelValue', p); scrollTop();"
     >
       {{ p }}
     </button>
@@ -24,7 +24,7 @@
     <button
       :disabled="modelValue === pages"
       class="px-4 py-2 rounded-full bg-bark-300 text-black text-sm disabled:opacity-50"
-      @click="emit('update:modelValue', modelValue + 1)"
+      @click="emit('update:modelValue', modelValue + 1); scrollTop();"
     >
       >
     </button>
@@ -39,4 +39,10 @@ const props = defineProps<{
 const emit = defineEmits<{
   'update:modelValue': [page: number]
 }>()
+function scrollTop(){
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
+}
 </script>

@@ -1,5 +1,3 @@
-import {useRoute} from "vue-router";
-
 export const useAuth = () => {
   const supabase = useSupabaseClient()
   const user = useSupabaseUser()
@@ -15,7 +13,9 @@ export const useAuth = () => {
       .single()
     return data
   })
-  const isAdmin = computed(() => profile.value?.role === 'admin')
+  const isAdmin = computed(() =>
+    user.value?.user_metadata?.role === 'admin'
+  )
   const isLoggedIn = computed(() => !!user.value)
   async function signOut() {
     await supabase.auth.signOut()

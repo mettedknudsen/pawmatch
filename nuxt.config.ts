@@ -3,7 +3,7 @@ import tailwindcss from '@tailwindcss/vite'
 import svgLoader from 'vite-svg-loader'
 
 export default defineNuxtConfig({
-  target: process.env.TARGET || 'static',
+  target: process.env.TARGET || 'server',
   compatibilityDate: '2025-07-15',
   devtools: { enabled: !process.env.PRODUCTION },
   modules: [
@@ -11,7 +11,6 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxt/image',
     '@nuxt/icon',
-    '@nuxt/eslint',
     '@nuxt/ui',
     '@yuta-inoue-ph/nuxt-vcalendar'
   ],

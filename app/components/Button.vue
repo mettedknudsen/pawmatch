@@ -55,7 +55,7 @@ const variantClasses = computed(() => {
       plain: 'text-salvie-900',
     },
     alert: {
-      full: 'bg-rust-900 text-white border border-rust-900',
+      full: 'bg-rust-900 text-white border border-rust-900 hover:bg-rust-900-hover',
       bordered: 'bg-rust-300 border border-rust-900 text-rust-900',
       plain: 'text-rust-900',
     },

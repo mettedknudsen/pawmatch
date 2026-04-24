@@ -1,3 +1,4 @@
+// @ts-ignore
 import type {Animal} from '~/types'
 
 export const useQuiz = () => {
@@ -50,8 +51,8 @@ export const useQuiz = () => {
           }
           // range can give 1 / 0.5 / 0 points - depending on the difference
           else if (typeof answerValue === 'number'){
-            // if animals requirement/needs is not met - give hard penalty score
-            if (question?.mode === 'requirement' && answerValue === 1 && animalValue === 3) score -= 1
+            // if animals requirement/needs is not met - give penalty score
+            if (question?.mode === 'requirement' && answerValue === 1 && animalValue === 3) score -= 2
               total++
 
               const diff = Math.abs((animalValue as number) - answerValue)
@@ -59,26 +60,26 @@ export const useQuiz = () => {
           }
           // our enum values gives 1 point if they match
           else {
-            // if animals requirement/needs is not met - give hard penalty score
-            if (question?.mode === 'requirement' && answerValue === 'small' && animalValue === 'large') score -= 1
+            // if animals requirement/needs is not met - give penalty score
+            if (question?.mode === 'requirement' && answerValue === 'small' && animalValue === 'large') score -= 2
+            total++
             if(answerValue === animalValue){
-              total++
               score++
             }
           }
         }
 
-
         // console.log('score;', total > 0 ? score / total : 0)
         // returning new mapped object, now animal + score
         return {
           animal,
-          score: total > 0 ? score / total : 0
+          score: total > 0 ? score / total : 0,
+          percent: total > 0 ? Math.round((score / total) * 100) : 0
         }
 
       })
       .sort((a, b) => b.score - a.score) // high to small
-      .slice(0, 3) // top3
+      .slice(0, 6) // top3
   }
 
   return {findMatches}

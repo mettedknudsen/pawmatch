@@ -56,7 +56,7 @@ const { user, profile, isAdmin, isLoggedIn, signOut } = useAuth()
 
 
 //   REDIRECT IF NOT ADMIN
-  if (!isLoggedIn || !isAdmin) {
+  if (!isLoggedIn.value || !isAdmin.value) {
     await navigateTo('/login')
   }
 
@@ -66,5 +66,7 @@ const isActive = (item) => {
   return route.fullPath.includes(item.to) && item.to !== '/admin'
 
 }
-
+// console.log('isLoggedIn:', isLoggedIn.value)
+// console.log('isAdmin:', isAdmin.value)
+// console.log('user metadata:', user.value?.user_metadata)
 </script>

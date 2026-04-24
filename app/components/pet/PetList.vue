@@ -93,9 +93,10 @@ import type {Animal} from '~/types'
 import FiltersIcon from '~/assets/images/icons/filters.svg?component'
 import CloseIcon from '~/assets/images/icons/close.svg?component'
 import {useFilterDrawer} from "../../composables/useFilterDrawer";
-import {useRoute} from "vue-router";
 
 const route = useRoute()
+const router = useRouter()
+
 const isOpen = useFilterDrawer()
 
 
@@ -109,11 +110,11 @@ const props = defineProps<{
 
 // the async needs a different key for each time the component is used / the different configuration - for caching
 const cacheKey = computed(() =>
-  `pets-${props.limit ?? 'all'}-${props.status ?? 'any'}-${props.species ?? 'any'}`
+  `pets-${props.limit ?? 'all'}-${props.status ?? 'any'}-${props.species ?? 'any'}-${selectedSpecies.value ?? 'any'}-${selectedSize.value ?? 'any'}-${selectedGender.value ?? 'any'}-${selectedStatus.value ?? 'any'}-p${currentPage.value}`
 )
 
 // FILTER REFS
-const selectedSpecies = ref((route.query.species || props.species) ?? null)
+const selectedSpecies = ref((route.query.s || props.species) ?? null)
 const selectedSize = ref<string | null>(null)
 const selectedGender = ref<string | null>(null)
 const selectedStatus = ref<string | null>(route.query.status ?? null)
@@ -187,13 +188,23 @@ const checkboxFilters= [
   }
 ]
 
+watch(selectedSpecies, (val) =>{
+  const query = { ...route.query }
+  if (val) query.s = val
+  else delete query.s
+  router.replace({ query })
+})
+
+watch(() => route.query.s, (val) =>{
+  selectedSpecies.value = (val as string) ?? null
+})
 
 // watch for value changes - set currentpage to 1
-watch([selectedSpecies, selectedSize, selectedGender,selectedStatus, goodWithChildren, goodWithAnimals, isNeutered,isHypoallergenic], () => {
+watch([selectedSpecies, selectedSize, selectedGender,selectedStatus, goodWithChildren, goodWithAnimals, isNeutered,isHypoallergenic, () => route.query.s], () => {
   currentPage.value = 1
 })
 
-const {data, error, refresh, pending} = await useAsyncData(cacheKey.value, async () => {
+const {data, error, refresh, pending} = await useAsyncData(() => cacheKey.value, async () => {
     let query = supabase
       .from('animals')
       .select('*', {count: 'exact'})
@@ -229,7 +240,7 @@ const {data, error, refresh, pending} = await useAsyncData(cacheKey.value, async
     return {animals: data as Animal[], total: count ?? 0}
   },
   // watch - get data if values changes
-  {watch: [currentPage, selectedSpecies, selectedSize, selectedGender,selectedStatus, goodWithChildren, goodWithAnimals, isNeutered,isHypoallergenic]}
+  {watch: [currentPage, selectedSpecies, selectedSize, selectedGender,selectedStatus, goodWithChildren, goodWithAnimals, isNeutered,isHypoallergenic, () => route.query.s]}
 )
 
 
@@ -256,6 +267,9 @@ const hasActiveFilters = computed(() =>
 )
 
 function resetFilters() {
+  const query = { ...route.query }
+  delete query.s
+  router.replace({ query })
   selectedSpecies.value = null
   selectedSize.value = null
   selectedGender.value = null

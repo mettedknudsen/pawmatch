@@ -196,7 +196,7 @@
             </div>
             <p class="text-xs text-neutral-400 mt-2">
               Har du en konto?
-              <Button variant="plain" type="button" class="!px-0 mt-1 hover:underline" @click="showLoginForm = true">Tryk her</Button>
+              <Button variant="plain" type="button" class="!px-0 mt-1 hover:underline" @click="showLoginForm = true">Log ind her</Button>
             </p>
           </template>
         </section>
@@ -360,7 +360,11 @@ const {data: timeslots, refresh: timeslotRefresh} = await useAsyncData('booking-
       .lt('starts_at', end) // less than (start of the next day)
       .order('starts_at')
     return data
-  }, {watch: [selectedDate]} // update/watch when selected date changes !
+  },{
+    watch: [selectedDate], // update/watch when selected date changes !
+    server: false, // only in browser
+    lazy: true, // no black ssr
+  }
 )
 // reset timeslot selection if date changes
 watch([selectedDate], () => {
@@ -374,9 +378,8 @@ const availableTimeslots = computed(() =>
     if(booked >= t.capacity) return false // if at capacity return false
 
     // then check if the animal is booked at this timeslot
-    if(form.animal_id && animalBookedSlots.value?.includes(t.id)) return false
+    return !(form.animal_id && animalBookedSlots.value?.includes(t.id));
 
-    return true
   }) ?? []
 )
 
@@ -405,6 +408,9 @@ const { data: availableDates } = await useAsyncData('available-dates', async () 
     }
   })
   return Array.from(dates)
+}, {
+  server: false,
+  lazy:   true,
 })
 
 const formattedDate = (dateStr) => {

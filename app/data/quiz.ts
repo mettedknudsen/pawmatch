@@ -6,9 +6,9 @@ export const quizData = {
       type: 'species',
       options: [
         {label: 'Kat', value:'cat', icon:'cat', classes:'bg-rust-500 hover:bg-rust-500/70 text-rust-900'},
-        {label: 'Hund', value:'dog', icon:'dog', classes:'bg-bark-300 hover:bg-bark-300/70 text-bark-500'},
+        {label: 'Hund', value:'dog', icon:'dog', classes:'bg-bark-300 active:bg--bark-300 hover:bg-bark-300/70 text-bark-500'},
         {label: 'Kanin', value:'rabbit', icon:'rabbit', classes:'bg-salvie-300 hover:bg-salvie-300/70 text-salvie-700'},
-        {label: 'Det er ligegyldigt', value:'all', icon:'i-lucide-x', classes: 'bg-neutral-200 hover:bg-neutral-200/70 text-neutral-500'}
+        {label: 'Det er ligegyldigt', value:'all', icon:'i-lucide-x', classes: 'bg-neutral-300 hover:bg-neutral-200/70 text-neutral-500'}
       ]},
   ],
   shared: [
@@ -18,8 +18,8 @@ export const quizData = {
       field:'is_hypoallergenic',
       type: 'boolean',
       options: [
-        {label: 'Ja', value:true, icon:'i-lucide-check'},
-        {label: 'Nej', value:false, icon:'i-lucide-x'}
+        {label: 'Ja', value:true, icon:'i-lucide-check', classes: 'bg-salvie-700 text-white active:bg-salvie-900 hover:bg-salvie-900'},
+        {label: 'Nej', value:false, icon:'i-lucide-x', classes: 'bg-rust-900 text-white active:bg-rust-900-hover hover:bg-rust-900-hover'}
     ]},
 
     {
@@ -28,8 +28,8 @@ export const quizData = {
       field:'good_with_children',
       type: 'boolean',
       options: [
-        {label: 'Ja', value:true, icon:'i-lucide-check'},
-        {label: 'Nej', value:false, icon:'i-lucide-x'}
+        {label: 'Ja', value:true, icon:'i-lucide-check', classes: 'bg-salvie-700 text-white active:bg-salvie-900 hover:bg-salvie-900'},
+        {label: 'Nej', value:false, icon:'i-lucide-x', classes: 'bg-rust-900 text-white active:bg-rust-900-hover hover:bg-rust-900-hover'}
     ]},
 
     {
@@ -38,8 +38,8 @@ export const quizData = {
       field:'good_with_animals',
       type: 'boolean',
       options: [
-        {label: 'Ja', value:true, icon:'i-lucide-check'},
-        {label: 'Nej', value:false, icon:'i-lucide-x'}
+        {label: 'Ja', value:true, icon:'i-lucide-check', classes: 'bg-salvie-700 text-white active:bg-salvie-900 hover:bg-salvie-900'},
+        {label: 'Nej', value:false, icon:'i-lucide-x', classes: 'bg-rust-900 text-white active:bg-rust-900-hover hover:bg-rust-900-hover'}
     ]},
 
     {
@@ -48,9 +48,9 @@ export const quizData = {
       field:'shedding_level',
       type: 'scale',
       options: [
-        {label: 'Mindst muligt', value:1},
-        {label: 'Lidt er ok', value:2},
-        {label: 'Det er ligegyldigt', value:3},
+        {label: 'Mindst muligt', value:1, classes: 'active:bg--bark-300 hover:bg-bark-300 bg-sand text-bark-900'},
+        {label: 'Lidt er ok', value:2, classes: 'bg-terrakotta active:bg-terrakotta-hover hover:bg-terrakotta-hover text-white'},
+        {label: 'Det er ligegyldigt', value:3, classes: 'bg-bark-500 active:bg-bark-900 hover:bg-bark-900  text-white'},
     ]},
 
     {
@@ -60,9 +60,9 @@ export const quizData = {
       mode: 'requirement',
       type: 'scale',
       options: [
-        {label: 'Kæler der, hvor det selv ligger', value: 1 },
-        {label: 'Lidt nus og kontakt', value: 2 },
-        {label: 'Putte, løfte og tæt kontakt', value: 3 },
+        {label: 'Kæler der, hvor det selv ligger', value: 1 , classes: 'active:bg--bark-300 hover:bg-bark-300 bg-sand text-bark-900'},
+        {label: 'Lidt nus og kontakt', value: 2 , classes: 'bg-terrakotta active:bg-terrakotta-hover hover:bg-terrakotta-hover text-white'},
+        {label: 'Putte, løfte og tæt kontakt', value: 3 , classes: 'bg-bark-500 active:bg-bark-900 hover:bg-bark-900  text-white'},
       ]},
 
   ],
@@ -73,9 +73,9 @@ export const quizData = {
         field: 'size',
         type: 'enum',
         options: [
-          {label:'Lille', value: 'small',description: 'Under 10 kg'},
-          {label:'Mellem', value: 'medium', description: '10–25 kg'},
-          {label:'Stor',value: 'large', description: 'Over 25 kg'},
+          {label:'Lille', value: 'small',description: 'Under 10 kg', classes: 'active:bg--bark-300 hover:bg-bark-300 bg-sand text-bark-900'},
+          {label:'Mellem', value: 'medium', description: '10–25 kg', classes: 'bg-terrakotta active:bg-terrakotta-hover hover:bg-terrakotta-hover text-white'},
+          {label:'Stor',value: 'large', description: 'Over 25 kg', classes: 'bg-bark-500 active:bg-bark-900 hover:bg-bark-900  text-white'},
         ]},
 
       {
@@ -85,9 +85,9 @@ export const quizData = {
         mode: 'requirement',
         type: 'scale',
         options: [
-          {label:'Rolig', value: 1,description: 'Mest sofahygge'},
-          {label:'Moderat', value: 2, description: 'Daglige gåture'},
-          {label:'Aktiv',value: 3, description: 'Løb og sport'},
+          {label:'Rolig', value: 1,description: 'Mest sofahygge', classes: 'active:bg--bark-300 hover:bg-bark-300 bg-sand text-bark-900'},
+          {label:'Moderat', value: 2, description: 'Daglige gåture', classes: 'bg-terrakotta active:bg-terrakotta-hover hover:bg-terrakotta-hover text-white'},
+          {label:'Aktiv',value: 3, description: 'Løb og sport', classes: 'bg-bark-500 active:bg-bark-900 hover:bg-bark-900  text-white'},
         ]},
 
         {
@@ -97,9 +97,9 @@ export const quizData = {
           mode: 'requirement',
           type: 'enum',
           options: [
-            {label: 'Lille lejlighed', value: 'small' },
-            {label: 'Mellemstor bolig',value: 'medium' },
-            {label: 'Hus med have', value: 'large'},
+            {label: 'Lille lejlighed', value: 'small' , classes: 'active:bg--bark-300 hover:bg-bark-300 bg-sand text-bark-900'},
+            {label: 'Mellemstor bolig',value: 'medium' , classes: 'bg-terrakotta active:bg-terrakotta-hover hover:bg-terrakotta-hover text-white'},
+            {label: 'Hus med have', value: 'large', classes: 'bg-bark-500 active:bg-bark-900 hover:bg-bark-900  text-white'},
           ]},
   ],
   cat: [
@@ -110,8 +110,8 @@ export const quizData = {
       type: 'boolean',
       mode: 'requirement',
       options: [
-        {label: 'Ja, have/altan', value: true },
-        {label: 'Nej, indekat',value: false},
+        {label: 'Ja, have/altan', value: true , classes: 'bg-salvie-700 text-white active:bg-salvie-900 hover:bg-salvie-900'},
+        {label: 'Nej, indekat',value: false, classes: 'bg-rust-900 text-white active:bg-rust-900-hover hover:bg-rust-900-hover'},
       ]},
 
     {
@@ -120,11 +120,10 @@ export const quizData = {
       field: 'independence_level',
       type: 'scale',
       options: [
-        {label: 'Selvstændig',value: 3 },
-        {label: 'Lidt af begge', value: 2 },
-        {label: 'Meget social', value: 1 },
+        {label: 'Selvstændig',value: 3 , classes: 'active:bg--bark-300 hover:bg-bark-300 bg-sand text-bark-900'},
+        {label: 'Lidt af begge', value: 2 , classes: 'bg-terrakotta active:bg-terrakotta-hover hover:bg-terrakotta-hover text-white'},
+        {label: 'Meget social', value: 1 , classes: 'bg-bark-500 active:bg-bark-900 hover:bg-bark-900  text-white'},
       ]},
-
   ],
   rabbit: [
     {
@@ -134,9 +133,9 @@ export const quizData = {
       type: 'enum',
       mode: 'requirement',
       options: [
-        {label: 'Lille lejlighed', value: 'small' },
-        {label: 'Mellemstor bolig',value: 'medium' },
-        {label: 'Hus med have', value: 'large'},
+        {label: 'Lille lejlighed', value: 'small' , classes: 'active:bg--bark-300 hover:bg-bark-300 bg-sand text-bark-900'},
+        {label: 'Mellemstor bolig',value: 'medium' , classes: 'bg-terrakotta active:bg-terrakotta-hover hover:bg-terrakotta-hover text-white'},
+        {label: 'Hus med have', value: 'large', classes: 'bg-bark-500 active:bg-bark-900 hover:bg-bark-900  text-white'},
       ]},
   ]
 }
