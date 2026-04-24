@@ -8,11 +8,12 @@ export default defineNuxtConfig({
   devtools: { enabled: !process.env.PRODUCTION },
   modules: [
     '@nuxtjs/supabase',
+    "@netlify/nuxt",
     '@pinia/nuxt',
     '@nuxt/image',
     '@nuxt/icon',
     '@nuxt/ui',
-    '@yuta-inoue-ph/nuxt-vcalendar'
+    '@yuta-inoue-ph/nuxt-vcalendar',
   ],
   ui: {
     colorMode: false
@@ -38,6 +39,9 @@ export default defineNuxtConfig({
         '@nuxt/ui > prosemirror-view',
         '@nuxt/ui > prosemirror-gapcursor',
       ]
+    },
+    nitro: {
+      preset: 'netlify'
     },
     plugins: [
       tailwindcss(),

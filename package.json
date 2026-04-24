@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@iconify-json/lucide": "^1.2.103",
+    "@netlify/nuxt": "^0.2.41",
     "@yuta-inoue-ph/nuxt-vcalendar": "^1.1.4"
   }
 }
