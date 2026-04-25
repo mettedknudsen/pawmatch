@@ -1,6 +1,6 @@
 [build]
 command = "pnpm run build"
-publish = ".output/public"
+publish = ".output/server"
 
 [functions]
 directory = ".netlify/functions"
