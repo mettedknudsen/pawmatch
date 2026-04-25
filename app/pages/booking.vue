@@ -486,6 +486,7 @@ async function save() {
       }
     })
     success.value = true
+    scrollTop()
   }
   catch (e: any) {
     error.value = e.message ?? 'Der skete en fejl, prøv igen'
@@ -494,12 +495,19 @@ async function save() {
     if (success.value) {
       // refresh data for timeslots after successful booking - since else it's cached - in case they book again - though unlikely.
       await Promise.all([
+        clearNuxtData('booking-timeslots', `animal-booked-${form.animal_id}`),
         animalTimeslotRefresh(),
         timeslotRefresh()
       ])
     }
     loading.value = false
   }
+}
+function scrollTop(){
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
 }
 </script>
 

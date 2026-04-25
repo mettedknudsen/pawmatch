@@ -35,7 +35,7 @@ async function handleAnswer(value: any) {
         <p class="text-neutral-500 mb-8">Baseret på dine svar har vi fundet disse dyr til dig</p>
         <Button type="button" @click="quiz.reset()" size="sm" class="absolute right-0 top-0">Tag quiz igen</Button>
       </div>
-        <div class="md:grid grid-cols-2 xl:grid-cols-3 gap-4">
+        <div class="md:grid grid-cols-2 xl:grid-cols-3 gap-4 max-md:space-y-4">
         <article
           v-for="({ animal, percent }, i) in quiz.results" :key="i" class="relative">
           <PetCard
@@ -59,7 +59,7 @@ async function handleAnswer(value: any) {
 
           <h2 class="font-inter font-medium text-xl mb-10">{{ quiz.questions[quiz.currentStep].question }}</h2>
 
-        <div class="flex space-x-2">
+        <div class="flex flex-col gap-2">
           <UButton v-for="option in quiz.questions[quiz.currentStep].options"
                    :class="option.classes"
                    :icon="iconMap[option.icon] ?? option.icon"

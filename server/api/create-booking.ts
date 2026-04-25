@@ -1,12 +1,13 @@
-import { createClient } from '@supabase/supabase-js'
+
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
 
+  const { createClient } = await import('@supabase/supabase-js')
   const config = useRuntimeConfig()
 
   const supabase = createClient(
-    process.env.SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY
+    config.public.supabaseUrl,
+    config.supabaseServiceRoleKey
   )
 
   let guest_id: string
@@ -62,7 +63,10 @@ export default defineEventHandler(async (event) => {
       status: 'confirmed'
     })
 
-  if (error) throw error
+  if (error) {
+    console.error('CREATE BOOKING ERROR:', error)
+    throw error
+  }
   // booking made, now set succes to give receipt
   return {success: true}
 })

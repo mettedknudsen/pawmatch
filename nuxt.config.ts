@@ -6,6 +6,12 @@ export default defineNuxtConfig({
   target: process.env.TARGET || 'server',
   compatibilityDate: '2025-07-15',
   devtools: { enabled: !process.env.PRODUCTION },
+  runtimeConfig: {
+    supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
+    public: {
+      supabaseUrl: process.env.SUPABASE_URL
+    }
+  },
   modules: [
     '@nuxtjs/supabase',
     "@netlify/nuxt",
@@ -41,8 +47,12 @@ export default defineNuxtConfig({
       ]
     },
     nitro: {
-      preset: 'netlify'
+      preset: 'netlify',
+      externals: {
+        external: ['@supabase/supabase-js']
+      }
     },
+
     plugins: [
       tailwindcss(),
       svgLoader()
