@@ -12,6 +12,12 @@ export default defineNuxtConfig({
       supabaseUrl: process.env.SUPABASE_URL
     }
   },
+  nitro: {
+    preset: 'netlify',
+    externals: {
+      external: ['@supabase/supabase-js']
+    }
+  },
   modules: [
     '@nuxtjs/supabase',
     "@netlify/nuxt",
@@ -45,12 +51,6 @@ export default defineNuxtConfig({
         '@nuxt/ui > prosemirror-view',
         '@nuxt/ui > prosemirror-gapcursor',
       ]
-    },
-    nitro: {
-      preset: 'netlify',
-      externals: {
-        external: ['@supabase/supabase-js']
-      }
     },
 
     plugins: [
