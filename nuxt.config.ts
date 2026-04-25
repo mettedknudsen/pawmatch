@@ -6,18 +6,14 @@ export default defineNuxtConfig({
   target: process.env.TARGET || 'server',
   compatibilityDate: '2025-07-15',
   devtools: { enabled: !process.env.PRODUCTION },
+
   runtimeConfig: {
     supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
     public: {
       supabaseUrl: process.env.SUPABASE_URL
     }
   },
-  nitro: {
-    preset: 'netlify',
-    externals: {
-      external: ['@supabase/supabase-js']
-    }
-  },
+
   modules: [
     '@nuxtjs/supabase',
     "@netlify/nuxt",
@@ -27,20 +23,32 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@yuta-inoue-ph/nuxt-vcalendar',
   ],
+
+  nitro: {
+    preset: 'netlify',
+    externals: {
+      external: ['@supabase/supabase-js']
+    }
+  },
+
   ui: {
     colorMode: false
   },
+
   image: {
     format: ['webp'],
     domains: ['rlqzvlavdwokmnrsdygx.supabase.co'],
   },
+
   supabase: {
     redirect: false,
     url: process.env.SUPABASE_URL,
     key: process.env.SUPABASE_KEY,
     types: '~/types/database.types.ts'
   },
+
   css: ['~/assets/css/main.css'],
+
   vite: {
     optimizeDeps: {
       include: [
