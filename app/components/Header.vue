@@ -32,7 +32,7 @@
       </ul>
       <ul class="space-y-3 mt-5 pt-5 border-t border-bark-300/30">
         <li v-for="item in userMenuItems" :key="item.label">
-          <Button :to="item.to" color="white" variant="plain" class="!p-0" @click="isOpen = !isOpen">
+          <Button color="white" variant="plain" class="!p-0" @click="handleClick(item, $event)">
             {{ item.label }}
           </Button>
         </li>
@@ -60,17 +60,18 @@
         </ul>
       </nav>
       <div class="flex items-center space-x-2 max-md:hidden flex-1 justify-end">
-
+      <client-only>
         <UDropdownMenu
           arrow
           :items="userMenuItems"
           :ui="{
-        content: 'w-48 max-md:hidden'
-      }"
+            content: 'w-48 max-md:hidden'
+          }"
         >
           <UButton icon="i-lucide-circle-user-round" color="neutral" variant="ghost"
                    class="[&_span]:size-6 hover:text-salvie-700 hover:bg-transparent"/>
         </UDropdownMenu>
+      </client-only>
 
         <Button
           :to="route.matched[0].path ==='/dyr/:id()' ? {path: '/booking', query: {dyr: route.params.id} }: '/booking'"
@@ -91,6 +92,16 @@ const route = useRoute()
 
 const {isAdmin, isLoggedIn, signOut} = useAuth()
 
+function handleClick(item: MenuItem, e: Event) {
+  if (item.onSelect) {
+    e.preventDefault()
+    item.onSelect(e)
+  }
+  if (item.to) {
+    navigateTo(item.to)
+  }
+  isOpen.value = false
+}
 
 const userMenuItems = computed<MenuItem[]>(() => [
   ...(isLoggedIn.value ? [
@@ -110,16 +121,16 @@ const userMenuItems = computed<MenuItem[]>(() => [
         icon: 'i-maki-dog-park',
         to: '/admin/dyr'
       },
+      {
+        label: 'Brugere',
+        icon: 'i-lucide-users',
+        to: '/admin/brugere'
+      },
     ] : [
       {
         label: 'Brugerindstillinger',
         icon: 'i-lucide-user-round-cog',
         to: '/bruger'
-      },
-      {
-        label: 'Favoritter',
-        icon: 'i-lucide-heart',
-        to: '/bruger/favoritter'
       },
       {
         label: 'Bookinger',
@@ -152,7 +163,7 @@ const userMenuItems = computed<MenuItem[]>(() => [
 const navItems = [
   {to: '/match-quiz', label: 'Find dit match'},
   {to: '/dyr', label: 'Dyrene', disabled: false},
-  {to: '/om-os', label: 'Om os', disabled: true},
-  {to: '/kontakt', label: 'Kontakt', disabled: true},
+  {label: 'Om os', disabled: true},
+  {label: 'Kontakt', disabled: true},
 ]
 </script>

@@ -176,7 +176,6 @@ const exceptions = ref<{
   open?: number
   close?: number
   label?: string
-  capacity: number
 }[]>([])
 
 const selectedDays = ref<CalendarDate[]>([])

@@ -34,8 +34,8 @@ const { data } = await useAsyncData('species-block', async () => {
 })
 
 const species = computed(() => [
-  { amount: data.value?.cats, label: 'Katte', to: {path:'/dyr', query: {species: 'cat'}}, classes: 'bg-rust-500 hover:bg-rust-500/70 text-rust-900', icon:CatSvg},
-  { amount: data.value?.dogs, label: 'Hunde',  to: {path:'/dyr', query: {species: 'dog'}}, classes: 'bg-bark-300 hover:bg-bark-300/70 text-bark-500', icon: DogSvg},
-  { amount: data.value?.rabbits, label: 'Kaniner',  to: {path:'/dyr', query: {species: 'rabbit'}}, classes: 'bg-salvie-300 hover:bg-salvie-300/70 text-salvie-700', icon: RabbitSvg},
+  { amount: data.value?.cats, label: 'Katte', to: {path:'/dyr', query: {s: 'cat'}}, classes: 'bg-rust-500 hover:bg-rust-500/70 text-rust-900', icon:CatSvg},
+  { amount: data.value?.dogs, label: 'Hunde',  to: {path:'/dyr', query: {s: 'dog'}}, classes: 'bg-bark-300 hover:bg-bark-300/70 text-bark-500', icon: DogSvg},
+  { amount: data.value?.rabbits, label: 'Kaniner',  to: {path:'/dyr', query: {s: 'rabbit'}}, classes: 'bg-salvie-300 hover:bg-salvie-300/70 text-salvie-700', icon: RabbitSvg},
 ])
 </script>

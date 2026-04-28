@@ -69,8 +69,8 @@ const footerContent = [
   { heading: 'Navigation', links: [
       { to: '/dyr', label: 'Dyrene' },
       { to: '/match-quiz',label: 'Find dit match'},
-      { to: '/om-os', label: 'Om os', disabled: true },
-      { to: '/kontakt', label: 'Kontakt', disabled: true },
+      { label: 'Om os', disabled: true },
+      { label: 'Kontakt', disabled: true },
     ]
   },
   { heading: 'Dyr',

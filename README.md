@@ -1,23 +1,13 @@
-# Nuxt Minimal Starter
-
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
-
 ## Setup
 
 Make sure to install dependencies:
 
 ```bash
-# npm
-npm install
+# node version
+v24.14.0
 
 # pnpm
 pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
 ## Development Server
@@ -25,51 +15,40 @@ bun install
 Start the development server on `http://localhost:3000`:
 
 ```bash
-# npm
-npm run dev
-
 # pnpm
-pnpm dev
+pnpm run dev 
 
-# yarn
-yarn dev
+or
 
-# bun
-bun run dev
+nuxt dev
 ```
 
 ## Production
 
 Build the application for production:
 
+Netlify deploy: `https://69ecbc904d70a5000810b601--glistening-licorice-d43f02.netlify.app/`
 ```bash
-# npm
-npm run build
-
 # pnpm
 pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
 Locally preview production build:
 
 ```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+node .output/server/index.mjs    
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+## Login credentials
+
+```bash
+# admin
+censor@admin.dk
+
+# standard user
+censor@bruger.dk
+
+# password
+password123
+```

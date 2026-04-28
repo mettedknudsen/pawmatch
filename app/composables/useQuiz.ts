@@ -36,7 +36,10 @@ export const useQuiz = () => {
           // bool
           if(typeof answerValue === 'boolean') {
             // if animals requirement/needs is not met - give penalty score
-            if (question?.mode === 'requirement' && animalValue === true && answerValue === false) score -= 1
+            if (question?.mode === 'requirement' && animalValue === true && answerValue === false) {
+              score--
+              total++
+            }
 
               // users needs - if false they dont have a specific need
               // child / allergy / other animals
@@ -52,20 +55,20 @@ export const useQuiz = () => {
           // range can give 1 / 0.5 / 0 points - depending on the difference
           else if (typeof answerValue === 'number'){
             // if animals requirement/needs is not met - give penalty score
-            if (question?.mode === 'requirement' && answerValue === 1 && animalValue === 3) score -= 2
-              total++
+            if (question?.mode === 'requirement' && answerValue === 1 && animalValue === 3) score--
 
               const diff = Math.abs((animalValue as number) - answerValue)
               score += diff === 0 ? 1 : diff== 1 ? 0.5 : 0
+              total++
           }
           // our enum values gives 1 point if they match
           else {
             // if animals requirement/needs is not met - give penalty score
-            if (question?.mode === 'requirement' && answerValue === 'small' && animalValue === 'large') score -= 2
-            total++
+            if (question?.mode === 'requirement' && answerValue === 'small' && animalValue === 'large') score--
             if(answerValue === animalValue){
               score++
             }
+            total++
           }
         }
 
@@ -79,7 +82,7 @@ export const useQuiz = () => {
 
       })
       .sort((a, b) => b.score - a.score) // high to small
-      .slice(0, 6) // top3
+      .slice(0, 3) // top3
   }
 
   return {findMatches}

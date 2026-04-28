@@ -57,9 +57,9 @@ async function handleAnswer(value: any) {
     <div v-else-if="!quiz.loading">
       <div v-if="quiz.questions[quiz.currentStep]" class="flex flex-col justify-center items-center">
 
-          <h2 class="font-inter font-medium text-xl mb-10">{{ quiz.questions[quiz.currentStep].question }}</h2>
+          <h2 class="font-inter font-medium text-xl mb-10 text-bark-900 text-center">{{ quiz.questions[quiz.currentStep].question }}</h2>
 
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-wrap justify-center gap-2">
           <UButton v-for="option in quiz.questions[quiz.currentStep].options"
                    :class="option.classes"
                    :icon="iconMap[option.icon] ?? option.icon"
@@ -74,12 +74,10 @@ async function handleAnswer(value: any) {
             {{ quiz.currentStep === 0 ? 'Start forfra' : 'Gå tilbage' }}
           </Button>
       </div>
-
-      <div v-else class="text-center py-20">
-        <div class="w-10 h-10 border-4 border-t-terrakotta border-neutral-200 rounded-full animate-spin mx-auto mb-4" />
-        <p class="text-neutral-500">Finder dine matches...</p>
-      </div>
-
+    </div>
+    <div v-else class="text-center py-20">
+      <div class="w-10 h-10 border-4 border-t-terrakotta border-neutral-200 rounded-full animate-spin mx-auto mb-4" />
+      <p class="text-neutral-500">Finder dine matches...</p>
     </div>
   </main>
 

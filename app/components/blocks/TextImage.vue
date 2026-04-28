@@ -10,8 +10,10 @@
 
       <Button variant="bordered" color="white" to="/dyr/1b2872f9-4fa7-49db-b034-6a1420276b6c" class="hover:bg-white/20">Se hans profil</Button>
     </div>
-    <NuxtPicture format="avif" src="/image-text-block-rabbit.avif"
-                 class="col-span-8 lg:col-span-7 col-start-5 lg:col-start-6 row-start-1 bg-neutral-300 [&_img]:h-full max-h-[700px] [&_img]:object-cover"/>
+    <figure class="col-span-8 lg:col-span-7 col-start-5 lg:col-start-6 row-start-1 bg-neutral-300 [&_img]:h-full max-h-[700px] h-full [&_img]:object-cover">
+      <NuxtPicture alt="Kaninen Basse" format="avif" src="/image-text-block-rabbit.avif"/>
+    </figure>
+
   </section>
 </template>
 <script setup lang="ts">

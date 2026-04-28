@@ -55,11 +55,11 @@
             <p class="font-bold text-bark-500">{{ bookingDateTime(booking.starts_at, booking.duration_minutes).time }}</p>
           </div>
           <div class="flex gap-2 justify-end">
-            <Button variant="bordered" :to="`/admin/bookinger/${booking.id}`" color="dark" size="sm" :icon="EditSvg" class="h-8"></Button>
+            <Button variant="bordered" :to="`/admin/bookinger/${booking.id}`" color="dark" size="sm" :icon="EditSvg" class="h-8" data-action="edit"></Button>
             <Button variant="bordered" @click="cancelBooking(booking.id)" color="alert" size="sm" class="bg-transparent hover:bg-rust-900 hover:text-white h-8"  v-if="booking.status === 'confirmed'">
               Aflys
             </Button>
-            <Button variant="bordered" @click="deleteBooking(booking.id)" color="alert" class="bg-transparent hover:bg-rust-900 hover:text-white [&_svg]:size-5 h-8" :icon="DeleteSvg"  v-else-if="booking.status === 'cancelled'">
+            <Button variant="bordered" @click="deleteBooking(booking.id)" color="alert" class="bg-transparent hover:bg-rust-900 hover:text-white [&_svg]:size-5 h-8" :icon="DeleteSvg" data-action="delete" v-else-if="booking.status === 'cancelled'">
             </Button>
           </div>
         </td>

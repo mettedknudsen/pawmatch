@@ -19,9 +19,8 @@
             {to: '/admin', text: 'Overblik'},
             {to: '/admin/bookinger', text: 'Bookinger'},
             {to: '/admin/dyr', text: 'Dyr'},
-            {to: '/admin/tider', text: 'Tider'},
             {to: '/admin/brugere', text: 'Brugere'},
-            {to: '/admin/sider', text: 'Sider'},
+            {to: '/admin/tider', text: 'Tider'},
           ]"
         :key="item.to"
         :to="item.to"

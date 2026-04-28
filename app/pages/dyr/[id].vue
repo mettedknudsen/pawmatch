@@ -3,7 +3,7 @@
     <div class="pawmatch-container flex flex-col lg:grid grid-cols-12 min-h-[100vh-100px] mb-10 md:mb-20">
       <!--  Content  -->
       <section class="col-span-5">
-        <div class="hidden md:flex md:space-x-7 items-center max-md:justify-between mb-10 max-lg:mt-10">
+        <div class="hidden md:flex md:space-x-7 items-center max-lg:justify-between mb-10 max-lg:mt-10">
           <h1 class="text-2xl font-bold font-inter" v-if="pet.name">{{ pet.name }}</h1>
 
           <div class="h-10 relative flex items-center justify-center p-1" v-if="pet.status === 'available'">
@@ -41,7 +41,7 @@
           </div>
 
         </div>
-      <figure class="relative  max-md:pb-8">
+      <figure class="relative  max-md:pb-8 [&_img]:object-cover [&_img]:w-full">
         <template v-if="images.length > 1">
           <div class="relative aspect-[4/3] rounded-2xl overflow-hidden">
             <NuxtImg
@@ -119,7 +119,7 @@
           <li v-for="item in attributes" :key="item.key" class="max-lg:w-full lg:flex-1/2 py-2 space-x-2 px-2 [&:not(:last-child)]:[&>div]:border-b">
             <div class="pb-4 flex items-center max-lg:justify-between lg:space-x-4 border-rust-900">
               <strong>{{ item.label }}:</strong>
-              <span class="capitalize">{{ item.value }}</span>
+              <span class="capitalize text-right">{{ item.value }}</span>
             </div>
           </li>
         </ul>

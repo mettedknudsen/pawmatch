@@ -44,7 +44,7 @@ const { data, refresh} = await useAsyncData('admin-overview', async () => {
   loading.value = true
   const [animals, bookings, todaysBookings] = await Promise.all([
     supabase.from('animals').select('status'),
-    supabase.from('bookings').select('status, created_at').eq('status', 'confirmed'),
+    supabase.from('bookings').select('id').eq('status', 'confirmed'),
     supabase.from('todays_bookings').select('*'),
   ])
   loading.value = false

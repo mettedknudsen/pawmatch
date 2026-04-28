@@ -11,7 +11,7 @@
         </div>
       </article>
       <figure class="col-span-7">
-        <NuxtPicture format="webp" src="/hero-image-pawmatch.webp" width="835" height="527" class="[&_img]:!w-full [&_img]:h-auto max-md:[&_img]:object-cover max-md:[&_img]:!min-h-[400px]"/>
+        <NuxtPicture alt="Pawmatch hero" format="webp" src="/hero-image-pawmatch.webp" width="835" height="527" class="[&_img]:!w-full [&_img]:h-auto max-md:[&_img]:object-cover max-md:[&_img]:!min-h-[400px]"/>
       </figure>
     </div>
   </section>

@@ -1,6 +1,6 @@
 <template>
   <div class="pawmatch-container lg:grid grid-cols-12 gap-4 max-lg:space-y-4 mb-10 lg:mb-20 min-h-[90vh] content-start">
-          <!--  Reciept for booking  -->
+    <!--  Reciept for booking  -->
     <main v-if="success" class="col-span-12 text-center py-5 lg:py-10">
       <section class="max-w-lg mx-auto py-5 lg:py-20 bg-white px-3 md:px-5">
         <div class="w-16 h-16 bg-salvie-300 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -50,7 +50,6 @@
         </div>
       </section>
     </main>
-
     <!--  booking flow  -->
     <template v-else>
       <div class="col-span-12">
@@ -140,12 +139,12 @@
       <div v-if="selectedDate" class="max-lg:px-5 mb-7 lg:mb-10">
         <h3 class="mb-5">Ledige tider <span class="px-1">-</span> {{ formattedDate(selectedDate) }}</h3>
         <div>
-          <div v-if="availableTimeslots.length === 0" class="text-sm py-4 text-neutral-400 ">
+          <div v-if="timeslots?.length === 0" class="text-sm py-4 text-neutral-400 ">
             Ingen ledige tider på denne dato — vælg en anden dag
           </div>
           <div v-else class="grid grid-cols-3 sm:grid-cols-4 gap-2">
             <button
-              v-for="slot in availableTimeslots"
+              v-for="slot in timeslots"
               :key="slot.id"
               type="button"
               class="p-3 border text-sm font-medium rounded-xl transition "
@@ -154,8 +153,8 @@
             >
               {{Temporal.Instant.from(slot.starts_at).toZonedDateTimeISO('Europe/Copenhagen').toLocaleString('da-DK', { hour: '2-digit', minute: '2-digit' })}}
               <span class="block text-xs mt-0.5 opacity-70">
-                {{slot.capacity - (slot.bookings?.[0]?.count ?? 0)}}
-                {{slot.capacity - (slot.bookings?.[0]?.count ?? 0) === 1 ? 'ledig' : 'ledige'}}
+                {{slot.remaining_spots}}
+                {{slot.remaining_spots === 1 ? 'ledig' : 'ledige'}}
               </span>
             </button>
           </div>
@@ -178,8 +177,8 @@
               <p v-if="loginError" class="text-sm text-rust-900">{{ loginError }}</p>
               <div class="flex gap-2 items-center">
                 <Button type="submit" :loading="loginLoading" size="sm">Log ind</Button>
-                <Button type="button" variant="plain" color="dark" size="sm" class="!px-0" @click="showLoginForm = false">
-                  Annuller
+                <Button type="button" variant="plain" color="dark" size="sm" class="!px-0 underline" @click="showLoginForm = false">
+                  Lav booking uden bruger
                 </Button>
               </div>
             </form>
@@ -262,7 +261,7 @@ const form = reactive({
 })
 
 // login form info
-const showLoginForm = ref(false)
+const showLoginForm = ref(true)
 const loginEmail = ref('')
 const loginPassword = ref('')
 const loginError = ref('')
@@ -318,102 +317,39 @@ const availableAppointmentTypes = computed(() => {
     Object.entries(appointmentType).filter(([key]) => allowed.includes(key))
   )
 })
-
-//---- get the timeslots where the chosen animal is booked ----//
-const {data:animalBookedSlots, refresh: animalTimeslotRefresh} = await useAsyncData(`animal-booked-${form.animal_id}`, async() => {
-  if(!form.animal_id) return []
-  const {data} = await supabase.from('bookings')
-    .select('timeslot_id')
-    .eq('animal_id', form.animal_id)
-    .neq('status', 'cancelled')
-  return data?.map(b =>b.timeslot_id) ?? []
-
-},{watch: [() => form.animal_id]}
+const {data:availableDates} = await useAsyncData('available-dates', () =>
+  $fetch('/api/calendar-dates'),
+  {
+    server: false,
+    lazy: true
+  }
 )
 
-
-//---- get the timeslots for date ----//
-const {data: timeslots, refresh: timeslotRefresh} = await useAsyncData('booking-timeslots', async () =>{
-    if(!selectedDate.value) return []
-    const dateZoned = Temporal.PlainDate.from(selectedDate.value).toZonedDateTime('Europe/Copenhagen')
-
-    // We need to check if the timeslots have already passed
-    const now = Temporal.Now.instant()
-
-    let startOfSelectedDay = dateZoned.startOfDay().toInstant()
-
-    // then the time of the day
-    if(Temporal.Instant.compare(now, startOfSelectedDay) > 0){
-      startOfSelectedDay = now
+const {data:timeslots } = await useAsyncData('booking-timeslots', () =>
+  $fetch('/api/timeslots', {
+    query: {
+      animal_id: petId.value ?? null,
+      date: selectedDate?.value
     }
-
-    // start of selected day or the current time, if that is after
-    const start = startOfSelectedDay.toString()
-
-    // start of the day after selected date
-    const end = Temporal.PlainDate.from(selectedDate.value).toZonedDateTime('Europe/Copenhagen').add({days: 1}).startOfDay().toInstant().toString()
-
-    const { data} = await supabase
-      .from('timeslots')
-      .select('*, bookings(count)')
-      .gte('starts_at', start) // greater than (first minute of the day)
-      .lt('starts_at', end) // less than (start of the next day)
-      .order('starts_at')
-    return data
-  },{
-    watch: [selectedDate], // update/watch when selected date changes !
-    server: false, // only in browser
-    lazy: true, // no black ssr
-  }
+  }),
+  {watch: [selectedDate, petId]}
 )
 // reset timeslot selection if date changes
 watch([selectedDate], () => {
   form.timeslot_id = ''
 } )
 
-const availableTimeslots = computed(() =>
-  timeslots.value?.filter(t => {
-    // first check the capacity - is the amount booked reach the capacity
-    const booked = t.bookings?.[0]?.count ?? 0
-    if(booked >= t.capacity) return false // if at capacity return false
-
-    // then check if the animal is booked at this timeslot
-    return !(form.animal_id && animalBookedSlots.value?.includes(t.id));
-
-  }) ?? []
-)
 
 // coloring the timeslots based on availability //
 function slotColorClass(slot: any) {
-  const remaining = slot.capacity - (slot.bookings?.[0]?.count ?? 0)
+  const remaining = slot.remaining_spots
   if (form.timeslot_id === slot.id) return 'bg-terrakotta text-white !font-bold border-terrakotta'
   if (remaining <= 1) return 'border-rust-500 text-rust-900 bg-rust-300/30'
   if (remaining === 2) return 'border-amber-400 text-amber-700 bg-amber-50'
   return 'border-neutral-200 text-bark-700 hover:border-terrakotta'
 }
 
-
-const { data: availableDates } = await useAsyncData('available-dates', async () => {
-  const { data } = await supabase
-    .from('timeslots')
-    .select('starts_at, bookings(count), capacity')
-    .gte('starts_at', new Date().toISOString())
-    .order('starts_at')
-
-  const dates = new Set<string>()
-  data?.forEach(slot => {
-    const booked = slot.bookings?.[0]?.count ?? 0
-    if (booked < slot.capacity) {
-      dates.add(slot.starts_at.split('T')[0])
-    }
-  })
-  return Array.from(dates)
-}, {
-  server: false,
-  lazy:   true,
-})
-
-const formattedDate = (dateStr) => {
+const formattedDate = (dateStr: string) => {
   if(!dateStr) return null
 
 // since we changed the selected date to a string, we need to change it to a plaindate to format it with temporal
@@ -492,17 +428,10 @@ async function save() {
     error.value = e.message ?? 'Der skete en fejl, prøv igen'
   }
   finally {
-    if (success.value) {
-      // refresh data for timeslots after successful booking - since else it's cached - in case they book again - though unlikely.
-      await Promise.all([
-        clearNuxtData('booking-timeslots', `animal-booked-${form.animal_id}`),
-        animalTimeslotRefresh(),
-        timeslotRefresh()
-      ])
-    }
     loading.value = false
   }
 }
+
 function scrollTop(){
   window.scrollTo({
     top: 0,

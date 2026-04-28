@@ -1,15 +1,16 @@
 <template>
-  <nuxt-link :to="`/dyr/${pet.id}`" class="pet-card block h-full hover:opacity-70 transition-opacity duration-300 ease-in">
+  <nuxt-link :to="`/dyr/${pet.id}`" class="pet-card block h-full">
+    <div class="group overflow-hidden" v-if="pet.images.length > 0">
     <NuxtImg
-      v-if="pet.images.length > 0"
       :src="getImageUrl(pet.images[0])"
       :alt="pet.name"
       width="400"
       height="300"
       fit="cover"
       loading="lazy"
-      class="w-full object-cover bg-neutral-200"
+      class="w-full object-cover bg-neutral-200 h-auto object-cover transition duration-500 group-hover:scale-110"
     />
+    </div>
     <div v-else class="w-full object-cover aspect-[1.33] flex items-center justify-center border border-b-neutral-400"
          :class="pet.species === 'dog' ? 'bg-bark-300 text-bark-500' : (pet.species === 'cat' ? 'bg-rust-500 text-rust-900 ' : 'bg-salvie-300 text-salvie-900')">
       <PetIcon v-if="pet.species" :species="pet.species" class="w-16 h-16"/>

@@ -47,6 +47,7 @@
             </div>
           </figure>
         </div>
+        <!--  upload  -->
           <UFileUpload v-model="pendingFiles"
                        accept="image/*, video/*"
                        position="outside" layout="list"
@@ -229,7 +230,7 @@ const toolbarItems: EditorToolbarItem[] = [
 const ageYears = ref(0)
 const ageMonths = ref(0)
 
-// Getting the animal by id | if not on add page
+// Getting the animal by id / slug
 if (!isNew) {
   const { data } = await supabase
     .from('animals')

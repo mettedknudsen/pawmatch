@@ -25,7 +25,7 @@ export default defineNuxtConfig({
   ],
 
   nitro: {
-    preset: 'netlify',
+    preset: process.env.NITRO_PRESET || 'node-server',
     externals: {
       external: ['@supabase/supabase-js']
     }

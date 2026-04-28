@@ -21,7 +21,7 @@ export type Database = {
           breed: string | null
           cage: string | null
           created_at: string | null
-          description: string | null
+          description: Json | null
           gender: string | null
           good_with_animals: boolean | null
           good_with_children: boolean | null
@@ -47,7 +47,7 @@ export type Database = {
           breed?: string | null
           cage?: string | null
           created_at?: string | null
-          description?: string | null
+          description?: Json | null
           gender?: string | null
           good_with_animals?: boolean | null
           good_with_children?: boolean | null
@@ -73,7 +73,7 @@ export type Database = {
           breed?: string | null
           cage?: string | null
           created_at?: string | null
-          description?: string | null
+          description?: Json | null
           gender?: string | null
           good_with_animals?: boolean | null
           good_with_children?: boolean | null
@@ -135,6 +135,13 @@ export type Database = {
             columns: ["animal_id"]
             isOneToOne: false
             referencedRelation: "animals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_animal_id_fkey"
+            columns: ["animal_id"]
+            isOneToOne: false
+            referencedRelation: "animals_overview"
             referencedColumns: ["id"]
           },
           {
@@ -201,6 +208,7 @@ export type Database = {
           email: string | null
           full_name: string | null
           id: string
+          phone: string | null
           role: string | null
         }
         Insert: {
@@ -208,6 +216,7 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id: string
+          phone?: string | null
           role?: string | null
         }
         Update: {
@@ -215,6 +224,7 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id?: string
+          phone?: string | null
           role?: string | null
         }
         Relationships: []
@@ -245,6 +255,37 @@ export type Database = {
       }
     }
     Views: {
+      animals_overview: {
+        Row: {
+          activity_level: number | null
+          age_months: number | null
+          breed: string | null
+          cage: string | null
+          created_at: string | null
+          description: Json | null
+          gender: string | null
+          good_with_animals: boolean | null
+          good_with_children: boolean | null
+          grooming_level: number | null
+          handling_tolerance: number | null
+          id: string | null
+          images: string[] | null
+          independence_level: number | null
+          is_hypoallergenic: boolean | null
+          is_neutered: boolean | null
+          name: string | null
+          needs_outdoor: boolean | null
+          next_booking_at: string | null
+          personality: string | null
+          shedding_level: number | null
+          size: string | null
+          space_needed: string | null
+          species: string | null
+          status: string | null
+          total_bookings: number | null
+        }
+        Relationships: []
+      }
       bookings_with_details: {
         Row: {
           animal_cage: string | null
@@ -272,6 +313,13 @@ export type Database = {
             columns: ["animal_id"]
             isOneToOne: false
             referencedRelation: "animals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_animal_id_fkey"
+            columns: ["animal_id"]
+            isOneToOne: false
+            referencedRelation: "animals_overview"
             referencedColumns: ["id"]
           },
           {
@@ -316,11 +364,21 @@ export type Database = {
             referencedRelation: "animals"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "bookings_animal_id_fkey"
+            columns: ["animal_id"]
+            isOneToOne: false
+            referencedRelation: "animals_overview"
+            referencedColumns: ["id"]
+          },
         ]
       }
     }
     Functions: {
-      [_ in never]: never
+      generate_slots_for_month: {
+        Args: { target_month: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

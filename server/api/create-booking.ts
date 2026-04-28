@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     // if logged in - check for existing guest
     const {data: existingGuest} = await supabase.from('guests')
       .select('id')
-      .eq('profile_id', body.user.id) // matching the logged in user's id
+      .eq('profile_id', body.user.sub)
       .maybeSingle()
 
     if (existingGuest) {
@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
         .insert({
           full_name: body.profile?.full_name ?? '',
           email: body.user.email,
-          profile_id: body.user.id,
+          profile_id: body.user.sub,
           phone: body.user.phone ?? null
         })
         .select('id')

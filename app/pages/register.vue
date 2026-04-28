@@ -71,6 +71,11 @@ const loading = ref(false)
 
 
 async function handleSignup() {
+  if (password.value.length < 5) {
+    error.value = 'Adgangskodens skal mindst være 5 tegn'
+    return
+  }
+
   if (password.value !== repeatPassword.value) {
     error.value = 'Adgangskoderne er ikke ens'
     return
