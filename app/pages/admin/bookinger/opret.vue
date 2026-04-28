@@ -59,12 +59,12 @@
         <!-- TIMESLOT -->
         <div v-if="selectedDate" class="col-span-2">
           <label class="block text-bark-700 font-medium mb-2 text-sm">Tidspunkt<span class="text-rust-900 ml-1 text-lg">*</span></label>
-          <div v-if="availableTimeslots.length === 0" class="text-neutral-400 text-sm ">
+          <div v-if="timeslots.length === 0" class="text-neutral-400 text-sm ">
             Ingen ledige tider på denne dato
           </div>
           <div v-else class="grid grid-cols-2 lg:grid-cols-4 gap-2">
             <button
-              v-for="slot in availableTimeslots"
+              v-for="slot in timeslots"
               :key="slot.id"
               type="button"
               class="p-2 border rounded-lg transition-colors text-sm"
@@ -108,7 +108,6 @@ const supabase = useSupabaseClient()
 
 const { appointmentType, species } = useAnimalMetaData()
 
-
 const form = reactive({
   guest_full_name: '',
   guest_email: '',
@@ -133,73 +132,25 @@ const { data: animals } = await useAsyncData('admin-animals-select', async () =>
   return data
 })
 
-// const animalOptions = computed(() => [
-//   {label: 'Generelt besøg — intet dyr', value: null},
-//   ...(animals.value?.map(a => ({
-//     label:`${a.name} (${species[a.species]})`,
-//     value: a.id,
-//   }))
-//     ?? [])
-// ])
+const selectedAnimal = computed(() =>
+  animals.value?.find(a => a.id === form.animal_id)
+)
 
 // Reset timeslot if selectedDate is changed
 watch([selectedDate], () => {
   form.timeslot_id = ''
 } )
 
-//---- get the timeslots where the chosen animal is booked ----//
-const {data:animalBookedSlots} = await useAsyncData(`animal-booked-${form.animal_id}`, async() => {
-    if(!form.animal_id) return []
-    const {data} = await supabase.from('bookings')
-      .select('timeslot_id')
-      .eq('animal_id', form.animal_id)
-      .neq('status', 'cancelled')
-    return data?.map(b =>b.timeslot_id) ?? []
-
-  },{watch: [() => form.animal_id]}
-)
-
-const {data: timeslots} = await useAsyncData('admin-timeslots', async () =>{
+const {data:timeslots } = await useAsyncData('booking-timeslots', () => {
   if(!selectedDate.value) return []
-  const dateZoned = Temporal.PlainDate.from(selectedDate.value).toZonedDateTime('Europe/Copenhagen')
 
-  // We need to check if the timeslots have already passed
-  const now = Temporal.Now.instant()
-
-  let startOfSelectedDay = dateZoned.startOfDay().toInstant()
-
-  // then the time of the day
-    if(Temporal.Instant.compare(now, startOfSelectedDay) > 0){
-      startOfSelectedDay = now
+  return $fetch('/api/timeslots', {
+    query: {
+      animal_id: form.animal_id ?? null,
+      date: selectedDate?.value
     }
-
-    // start of selected day or the current time, if that is after
-  const start = startOfSelectedDay.toString()
-  // start of the day after selected date
-  const end = dateZoned.add({days: 1}).startOfDay().toInstant().toString()
-
-  const { data} = await supabase
-    .from('timeslots')
-    .select('*, bookings(count)')
-    .gte('starts_at', start) // greater than (first minute of the day)
-    .lt('starts_at', end) // less than (start of the next day)
-    .order('starts_at')
-  return data
-}, {watch: [selectedDate]}// update/watch when selected date changes !
-)
-
-const availableTimeslots = computed(() =>
-  timeslots.value?.filter(t => {
-    const booked = t.bookings?.[0]?.count ?? 0
-    if(booked >= t.capacity) return false
-
-    // then check if the animal is booked at this timeslot
-    if(form.animal_id && animalBookedSlots.value?.includes(t.id)) return false
-
-    return true
-  }) ?? []
-)
-
+  })
+  }, {watch: [selectedDate, () => form.animal_id]})
 
 const error = ref('')
 const loading = ref(false)
@@ -264,10 +215,6 @@ const appointmentTypeBySpecies: Record<string, string[]> = {
   cat:['visit','petting'],
   rabbit:['visit', 'petting']
 }
-
-const selectedAnimal = computed(() =>
-  animals.value?.find(a => a.id === form.animal_id)
-)
 
 // which meeting types should be available based on animal's species
 const availableAppointmentTypes = computed(() => {

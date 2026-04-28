@@ -131,6 +131,7 @@ async function save(){
 
     if (err) throw err
     refresh()
+    navigateTo('/admin/bookinger')
   } catch (e:any) {
     error.value = e.message ?? 'Der skete en fejl, prøv igen.'
   } finally {
@@ -149,7 +150,7 @@ async function cancelBooking(){
       .eq('id', route.params.id as string)
     if(err) throw error
     refresh()
-
+    navigateTo('/admin/bookinger')
   } finally {
     loading.value = false
   }
