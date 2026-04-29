@@ -1,6 +1,9 @@
 <template>
   <section class="mb-6">
-    <h1 class="text-2xl font-bold text-bark-900">{{ isNew ? 'Opret bruger' : 'Bruger' }}</h1>
+    <div class="flex items-center justify-between">
+      <h1 class="text-2xl font-bold text-bark-900">{{ isNew ? 'Opret bruger' : 'Bruger' }}</h1>
+      <Button to="/admin/brugere" size="sm">Gå tilbage</Button>
+    </div>
     <p v-if="!isNew" class="text-sm text-neutral-500 mt-3">{{ route.params.id }}</p>
     <form class="bg-white mt-5 p-3 lg:p-6 rounded-lg flex flex-wrap gap-y-4" @submit.prevent="handleSubmit">
       <div class="input w-full md:w-1/2 md:pr-2 lg:pr-4">

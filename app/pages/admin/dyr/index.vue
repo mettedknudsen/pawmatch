@@ -1,7 +1,7 @@
 <template>
     <div class="flex items-center justify-between mb-6">
       <h1 class="text-2xl font-bold text-bark-900">Dyr</h1>
-        <Button :icon="PlusSvg" to="/admin/dyr/opret">Tilføj dyr</Button>
+        <Button :icon="PlusSvg" to="/admin/dyr/opret" size="sm">Tilføj dyr</Button>
     </div>
 
     <div class="bg-white rounded-2xl border border-neutral-200 overflow-hidden">

@@ -1,9 +1,11 @@
 <template>
   <section class="max-w-2xl">
+    <div class="flex items-center justify-between">
     <h1 class="text-2xl mb-8 text-bark-900 font-bold">
       Opret booking
     </h1>
-
+    <Button to="/admin/bookinger" size="sm">Gå tilbage</Button>
+    </div>
     <form class="space-y-6 bg-white rounded-2xl border border-neutral-200 p-6" @submit.prevent="save()">
 
       <!-- GUEST -->

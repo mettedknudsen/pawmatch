@@ -1,6 +1,9 @@
 <template>
   <section class="max-w-6xl space-y-6 mb-8">
+    <div class="flex items-center justify-between">
     <h1 class="text-2xl font-bold text-bark-900 font-inter">Tilføj tider</h1>
+      <Button to="/admin" size="sm">Gå tilbage</Button>
+    </div>
     <!-- add timeslots to a month - supabase function -->
     <div class="bg-white rounded-2xl border border-neutral-200 p-3 lg:p-6">
       <p class="text-neutral-500 text-sm mb-1">Vælg måned/år og opret tider til booking</p>

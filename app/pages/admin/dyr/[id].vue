@@ -1,10 +1,11 @@
 <template>
   <section class="max-w-2xl">
-    <div class="flex items-center mb-8 max-md:justify-between">
+    <div class="flex items-end mb-8 max-md:justify-between">
       <h1 class="text-bark-900 text-2xl font-bold ">
         {{ isNew ? 'Tilføj dyr' : 'Rediger dyr'}}
       </h1>
-      <Button v-if="!isNew" color="dark" :to="`/dyr/${route.params.id}`" variant="plain" :icon="EyeSvg" class="!text-neutral-500 hover:!text-neutral-500/70 transition max-md:[&_svg]:size-8"><span class="max-md:hidden">Se profilen</span></Button>
+      <Button v-if="!isNew" color="dark" :to="`/dyr/${route.params.id}`" variant="plain" :icon="EyeSvg" class="!text-neutral-500 hover:!text-neutral-500/70 transition max-md:[&_svg]:size-8 !py-0"><span class="max-md:hidden">Se profilen</span></Button>
+      <Button to="/admin/dyr" size="sm" class="ml-auto">Gå tilbage</Button>
     </div>
     <form class="p-6 bg-white rounded-2xl border border-neutral-200 space-y-6" @submit.prevent="save">
 
@@ -145,7 +146,7 @@
       <div class="input">
         <label class="label mb-1">Beskrivelse</label>
 
-        <UEditor v-slot="{ editor }" v-model="form.description" content-type="json" class="w-full py-2 border border-neutral-300 rounded-xl min-h-[150px]" :placeholder="{ placeholder: 'Skriv en beskrivelse her...', mode: 'firstLine' }">
+        <UEditor v-slot="{ editor }" v-model="form.description" content-type="json" class="w-full max-lg:px-2 py-2 [*_p]:!text-xs border border-neutral-300 rounded-xl min-h-[150px]" :placeholder="{ placeholder: 'Skriv en beskrivelse her...', mode: 'firstLine' }">
           <UEditorToolbar class="border-b border-neutral-300 mb-3 pb-1 px-4" :editor="editor" :items="toolbarItems"/>
         </UEditor>
       </div>

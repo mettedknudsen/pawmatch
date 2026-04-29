@@ -3,7 +3,7 @@
     <div class="pawmatch-container flex flex-col lg:grid grid-cols-12 min-h-[100vh-100px] mb-10 md:mb-20">
       <!--  Content  -->
       <section class="col-span-5">
-        <div class="hidden md:flex md:space-x-7 items-center max-lg:justify-between mb-10 max-lg:mt-10">
+        <div class="hidden lg:flex md:space-x-7 items-center max-lg:justify-between mb-10 max-lg:mt-10">
           <h1 class="text-2xl font-bold font-inter" v-if="pet.name">{{ pet.name }}</h1>
 
           <div class="h-10 relative flex items-center justify-center p-1" v-if="pet.status === 'available'">
@@ -27,7 +27,7 @@
       </section>
       <!--  Image  -->
       <div class="col-span-6 col-start-7 max-lg:order-first">
-        <div class="flex md:space-x-7 items-center max-md:justify-between mb-10 md:hidden">
+        <div class="flex md:space-x-7 items-center max-md:justify-between mb-10 lg:hidden">
           <h1 class="text-2xl font-bold font-inter" v-if="pet.name">{{ pet.name }}</h1>
           <div class="h-10 relative flex items-center justify-center p-1">
             <div class="bg-rust-500/80 rounded-xl animate-pulse absolute inset-0" v-if="pet.status === 'available'">
@@ -116,7 +116,7 @@
             width="800"
             fit="cover"
             loading="lazy"
-            class="w-full object-cover rounded-lgrounded-2xl md:min-h-100  h-full"
+            class="w-full object-cover rounded-lgrounded-2xl min-h-100  h-full"
           />
           </template>
           <div v-else

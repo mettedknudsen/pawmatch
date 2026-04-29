@@ -8,14 +8,14 @@
         <p class="text-neutral-400 mb-8 text-sm font-inter">{{ booking.id }}</p>
       </section>
       <div class="flex items-center gap-2 max-md:mb-5">
-        <Button v-if="booking.status === 'confirmed'" variant="full" color="alert" :loading="loading" @click="cancelBooking">
+        <Button v-if="booking.status === 'confirmed'" variant="full" color="alert" size="sm" :loading="loading" @click="cancelBooking">
           Aflys booking
         </Button>
         <div v-else class="text-rust-900 px-3 py-1.5 text-sm flex items-center gap-2">
           <WarningSvg />
           <span>Booking er aflyst</span>
         </div>
-        <Button variant="bordered" color="dark" to="/admin/bookinger">
+        <Button variant="bordered" color="dark" to="/admin/bookinger" size="sm">
           Tilbage
         </Button>
       </div>
