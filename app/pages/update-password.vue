@@ -65,8 +65,6 @@
 </template>
 
 <script setup lang="ts">
-import {navigateTo} from "../../.nuxt/imports";
-
 definePageMeta({ layout: 'account' })
 
 const supabase = useSupabaseClient()
