@@ -17,7 +17,7 @@
     <article class="bg-white rounded-xl p-3 lg:p-6 flex flex-wrap items-start gap-3">
       <div class="w-full">
         <p class="bg-rust-300 text-rust-900 text-sm rounded-lg py-1 px-2 mb-5 border">
-          <strong>Disclaimer:</strong> Denne del blev ikke funktionel - men brugte meget tid på denne opsætning, så det kommer med :)
+          <strong>Disclaimer:</strong> Denne del blev ikke funktionel (!)
         </p>
         <div class="items-center flex justify-between">
           <div>

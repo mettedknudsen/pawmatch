@@ -54,7 +54,7 @@
         <label
           v-for="(filter, index) in checkboxFilters"
           :key="index"
-          class="flex items-center flex-1 gap-2 text-sm cursor-pointer border rounded-lg p-2 mb-2 has-checked:bg-white/10">
+          class="flex items-center flex-1 gap-2 text-sm cursor-pointer border border-white/50 rounded-lg p-2 mb-2 has-checked:border-white has-checked:bg-white/10">
           {{ filter.label }}
           <input v-model="filter.model.value" type="checkbox" class="hidden"/>
         </label>

@@ -1,5 +1,3 @@
-import * as path from "node:path";
-
 export function useStorage() {
   const supabase = useSupabaseClient()
   function getImageUrl(path: string) {
@@ -9,11 +7,14 @@ export function useStorage() {
     return data.publicUrl
   }
   async function uploadImage(file: File, filename: string) {
+      const isVideo = ['mp4', 'mov', 'avi', 'webm'].includes( filename.split('.').pop()?.toLowerCase() ?? '' )
+
     const { data, error } = await supabase.storage
       .from('animals')
       .upload(filename, file, {
-        cacheControl: '3600',
-        upsert: false
+        cacheControl: isVideo ? '85000':'3600',
+        upsert: false,
+        contentType: file.type
       })
     if (error) throw error
     return data.path

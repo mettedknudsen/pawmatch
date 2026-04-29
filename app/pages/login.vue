@@ -1,23 +1,37 @@
 <template>
       <form class="space-y-4 px-10 bg-white px-3 lg:px-5 py-10 max-w-[400px] mx-auto" @submit.prevent="handleLogin">
         <h1 class="text-center font-bold text-bark-500 text-lg">Login</h1>
-        <div>
-          <label class="block text-sm text-bark-700 mb-1">Email</label>
-          <input
+        <div class="input">
+          <label class="label mb-1">Email</label>
+          <UInput
             v-model="email"
             type="email"
             required
-            class="rounded-lg border border-bark-300 px-4 py-1.5 focus:outline-terrakotta w-full min-h-8"
+            class="w-full"
           />
         </div>
-        <div>
-          <label class="block text-sm text-bark-700 mb-1">Adgangskode</label>
-          <input
+        <div class="input">
+          <label class="label mb-1">Adgangskode</label>
+          <UInput
             v-model="password"
-            type="password"
-            required
-            class="rounded-lg border border-bark-300 px-4 py-1.5 focus:outline-terrakotta  w-full min-h-8"
-          />
+            placeholder="Kodeord"
+            class="w-full"
+            :type="show ? 'text' : 'password'"
+            :ui="{ trailing: 'pe-1' }"
+          >
+            <template #trailing>
+              <UButton
+                color="neutral"
+                variant="link"
+                size="sm"
+                :icon="show ? 'i-lucide-eye-off' : 'i-lucide-eye'"
+                :aria-label="show ? 'Skjul kodeord' : 'Vis kodeord'"
+                :aria-pressed="show"
+                aria-controls="password"
+                @click="show = !show"
+              />
+            </template>
+          </UInput>
         </div>
 
         <p v-if="error" class="text-sm text-rust-900">{{ error }}</p>
@@ -49,7 +63,7 @@ const email = ref('')
 const password = ref('')
 const error = ref('')
 const loading = ref(false)
-
+const show = ref(false)
 
 async function handleLogin() {
   loading.value = true

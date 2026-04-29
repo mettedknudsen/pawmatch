@@ -9,19 +9,27 @@
     <form class="p-6 bg-white rounded-2xl border border-neutral-200 space-y-6" @submit.prevent="save">
 
       <!-- Image | Upload -->
-      <div class="input bg-terrakotta/10 p-2 rounded-lg border border-dotted border-neutral-200">
+      <div class="input bg-neutral-100/50 p-2 rounded-lg border-2 border-dotted border-neutral-200">
         <p class="label">Billeder</p>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-5 gap-3">
-          <!--  currentImages  -->
+          <!--  currentImages -preview  -->
           <figure v-for="(url, i) in images" :key="i" class="relative max-w-93">
+            <video
+              v-if="getFileType(url) === 'video'"
+              :src="getImageUrl(url)"
+              class="w-full h-full rounded-xl border border-neutral-500 aspect-[4/3] object-cover"
+              preload="metadata"
+              muted
+            />
             <NuxtImg
+              v-else
               :src="getImageUrl(url)"
               :alt="`${form.name}-image`"
               width="400"
               height="300"
               fit="contain"
               loading="lazy"
-              class="w-full h-full rounded-xl"
+              class="w-full h-full rounded-xl border border-neutral-500"
             />
             <div class="absolute bg-white/50 rounded-lg py-1 px-2 bottom-1 space-x-1 right-1 flex items-center">
               <Button
@@ -188,7 +196,7 @@ import type { EditorToolbarItem } from '@nuxt/ui'
 definePageMeta({ layout: 'admin' })
 const route  = useRoute()
 const supabase = useSupabaseClient()
-const {uploadImages, getImageUrl} = useStorage()
+const {uploadImages, getImageUrl, getFileType} = useStorage()
 
 const isNew = route.params.id === 'opret'
 

@@ -4,8 +4,8 @@
     <NuxtImg
       :src="getImageUrl(pet.images[0])"
       :alt="pet.name"
-      width="400"
-      height="300"
+      width="600"
+      height="450"
       fit="cover"
       loading="lazy"
       class="w-full object-cover bg-neutral-200 h-auto object-cover transition duration-500 group-hover:scale-110"
